@@ -1,7 +1,7 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
-require 'json'
 require 'ppt'
+require_relative 'processor'
 
 unless Dir.pwd == PPT.root
   puts "~ Changing from #{Dir.pwd} to #{PPT.root}"
@@ -15,9 +15,8 @@ EM.run do
     client.on_open do
       puts "~ Listening for data ..."
 
-      client.subscribe('inbox.jira.#') do |payload, header, frame|
-        # TODO
-        # Receiver.process(payload)
+      client.subscribe('inbox.jira') do |payload, header, frame|
+        Processor.process(payload, frame.routing_key)
       end
     end
   end

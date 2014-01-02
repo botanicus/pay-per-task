@@ -25,4 +25,32 @@ class PPT
   end
 end
 
+class NoPriceDetectedError < StandardError
+  def initialize(title)
+    super("No price detected in: #{title.inspect}")
+  end
+end
+
+class Story
+  attr_reader :service, :username
+  attr_reader :id, :price, :currency, :link
+
+  def initialize(redis, service, username, id, price, currency, link)
+    @service, @username = service, username
+    @id, @price, @currency, @link = id, price, currency, link
+  end
+
+  def key
+    "stories.#{self.service}.#{self.username}.#{self.id}"
+  end
+
+  def value
+    #
+  end
+
+  def save
+    @redis.set(self.key, self.value)
+  end
+end
+
 require 'ppt/client'

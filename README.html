@@ -15,12 +15,13 @@
 
 <h1>Simulation (Creating Fake Data)</h1>
 <pre>
-  curl -X POST http://localhost:9999/pt/botanicus/5c32e90nsf10
+  curl -X POST http://localhost:9999/pt/botanicus/5c32e90nsf10 --data '{"key": "value"}'
+  curl -X POST http://localhost:9999/jira/botanicus/5c32e90nsf10 --data @consumers/inbox.jira/sample_data.json
 </pre>
 
 <h1>Inspection</h1>
 <p>
-  Run <code>./inspect.rb</code>. It doesn't touch the production queue. Rather it creates a temporary queue and binds it to the fanout.
+  Run <code>./inspect.rb 'inbox.#'</code>. It doesn't touch the production queue. Rather it creates a temporary queue and binds it to the fanout.
 </p>
 
 <h1>TODO</h1>
