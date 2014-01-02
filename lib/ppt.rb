@@ -11,6 +11,25 @@ class PPT
     File.expand_path('../..', __FILE__)
   end
 
+  def self.ensure_at_root
+    unless Dir.pwd == self.root
+      puts "~ Changing from #{Dir.pwd} to #{self.root}"
+      Dir.chdir(self.root)
+    end
+  end
+
+  def self.async_loop(&block)
+    PPT.ensure_at_root
+
+    client = PPT::Client.register_hook
+
+    EM.run do
+      EM.next_tick do
+        block.call(client)
+      end
+    end
+  end
+
   def self.config(key)
     JSON.parse(File.read(File.join(self.root, 'config', "#{key}.json")))
   end
@@ -43,6 +62,11 @@ class PPT
 
     def emit(event, data)
       routing_key = "events.#{event}"
+      puts "~ PUB #{routing_key}: #{data}"
+      self.publish(data, routing_key)
+    end
+
+    def publish(data, routing_key)
       @client.exchange.publish(data, routing_key)
     end
 
@@ -51,6 +75,10 @@ class PPT
 
       _, service, username = routing_key.split('.')
 
+      # TODO: do this only if the state is new.
+      # new -> WIP
+      # WIP -> done
+      # done -> [accepted | rejected]
       story = self.build_story(service, username, payload)
       self.emit('stories.new', story.to_json)
 
