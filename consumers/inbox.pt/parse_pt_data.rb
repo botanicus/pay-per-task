@@ -1,6 +1,12 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
-require_relative 'processor'
+class PPT
+  module PT
+    class Processor < PPT::Processor
+      # TODO
+    end
+  end
+end
 
 PPT.async_loop do |client|
   client.on_open do

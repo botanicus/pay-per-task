@@ -1,3 +1,5 @@
+#!/usr/bin/env bundle exec ruby -Ilib
+
 require 'ppt'
 
 class PPT
@@ -42,6 +44,17 @@ class PPT
 
         PPT::Developer.new(service, username, email: email, name: name)
       end
+    end
+  end
+end
+
+PPT.async_loop do |client|
+  client.on_open do
+    puts "~ Listening for data ..."
+    processor = PPT::Jira::Processor.new(client)
+
+    client.subscribe('inbox.jira') do |payload, header, frame|
+      processor.process(payload, frame.routing_key)
     end
   end
 end
