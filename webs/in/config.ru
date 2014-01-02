@@ -14,7 +14,6 @@ run lambda { |env|
     service, username, auth_key = $1, $2, $3
     if PPT.supports_service?(service)
       if PPT.authenticate(username, auth_key)
-        It might not be useful for filtering
         routing_key = "inbox.#{service}.#{username}"
         client.publish(env['rack.input'].read, routing_key)
         [201, Hash.new, Array.new]

@@ -7,13 +7,13 @@ class PPT
         title = payload['issue']['fields']['summary']
         price, currency = self.parse_price(title)
 
-        raise NoPriceDetectedError.new(title) if price.nil?
+        raise PPT::NoPriceDetectedError.new(title) if price.nil?
 
-        Story.new(service, username, id, price, currency, link)
+        PPT::Story.new(service, username, id: id, price: price, currency: currency, link: link)
       end
 
       def build_developer(service, username, payload)
-        Developer.new(service, username)
+        PPT::Developer.new(service, username, id: 'id')
       end
     end
   end

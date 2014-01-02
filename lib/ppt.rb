@@ -43,7 +43,7 @@ class PPT
 
     def emit(event, data)
       routing_key = "events.#{event}"
-      client.exchange.publish(data, routing_key)
+      @client.exchange.publish(data, routing_key)
     end
 
     def process(payload, routing_key)
