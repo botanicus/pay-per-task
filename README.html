@@ -1,0 +1,44 @@
+<h1>About</h1>
+<ul>
+  <li>When a story on <b>PT</b> is changed, PT <code>POST</code> to <code>in.ppt.com/pt/user/auth_key</code>.</li>
+  <li>If authentication was successful, the data are published to <code>inbox-exchange</code> fanout.</li>
+  <li>There's queue called <code>inbox</code> which is bound to the <code>inbox-exchange</code>.</li>
+</ul>
+
+<a href="how-it-works.png"><img width="450" src="how-it-works.png" /></a>
+
+<h1>Setup</h1>
+<ol>
+  <li>Create <code>config/amqp.json</code> with keys <code>user</code>, <code>password</code> and <code>vhost</code>.</li>
+  <li>Run <code>./bin/setup_rabbitmq.rb</code> to set up RabbitMQ users and permissions.</li>
+</ol>
+
+<h1>Simulation (Creating Fake Data)</h1>
+<p>
+  Run <code>./publish_test_data.rb</code>.
+</p>
+
+<h1>Inspection</h1>
+<p>
+  Run <code>./inspect.rb</code>. It doesn't touch the production queue. Rather it creates a temporary queue and binds it to the fanout.
+</p>
+
+<h1>TODO</h1>
+<ul>
+  <li>Proper logging.</li>
+  <li><code>Client#on_open</code> should wait until both the queue and exchange is declared.</li>
+</ul>
+
+REDIS
+
+http://redis.io/topics/persistence
+
+Stories [created|in-progress|done|accepted] delete stories using EXPIRE
+
+Developers
+If there's a story with a dev who isn't in the system, send an email asking to fill in his details.
+bank account (or sth like that; out of scope of MVP)
+
+Payments (out of scope of MVP)
+
+# TODO: This should be HTTPS in future.
