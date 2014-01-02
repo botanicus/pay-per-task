@@ -7,16 +7,16 @@
 
 <a href="how-it-works.png"><img width="450" src="how-it-works.png" /></a>
 
-<h1>Setup</h1>
+<h1>Initial Setup</h1>
 <ol>
   <li>Create <code>config/amqp.json</code> with keys <code>user</code>, <code>password</code> and <code>vhost</code>.</li>
   <li>Run <code>./bin/setup_rabbitmq.rb</code> to set up RabbitMQ users and permissions.</li>
 </ol>
 
 <h1>Simulation (Creating Fake Data)</h1>
-<p>
-  Run <code>./publish_test_data.rb</code>.
-</p>
+<pre>
+  curl -X POST http://localhost:9999/pt/botanicus/5c32e90nsf10
+</pre>
 
 <h1>Inspection</h1>
 <p>

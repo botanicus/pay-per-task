@@ -79,16 +79,15 @@ class PPT::Client
     self.on_open_callbacks << block
   end
 
-  def publish(data)
-    self.exchange.publish(data)
+  def publish(*args)
+    self.exchange.publish(*args)
   end
 
-  def subscribe(routing_key, &block)
-    self.queues[] #######
-    @queue.consume(true) do |consume_ok|
-      puts "Subscribed for messages routed to #{@queue.name}, consumer tag is #{consume_ok.consumer_tag}, using no-ack mode"
+  def subscribe(queue, &block)
+    queue.consume(true) do |consume_ok|
+      puts "Subscribed for messages routed to #{queue.name}, consumer tag is #{consume_ok.consumer_tag}, using no-ack mode"
 
-      @queue.on_delivery do |basic_deliver, header, payload|
+      queue.on_delivery do |basic_deliver, header, payload|
         block.call(payload, header, basic_deliver)
       end
     end

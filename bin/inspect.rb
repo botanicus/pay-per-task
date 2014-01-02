@@ -2,10 +2,14 @@
 
 # This script creates second queue and binds it to
 # the exchange. It never touches the 'production' queue.
+#
+# Usage: ./bin/inspect.rb 'inbox.#'
 
-require 'ppt/client'
+require 'ppt'
 
-client = Client.register_hook
+client = PPT::Client.register_hook
+
+routing_key = ARGV.first
 
 EM.run do
   EM.next_tick do
@@ -16,12 +20,12 @@ EM.run do
         puts "~ Temporary queue #{temporary_queue.name.inspect} is ready"
       end
 
-      temporary_queue.bind(client.exchange.name) do
-        puts "~ Temporary queue #{temporary_queue.name} is now bound to #{client.exchange.name}"
+      temporary_queue.bind(client.exchange.name, routing_key) do
+        puts "~ Temporary queue #{temporary_queue.name} is now bound to #{client.exchange.name} with routing key #{routing_key}"
       end
 
-      client.subscribe do |payload|
-        puts "~ Data received: #{payload}"
+      client.subscribe(temporary_queue) do |payload, header, frame|
+        puts "~ #{frame.routing_key}: #{payload}"
       end
     end
   end
