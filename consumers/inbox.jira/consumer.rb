@@ -14,9 +14,10 @@ EM.run do
   EM.next_tick do
     client.on_open do
       puts "~ Listening for data ..."
+      processor = PPT::Jira::Processor.new(client)
 
       client.subscribe('inbox.jira') do |payload, header, frame|
-        Processor.process(payload, frame.routing_key)
+        processor.process(payload, frame.routing_key)
       end
     end
   end

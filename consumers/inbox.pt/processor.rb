@@ -1,5 +1,7 @@
-class Processor
-  def self.process(payload, routing_key)
-    _, service, username = routing_key.split('.')
+class PPT
+  module PT
+    class Processor < PPT::Processor
+      # TODO
+    end
   end
 end

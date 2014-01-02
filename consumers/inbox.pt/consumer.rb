@@ -14,9 +14,10 @@ EM.run do
   EM.next_tick do
     client.on_open do
       puts "~ Listening for data ..."
+      processor = PPT::PT::Processor.new(client)
 
       client.subscribe('inbox.pt') do |payload, header, frame|
-        Processor.process(payload, frame.routing_key))
+        processor.process(payload, frame.routing_key))
       end
     end
   end
