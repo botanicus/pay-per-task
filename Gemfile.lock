@@ -7,18 +7,29 @@ GEM
     amq-protocol (1.9.2)
     daemons (1.1.9)
     eventmachine (1.0.3)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime-types (1.25.1)
+    mustache (0.99.5)
+    polyglot (0.3.3)
     rack (1.5.2)
     redis (3.0.6)
     thin (1.6.1)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   amq-client
+  mail
+  mustache
   rack
   redis
   thin

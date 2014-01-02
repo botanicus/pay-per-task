@@ -1,5 +1,6 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
+require 'mail'
 require 'mustache'
 require_relative 'processor'
 
@@ -10,7 +11,16 @@ PPT.async_loop do |client|
     client.subscribe('events.devs.new') do |payload, header, frame|
       presenter = PPT::Presenters::Developer.new(JSON.parse(payload))
       scope = {name: @presenter.name, user_activation_page: @presenter.user_activation_page}
-      Mustache.render(DATA.read, scope)
+
+
+      email = Mail.new do
+        from    'james@101ideas.cz'
+        to      @presenter.email
+        subject 'Welcome to PPT :)'
+        body    Mustache.render(DATA.read, scope)
+      end
+
+      client.emit('emails.devs.new', email.to_s)
     end
   end
 end

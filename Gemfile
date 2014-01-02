@@ -7,3 +7,4 @@ gem 'amq-client'
 gem 'redis'
 
 gem 'mustache'
+gem 'mail'
