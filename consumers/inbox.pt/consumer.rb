@@ -15,7 +15,7 @@ EM.run do
     client.on_open do
       puts "~ Listening for data ..."
 
-      client.subscribe('inbox.jira.#') do |payload, header, frame|
+      client.subscribe('inbox.pt.#') do |payload, header, frame|
         # TODO
         # Receiver.process(payload)
       end

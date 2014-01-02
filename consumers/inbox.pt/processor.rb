@@ -1,4 +1,4 @@
-  # At https://www.pivotaltracker.com/projects/957456/integrations -> Activity Web Hook
+# At https://www.pivotaltracker.com/projects/957456/integrations -> Activity Web Hook
 class Receiver
   class PT
     def self.process(username, payload)
