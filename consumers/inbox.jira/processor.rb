@@ -26,7 +26,7 @@ class PPT
           item['field'] == 'status' # TODO: I don't know the name of the field.
         end
 
-        if status['fromString'] == 'approved' && status['toString'] == 'approved' # && user has the permissions for that
+        if status && status['fromString'] == 'approved' && status['toString'] == 'approved' # && user has the permissions for that
           # TODO: do something.
         end
 
