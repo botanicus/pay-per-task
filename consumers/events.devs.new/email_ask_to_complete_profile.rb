@@ -2,7 +2,6 @@
 
 require 'mail'
 require 'mustache'
-require_relative 'processor'
 
 PPT.async_loop do |client|
   client.on_open do
@@ -16,11 +15,12 @@ PPT.async_loop do |client|
       email = Mail.new do
         from    'james@101ideas.cz'
         to      @presenter.email
-        subject 'Welcome to PPT :)'
+        subject "Welcome to PPT :)"
         body    Mustache.render(DATA.read, scope)
       end
 
-      client.emit('emails.devs.new', email.to_s)
+      # Send to email queue.
+      client.send('emails.devs.new', email.to_s)
     end
   end
 end

@@ -66,7 +66,7 @@ class PPT::Client
         end
 
         queue.bind(self.exchange.name, routing_key) do
-          puts "~ Queue #{queue.name} is now bound to #{self.exchange.name}"
+          puts "~ Queue #{queue.name} is now bound to #{self.exchange.name} with #{routing_key}"
         end
 
         self.queues[name] = queue
