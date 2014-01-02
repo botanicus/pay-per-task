@@ -3,6 +3,8 @@
 # WebHooks API POSTs to:
 # https://in.ppt.com/jira/botanicus/5c32e90nsf10
 
+# ESSENTIAL SERVICE, don't screw with me!
+
 require 'ppt'
 
 client = PPT::Client.register_hook
@@ -12,6 +14,7 @@ run lambda { |env|
     service, username, auth_key = $1, $2, $3
     if PPT.supports_service?(service)
       if PPT.authenticate(username, auth_key)
+        It might not be useful for filtering
         routing_key = "inbox.#{service}.#{username}"
         client.publish(env['rack.input'].read, routing_key)
         [201, Hash.new, Array.new]

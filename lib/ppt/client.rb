@@ -57,7 +57,7 @@ class PPT::Client
   def declare_queue
     self.on_open do
       #self.consumers.each do |routing_key|
-      queues = {'inbox.jira' => 'inbox.jira', 'inbox.pt' => 'inbox.pt', 'inbox' => 'inbox.*', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
+      queues = {'inbox.jira' => 'inbox.jira', 'inbox.pt' => 'inbox.pt', 'inbox' => 'inbox.#', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
       queues.each do |name, routing_key|
         queue = AMQ::Client::Queue.new(@connection, @channel, name)
 
@@ -84,6 +84,7 @@ class PPT::Client
   end
 
   def subscribe(queue, &block)
+    queue = self.queues[queue] if queue.is_a?(String)
     queue.consume(true) do |consume_ok|
       puts "Subscribed for messages routed to #{queue.name}, consumer tag is #{consume_ok.consumer_tag}, using no-ack mode"
 
