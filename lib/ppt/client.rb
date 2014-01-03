@@ -57,7 +57,7 @@ class PPT::Client
   def declare_queue
     self.on_open do
       #self.consumers.each do |routing_key|
-      queues = {'inbox.jira' => 'inbox.jira.*', 'inbox.pt' => 'inbox.pt.*', 'inbox' => 'inbox.#', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
+      queues = {'inbox.jira' => 'inbox.jira.*', 'inbox.pt' => 'inbox.pt.*', 'inbox' => 'inbox.#', 'emails' => 'emails.#', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
       queues.each do |name, routing_key|
         queue = AMQ::Client::Queue.new(@connection, @channel, name)
 
