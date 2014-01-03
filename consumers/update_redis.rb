@@ -1,6 +1,6 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
-require_relative 'processor'
+require 'ppt'
 
 # This will save/update anything.
 PPT.async_loop do |client|

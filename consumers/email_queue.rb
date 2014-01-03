@@ -1,5 +1,9 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
+# Useful resource:
+# http://stackoverflow.com/questions/12884711/how-to-send-email-via-smtp-with-rubys-mail-gem
+
+require 'ppt'
 require 'mail'
 
 # TODO: Extract to settings file.

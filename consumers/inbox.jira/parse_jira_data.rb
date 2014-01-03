@@ -24,7 +24,7 @@ class PPT
         #
         # 2) We don't really care much about the actual status, only
         #    about the transition from finished to approved.
-        status = payload['changelog']['items'].select do |item|
+        status = payload['changelog']['items'].find do |item|
           item['field'] == 'status' # TODO: I don't know the name of the field.
         end
 
@@ -35,14 +35,14 @@ class PPT
         # We might not want to skip any stories(?)
         # raise PPT::NoPriceDetectedError.new(title) if price.nil?
 
-        PPT::Story.new(service, username, id: id, price: price, currency: currency, link: link)
+        PPT::Presenters::Story.new(service, username, id: id, price: price, currency: currency, link: link)
       end
 
       def build_developer(service, username, payload)
         email = payload['user']['emailAddress']
         name  = payload['user']['displayName']
 
-        PPT::Developer.new(service, username, email: email, name: name)
+        PPT::Presenters::Developer.new(service, username, email: email, name: name)
       end
     end
   end
@@ -54,7 +54,14 @@ PPT.async_loop do |client|
     processor = PPT::Jira::Processor.new(client)
 
     client.subscribe('inbox.jira') do |payload, header, frame|
-      processor.process(payload, frame.routing_key)
+      begin
+        processor.process(payload, frame.routing_key)
+      rescue Exception => error
+        # Exception queue(?) and not ack
+        raise error
+      # else
+        # ack it
+      end
     end
   end
 end

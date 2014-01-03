@@ -86,95 +86,9 @@ class PPT
       self.emit('devs.new', developer.to_json)
     end
   end
-
-  module Presenters
-    class Entity
-      EXPECTED_KEYS ||= [].sort
-
-      attr_reader :values
-
-      def initialize(service, username, **values)
-        unless values.keys.sort == self.class::EXPECTED_KEYS
-          raise ArgumentError.new("Expected keys: #{self.class::EXPECTED_KEYS.inspect}, got #{values.keys.sort.inspect}")
-        end
-
-        @values = values.merge(service: service, username: username)
-      end
-
-      def method_missing(name, *args, &block)
-        if @values.has_key?(name)
-          @values[name]
-        else
-          super(name, *args, &block)
-        end
-      end
-
-      def respond_to_missing?(name, include_private = false)
-        @values.has_key?(name) || super(name, include_private)
-      end
-
-      def to_json
-        @values.to_json
-      end
-    end
-
-    class User < Entity
-      EXPECTED_KEYS = [:email, :accounting_email].sort
-    end
-
-    class Story < Entity
-      # NOTE: Do NOT use ||=, otherwise Entity#EXPECTED_KEYS shall be utilised.
-      EXPECTED_KEYS = [:id, :price, :currency, :link].sort
-    end
-
-    class Developer < Entity
-      EXPECTED_KEYS = [:id].sort
-    end
-  end
-
-  require 'redis'
-
-  module DB
-    def self.redis
-      @redis ||= Redis.new
-    end
-
-    class Entity
-      def initialize(presenter)
-        @presenter = presenter
-      end
-
-      def values
-        @presenter.values
-      end
-
-      def save
-        self.values.each do |key, value|
-          PPT::DB.redis.hset(self.key, key, value)
-        end
-      end
-    end
-
-    class User < Entity
-      def key
-        "users.#{@presenter.username}"
-      end
-    end
-
-    class Story < Entity
-      def key
-        "stories.#{@presenter.service}.#{@presenter.username}.#{@presenter.id}"
-      end
-    end
-
-    class Developer < Entity
-      def key
-        "devs.#{@presenter.service}.#{@presenter.username}.#{@presenter.nickname}"
-      end
-    end
-  end
 end
 
 
-
+require 'ppt/presenters'
+require 'ppt/db'
 require 'ppt/client'
