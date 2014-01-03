@@ -1,17 +1,12 @@
 require 'spec_helper'
+require 'factories'
+
 require 'json'
 
 require 'ppt/presenters'
 
 describe PPT::Presenters::Story do
-  let(:valid_values) {{
-    service: 'pt',
-    username: 'botanicus',
-    id: 101,
-    price: 75,
-    currency: 'EUR',
-    link: 'http://jira.org/a/b/c'
-  }}
+  let(:valid_values) { F[:story] }
 
   describe ".new(values)" do
     it "takes only certain keys" do

@@ -45,7 +45,7 @@ class PPT
     end
 
     class Developer < Entity
-      EXPECTED_KEYS = [:service, :username, :email, :name]
+      EXPECTED_KEYS = [:service, :username, :email, :nickname, :name]
     end
   end
 end

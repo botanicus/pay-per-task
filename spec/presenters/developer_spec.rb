@@ -1,15 +1,12 @@
 require 'spec_helper'
+require 'factories'
+
 require 'json'
 
 require 'ppt/presenters'
 
 describe PPT::Presenters::Developer do
-  let(:valid_values) {{
-    service: 'pt',
-    username: 'botanicus',
-    email: 'contracts@101ideas.cz',
-    name: 'James C Russell'
-  }}
+  let(:valid_values) { F[:developer] }
 
   describe ".new(values)" do
     it "takes only certain keys" do
@@ -43,7 +40,7 @@ describe PPT::Presenters::Developer do
     subject { described_class.new(valid_values) }
 
     context "valid" do
-      [:service, :username, :email, :name].each do |property|
+      [:service, :username, :email, :nickname, :name].each do |property|
         it "allows you to read #{property}" do
           subject.should respond_to(property)
           subject.send(property).should eql(valid_values[property])

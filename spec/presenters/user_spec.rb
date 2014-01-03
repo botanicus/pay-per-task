@@ -1,15 +1,12 @@
 require 'spec_helper'
+require 'factories'
+
 require 'json'
 
 require 'ppt/presenters'
 
 describe PPT::Presenters::User do
-  let(:valid_values) {{
-    service: 'pt',
-    username: 'botanicus',
-    email: 'james@101ideas.cz',
-    accounting_email: 'accounting@101ideas.cz'
-  }}
+  let(:valid_values) { F[:user] }
 
   describe ".new(values)" do
     it "takes only certain keys" do
