@@ -1,4 +1,4 @@
 info "Removing old upstart scripts."
-rm /etc/init/matcher.*.conf 2> /dev/null
+rm /etc/init/ppt.*.conf 2> /dev/null
 
 . hooks/clone
