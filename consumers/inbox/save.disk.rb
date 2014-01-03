@@ -2,8 +2,10 @@
 
 # ESSENTIAL SERVICE, don't screw with me!
 
-require 'json'
 require 'ppt'
+require 'ppt/client'
+
+require 'json'
 
 unless Dir.pwd == PPT.root
   puts "~ Changing from #{Dir.pwd} to #{PPT.root}"
@@ -18,7 +20,7 @@ EM.run do
     client.on_open do
       puts "~ Listening for data ..."
 
-      client.subscribe('inbox') do |payload, header, frame|
+      client.consumer('inbox', 'inbox.#') do |payload, header, frame|
         _, service, username = frame.routing_key.split('.')
         path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}.json")
         FileUtils.mkdir_p(File.dirname(path))

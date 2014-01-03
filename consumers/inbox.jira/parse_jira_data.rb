@@ -1,6 +1,7 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
 require 'ppt'
+require 'ppt/client'
 
 class PPT
   module Jira
@@ -39,10 +40,11 @@ class PPT
       end
 
       def build_developer(service, username, payload)
-        email = payload['user']['emailAddress']
-        name  = payload['user']['displayName']
+        email    = payload['user']['emailAddress']
+        name     = payload['user']['displayName']
+        nickname = payload['user']['name']
 
-        PPT::Presenters::Developer.new(service: service, username: username, email: email, name: name)
+        PPT::Presenters::Developer.new(service: service, username: username, email: email, nickname: nickname, name: name)
       end
     end
   end
@@ -53,7 +55,7 @@ PPT.async_loop do |client|
     puts "~ Listening for data ..."
     processor = PPT::Jira::Processor.new(client)
 
-    client.subscribe('inbox.jira') do |payload, header, frame|
+    client.consumer('inbox.jira', 'inbox.jira.#') do |payload, header, frame|
       begin
         processor.process(payload, frame.routing_key)
       rescue Exception => error

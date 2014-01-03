@@ -6,6 +6,7 @@
 # ESSENTIAL SERVICE, don't screw with me!
 
 require 'ppt'
+require 'ppt/client'
 
 client = PPT::Client.register_hook
 

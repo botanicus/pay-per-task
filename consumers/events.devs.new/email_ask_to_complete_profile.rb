@@ -1,27 +1,31 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
 require 'ppt'
+require 'ppt/client'
+
 require 'mail'
 require 'mustache'
+
+template = DATA.read
 
 PPT.async_loop do |client|
   client.on_open do
     puts "~ Listening for data ..."
 
-    client.subscribe('events.devs.new') do |payload, header, frame|
+    client.consumer('events.devs.new') do |payload, header, frame|
       presenter = PPT::Presenters::Developer.new(JSON.parse(payload))
       scope = {name: presenter.name, user_activation_page: 'LINK'}
-
 
       email = Mail.new do
         from    'james@101ideas.cz'
         to      presenter.email
         subject "Welcome to PPT :)"
-        body    Mustache.render(DATA.read, scope)
+        body    Mustache.render(template, scope)
       end
 
       # Send to email queue.
-      client.send('emails.devs.new', email.to_s)
+      puts "~ Welcome email to #{presenter.email} has been added to the queue."
+      client.publish(email.to_s, 'emails.devs.new')
     end
   end
 end

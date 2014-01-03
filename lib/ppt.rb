@@ -91,4 +91,3 @@ end
 
 require 'ppt/presenters'
 require 'ppt/db'
-require 'ppt/client'

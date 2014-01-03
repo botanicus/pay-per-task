@@ -1,21 +1,19 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
 require 'ppt'
+require 'ppt/client'
 
 # This will save/update anything.
 PPT.async_loop do |client|
   client.on_open do
     puts "~ Listening for data ..."
 
-    client.subscribe('events.devs.new') do |payload, header, frame|
-      presenter = PPT::Presenters::Developer.new(JSON.parse(payload))
-      record = PPT::DB::Developer.new(presenter)
-      record.save
-    end
-
-    client.subscribe('events.stories.new') do |payload, header, frame|
-      presenter = PPT::Presenters::Story.new(JSON.parse(payload))
-      record = PPT::DB::Story.new(presenter)
+    # events.stories.new | events.stories.update
+    client.consumer('db.new', 'events.*.*') do |payload, header, frame|
+      name = frame.routing_key.split('.')[1]
+      record_klass = PPT::DB.get_klass(name)
+      record = record_klass.new(JSON.parse(payload))
+      puts "~ Saving #{record.values.inspect} to the DB."
       record.save
     end
   end

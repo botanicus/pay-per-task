@@ -10,7 +10,6 @@ class PPT::Client
 
     # Next tick, so we can use it with Thin.
     EM.next_tick do
-      puts "~ Connecting to RabbitMQ ..."
       opts = PPT.config('amqp')
 
       client.connect(adapter: 'eventmachine', user: opts['user'], password: opts['password'], vhost: opts['vhost'])
@@ -22,8 +21,6 @@ class PPT::Client
           client.disconnect { EM.stop }
         end
       end
-
-      client.declare_queue
     end
 
     client
@@ -50,26 +47,34 @@ class PPT::Client
     @exchange ||= AMQ::Client::Exchange.new(@connection, @channel, 'amq.topic')
   end
 
-  def queues
-    @queues ||= Hash.new
+  # def queues
+  #   @queues ||= Hash.new
+  # end
+
+  # queues = {'inbox.jira' => 'inbox.jira.*', 'inbox.pt' => 'inbox.pt.*', 'inbox' => 'inbox.#', 'emails' => 'emails.#', 'new' => 'events.*.new', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
+
+  def declare_queue(name, routing_key)
+    queue = AMQ::Client::Queue.new(@connection, @channel, name)
+
+    queue.declare(false, true, false, true) do
+      # puts "~ Queue #{queue.name.inspect} is ready"
+    end
+
+    queue.bind(self.exchange.name, routing_key) do
+      puts "~ Queue #{queue.name} is now bound to #{self.exchange.name} with #{routing_key}"
+    end
+
+    queue
   end
 
-  def declare_queue
-    self.on_open do
-      #self.consumers.each do |routing_key|
-      queues = {'inbox.jira' => 'inbox.jira.*', 'inbox.pt' => 'inbox.pt.*', 'inbox' => 'inbox.#', 'emails' => 'emails.#', 'new' => 'events.*.new', 'events.devs.new' => 'events.devs.new', 'events.stories.accepted' => 'events.stories.accepted'}
-      queues.each do |name, routing_key|
-        queue = AMQ::Client::Queue.new(@connection, @channel, name)
+  def consumer(name, routing_key = name, &block)
+    queue = self.declare_queue(name, routing_key)
 
-        queue.declare(false, true, false, true) do
-          puts "~ Queue #{queue.name.inspect} is ready"
-        end
+    queue.consume(true) do |consume_ok|
+      puts "Subscribed for messages routed to #{queue.name}, consumer tag is #{consume_ok.consumer_tag}, using no-ack mode"
 
-        queue.bind(self.exchange.name, routing_key) do
-          puts "~ Queue #{queue.name} is now bound to #{self.exchange.name} with #{routing_key}"
-        end
-
-        self.queues[name] = queue
+      queue.on_delivery do |basic_deliver, header, payload|
+        block.call(payload, header, basic_deliver)
       end
     end
   end
@@ -81,17 +86,6 @@ class PPT::Client
 
   def publish(*args)
     self.exchange.publish(*args)
-  end
-
-  def subscribe(queue, &block)
-    queue = self.queues[queue] if queue.is_a?(String)
-    queue.consume(true) do |consume_ok|
-      puts "Subscribed for messages routed to #{queue.name}, consumer tag is #{consume_ok.consumer_tag}, using no-ack mode"
-
-      queue.on_delivery do |basic_deliver, header, payload|
-        block.call(payload, header, basic_deliver)
-      end
-    end
   end
 
   def disconnect(&block)
