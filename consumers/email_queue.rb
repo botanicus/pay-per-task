@@ -8,10 +8,12 @@ require 'ppt/client'
 
 require 'mail'
 
-puts "~ Starting with configuration: #{PPT.config('smtp')}"
+config = PPT.symbolise_keys(PPT.config('smtp'))
+
+puts "~ Starting with configuration: #{config}"
 
 Mail.defaults do
-  delivery_method :smtp, PPT.config('smtp')
+  delivery_method :smtp, config
 end
 
 PPT.async_loop do |client|
