@@ -1,7 +1,9 @@
+require 'ppt/extensions'
+
 class PPT
   module Presenters
     class Entity
-      EXPECTED_KEYS ||= [].sort
+      EXPECTED_KEYS ||= []
 
       attr_reader :values
 
@@ -10,8 +12,8 @@ class PPT
         # It might not be the best idea, but for now, who cares.
         values = PPT.symbolise_keys(values)
 
-        unless values.keys.sort == self.class::EXPECTED_KEYS
-          raise ArgumentError.new("Expected keys: #{self.class::EXPECTED_KEYS.inspect}, got #{values.keys.sort.inspect}")
+        unless values.keys.sort == self.class::EXPECTED_KEYS.sort
+          raise ArgumentError.new("Expected keys: #{self.class::EXPECTED_KEYS.inspect}, got #{values.keys.inspect}")
         end
 
         @values = values
@@ -35,16 +37,15 @@ class PPT
     end
 
     class User < Entity
-      EXPECTED_KEYS = [:service, :username, :email, :accounting_email].sort
+      EXPECTED_KEYS = [:service, :username, :email, :accounting_email]
     end
 
     class Story < Entity
-      # NOTE: Do NOT use ||=, otherwise Entity#EXPECTED_KEYS shall be utilised.
-      EXPECTED_KEYS = [:service, :username, :id, :price, :currency, :link].sort
+      EXPECTED_KEYS = [:service, :username, :id, :price, :currency, :link]
     end
 
     class Developer < Entity
-      EXPECTED_KEYS = [:service, :username, :email, :name].sort
+      EXPECTED_KEYS = [:service, :username, :email, :name]
     end
   end
 end
