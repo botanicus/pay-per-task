@@ -1,0 +1,4 @@
+info "Removing old upstart scripts."
+rm /etc/init/matcher.*.conf 2> /dev/null
+
+. hooks/clone

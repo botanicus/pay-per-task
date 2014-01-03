@@ -1,0 +1,4 @@
+for script in upstart/*.conf; do
+  info "Installing $script"
+  cp $script /etc/init/
+done
