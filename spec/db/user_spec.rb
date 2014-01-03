@@ -4,20 +4,18 @@ require 'factories'
 require 'ppt/db'
 
 describe PPT::DB::User do
-  let(:presenter) do
-    PPT::Presenters::User.new(F[:user])
-  end
+  let(:values) { F[:user] }
 
-  describe ".new(presenter)" do
-    it "takes presenter as the first argument" do
+  describe ".new(values)" do
+    it "takes presenter values as the first argument" do
       expect {
-        described_class.new(presenter)
+        described_class.new(values)
       }.not_to raise_error
     end
   end
 
   describe "#key" do
-    subject { described_class.new(presenter) }
+    subject { described_class.new(values) }
 
     it "sets up the key" do
       subject.key.should eql('users.botanicus')
@@ -25,20 +23,28 @@ describe PPT::DB::User do
   end
 
   describe "#values" do
-    subject { described_class.new(presenter) }
+    subject { described_class.new(values) }
 
     it "should be values of the presenter" do
-      subject.values.should eql(F[:user])
+      subject.values.should eql(subject.presenter.values)
+    end
+  end
+
+  describe "#presenter" do
+    subject { described_class.new(values) }
+
+    it "is an instance of corresponding presenter class" do
+      subject.presenter.should be_kind_of(PPT::Presenters::User)
     end
   end
 
   describe "#save" do
-    subject { described_class.new(presenter) }
+    subject { described_class.new(values) }
 
     it "saves the object to DB under its key with given values" do
       subject.save
 
-      F[:user].each do |property, value|
+      values.each do |property, value|
         PPT::DB.redis.hget(subject.key, property).should eql(value)
       end
     end

@@ -17,6 +17,7 @@ class PPT
         @presenter ||= klass
       end
 
+      attr_reader :presenter
       def initialize(values)
         @presenter = self.class.presenter.new(values)
       end
