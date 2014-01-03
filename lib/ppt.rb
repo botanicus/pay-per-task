@@ -18,6 +18,12 @@ class PPT
     end
   end
 
+  def self.symbolise_keys(hash)
+    hash.reduce(Hash.new) do |buffer, (key, value)|
+      buffer.merge!(key.to_sym => value)
+    end
+  end
+
   def self.async_loop(&block)
     PPT.ensure_at_root
 

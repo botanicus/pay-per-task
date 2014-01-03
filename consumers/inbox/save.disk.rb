@@ -22,7 +22,7 @@ EM.run do
         _, service, username = frame.routing_key.split('.')
         path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}.json")
         FileUtils.mkdir_p(File.dirname(path))
-        puts "~ Writing #{payload} to #{path}"
+        puts "~ Writing payload from #{frame.routing_key} to #{path}"
         File.open(path, 'w') do |file|
           file.puts(payload)
         end

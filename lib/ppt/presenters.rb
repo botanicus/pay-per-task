@@ -5,7 +5,11 @@ class PPT
 
       attr_reader :values
 
-      def initialize(**values)
+      def initialize(values)
+        # Let's consider it safe since this is not user input.
+        # It might not be the best idea, but for now, who cares.
+        values = PPT.symbolise_keys(values)
+
         unless values.keys.sort == self.class::EXPECTED_KEYS
           raise ArgumentError.new("Expected keys: #{self.class::EXPECTED_KEYS.inspect}, got #{values.keys.sort.inspect}")
         end

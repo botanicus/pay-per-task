@@ -35,14 +35,14 @@ class PPT
         # We might not want to skip any stories(?)
         # raise PPT::NoPriceDetectedError.new(title) if price.nil?
 
-        PPT::Presenters::Story.new(service, username, id: id, price: price, currency: currency, link: link)
+        PPT::Presenters::Story.new(service: service, username: username, id: id, price: price, currency: currency, link: link)
       end
 
       def build_developer(service, username, payload)
         email = payload['user']['emailAddress']
         name  = payload['user']['displayName']
 
-        PPT::Presenters::Developer.new(service, username, email: email, name: name)
+        PPT::Presenters::Developer.new(service: service, username: username, email: email, name: name)
       end
     end
   end

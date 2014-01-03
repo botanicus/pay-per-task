@@ -12,5 +12,11 @@ PPT.async_loop do |client|
       record = PPT::DB::Developer.new(presenter)
       record.save
     end
+
+    client.subscribe('events.stories.new') do |payload, header, frame|
+      presenter = PPT::Presenters::Story.new(JSON.parse(payload))
+      record = PPT::DB::Story.new(presenter)
+      record.save
+    end
   end
 end
