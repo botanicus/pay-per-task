@@ -15,8 +15,8 @@ PPT.async_loop do |client|
 
 
       email = Mail.new do
-        from    'james@101ideas.cz'
-        to      @presenter.email
+        from    @presenter.email
+        to      @profile.invoice_email
         subject "Invoice"
         body    Mustache.render(DATA.read, scope)
       end

@@ -28,8 +28,15 @@ end
 __END__
 Hi {{name}},
 
-you have been added to PPT. Please go to {{user_activation_page}} and fill
-in your your profile in order to get automated payments to your bank account.
+you have been added to PPT. PPT is ...
+
+Please go to {{user_activation_page}} and activate your profile.
+Once you're done with that, you'll be able to keep track of all your
+invoices, their due dates and their status.
+
+In the future there will be page of transactions, you'll be getting
+your money without needing to worry about chasing your clients anymore.
+Yaks!
 
 Cheers,
 

@@ -118,6 +118,10 @@ class PPT
       end
     end
 
+    class User < Entity
+      EXPECTED_KEYS = [:email, :accounting_email].sort
+    end
+
     class Story < Entity
       # NOTE: Do NOT use ||=, otherwise Entity#EXPECTED_KEYS shall be utilised.
       EXPECTED_KEYS = [:id, :price, :currency, :link].sort
@@ -148,6 +152,12 @@ class PPT
         self.values.each do |key, value|
           PPT::DB.redis.hset(self.key, key, value)
         end
+      end
+    end
+
+    class User < Entity
+      def key
+        "users.#{@presenter.username}"
       end
     end
 
