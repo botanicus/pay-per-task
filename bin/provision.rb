@@ -32,6 +32,7 @@ begin
   ARGV.each do |provisioner|
     if File.exist?(provisioner) && File.executable?(provisioner)
       if (! config[:run].include?(provisioner)) || opts[:redeploy]
+        puts "~ Running provisioner #{provisioner}"
         system(provisioner)
         if $?.exitstatus == 0
           puts "~ Provisioner #{provisioner} finished"
@@ -49,5 +50,6 @@ begin
     end
   end
 ensure
+  puts "~ Saving #{config_path}: #{config.inspect}"
   save_config.call(config)
 end

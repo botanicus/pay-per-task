@@ -4,11 +4,10 @@
 # It is NOT meant to run with Vagrant, neither it
 # is meant to run ON the remote server.
 
-SCRIPTS=(deployment/git-deploy.sh)
 PROJECT=ppt
 
 run () {
-  ssh server "cd /root/deployment/$PROJECT && chmod +x $1 && $remote_path ${@:2}"
+  ssh server "cd /root/deployment/$PROJECT && chmod +x $1 && $*"
 }
 
 echo "Copying deployment scripts"
@@ -20,10 +19,10 @@ ssh server "test -d /etc/provisioners || mkdir /etc/provisioners"
 
 if [ "$1" = "--redeploy" ]; then
   echo "Redeploying ${@:2}"
-  run provision.rb ${@:2} --redeploy
+  run ./provision.rb ${@:2} --redeploy
 else
   echo "Running additional deployment scripts"
-  run provision.rb $SCRIPTS
+  run ./provision.rb deployment/git-deploy.sh deployment/nginx.sh
 
   git push
   git push origin master:deployment
