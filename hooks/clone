@@ -1,4 +1,12 @@
+RUBY_VERSION=2.1
+
 for script in upstart/*.conf; do
   info "Installing $script"
   cp $script /etc/init/
 done
+
+echo $SHELL
+info "Running bundler."
+chruby-exec $RUBY_VERSION -- bundle install
+
+echo "ruby-$RUBY_VERSION" > /webs/$1/.ruby-version
