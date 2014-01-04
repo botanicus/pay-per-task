@@ -26,6 +26,9 @@ run lambda { |env|
       message = "Invalid reqest: #{service.inspect} isn't supported.\n"
       [400, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
     end
+  elsif env['REQUEST_METHOD'] == 'GET' && env['PATH_INFO'] == '/'
+    message = "PPT is running. Yaks!"
+    [200, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
   else
     message = "Invalid request: #{env['REQUEST_METHOD']} #{env['PATH_INFO'].inspect}.\n"
     [404, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
