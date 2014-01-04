@@ -8,6 +8,7 @@ for script in upstart/*.conf; do
 done
 
 info "Changing Ruby to $RUBY_VERSION"
+source /usr/local/share/chruby/chruby.sh
 chruby $RUBY_VERSION
 ruby -v
 
