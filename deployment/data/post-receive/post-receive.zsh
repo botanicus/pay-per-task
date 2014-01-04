@@ -4,6 +4,9 @@
 # ARGV: empty
 # STDIN: [OLD HEAD] [NEW HEAD] refs/heads/alpha
 
+RUBY_VERSION=2.1
+
+
 unset GIT_DIR
 
 export FN_DIR="$PWD/hooks/functions"
