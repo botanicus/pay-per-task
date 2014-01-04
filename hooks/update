@@ -4,12 +4,6 @@
 PROJECT=ppt
 RUBY_VERSION=2.1
 
-# Chruby.
-# info "Changing Ruby to $RUBY_VERSION"
-# source /usr/local/share/chruby/chruby.sh
-# chruby $RUBY_VERSION
-ruby -v
-
 info "Removing old upstart scripts."
 rm /etc/init/ppt.*.conf 2> /dev/null
 

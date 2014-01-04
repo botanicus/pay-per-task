@@ -4,12 +4,6 @@
 PROJECT=ppt
 RUBY_VERSION=2.1
 
-# Chruby.
-# info "Changing Ruby to $RUBY_VERSION"
-# source /usr/local/share/chruby/chruby.sh
-# chruby $RUBY_VERSION
-ruby -v
-
 # Chruby autoswitching.
 echo "ruby-$RUBY_VERSION" > .ruby-version
 
@@ -47,7 +41,7 @@ for script in upstart/*.conf; do
 done
 
 # Services.
-# start ppt.webs.in
+start ppt.webs.in
 
 # Nginx.
 # stop nginx 2> /dev/null
