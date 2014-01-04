@@ -1,17 +1,14 @@
 # This hook has to be commited and pushed in order to have effect!
 # This is supposed to run under ppt user, not under root!
 
-PROJECT=ppt
-RUBY_VERSION=2.1
-
 # Chruby autoswitching.
 echo "ruby-$RUBY_VERSION" > .ruby-version
 
 # Settings.
 cat > config/amqp.json << EOF
 {
-  "vhost":    "ppt",
-  "user":     "ppt",
+  "vhost":    "$NAME",
+  "user":     "$NAME",
   "password": "ae28cd87adb5c385117f89e9bd452d18"
 }
 EOF
@@ -44,5 +41,8 @@ done
 start ppt.webs.in
 
 # Nginx.
-# stop nginx 2> /dev/null
-# start nginx
+stop nginx 2> /dev/null
+start nginx
+
+# RabbitMQ.
+/etc/init.d/rabbitmq-server start

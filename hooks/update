@@ -1,11 +1,8 @@
 # This hook has to be commited and pushed in order to have effect!
 # This is supposed to run under ppt user, not under root!
 
-PROJECT=ppt
-RUBY_VERSION=2.1
-
 info "Removing old upstart scripts."
-rm /etc/init/ppt.*.conf 2> /dev/null
+rm /etc/init/$NAME.*.conf 2> /dev/null
 
 # Upstart.
 for script in upstart/*.conf; do
