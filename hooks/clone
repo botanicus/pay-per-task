@@ -1,3 +1,5 @@
+# This hook has to be commited and pushed in order to have effect!
+
 RUBY_VERSION=2.1
 
 for script in upstart/*.conf; do
@@ -5,8 +7,11 @@ for script in upstart/*.conf; do
   cp $script /etc/init/
 done
 
-echo $SHELL
+info "Changing Ruby to $RUBY_VERSION"
+chruby $RUBY_VERSION
+ruby -v
+
 info "Running bundler."
-chruby-exec $RUBY_VERSION -- bundle install
+bundle install
 
 echo "ruby-$RUBY_VERSION" > /webs/$1/.ruby-version
