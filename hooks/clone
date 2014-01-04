@@ -1,18 +1,34 @@
 # This hook has to be commited and pushed in order to have effect!
 
+PROJECT=ppt
 RUBY_VERSION=2.1
 
-for script in upstart/*.conf; do
-  info "Installing $script"
-  cp $script /etc/init/
-done
-
+# Chruby.
 info "Changing Ruby to $RUBY_VERSION"
 source /usr/local/share/chruby/chruby.sh
 chruby $RUBY_VERSION
 ruby -v
 
+# Chruby autoswitching.
+echo "ruby-$RUBY_VERSION" > .ruby-version
+
+# Upstart.
+for script in upstart/*.conf; do
+  info "Installing $script"
+  cp $script /etc/init/
+done
+
+# Nginx.
+cat > /etc/nginx/sites-enabled/$PROJECT.conf << EOF
+include /webs/$PROJECT/vhost.conf;
+EOF
+
+stop nginx 2> /dev/null
+start nginx
+
+# Bundler.
 info "Running bundler."
 bundle install
 
-echo "ruby-$RUBY_VERSION" > /webs/$1/.ruby-version
+# RabbitMQ.
+./bin/setup_rabbitmq.rb
