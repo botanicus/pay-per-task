@@ -26,6 +26,7 @@ info "Reading /etc/environment and setting Ruby version."
 chruby $RUBY_VERSION
 ruby -v
 
+
 # The target might not exist yet.
 cd $(dirname $TARGET)
 
