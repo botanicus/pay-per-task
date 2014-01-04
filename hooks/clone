@@ -1,16 +1,41 @@
 # This hook has to be commited and pushed in order to have effect!
+# This is supposed to run under ppt user, not under root!
 
 PROJECT=ppt
 RUBY_VERSION=2.1
 
 # Chruby.
-info "Changing Ruby to $RUBY_VERSION"
-source /usr/local/share/chruby/chruby.sh
-chruby $RUBY_VERSION
+# info "Changing Ruby to $RUBY_VERSION"
+# source /usr/local/share/chruby/chruby.sh
+# chruby $RUBY_VERSION
 ruby -v
 
 # Chruby autoswitching.
 echo "ruby-$RUBY_VERSION" > .ruby-version
+
+# Settings.
+cat > config/amqp.json << EOF
+{
+  "vhost":    "ppt",
+  "user":     "ppt",
+  "password": "ae28cd87adb5c385117f89e9bd452d18"
+}
+EOF
+
+cat > config/smtp.json << EOF
+{
+  "address": "smtp.gmail.com",
+  "port": 587,
+  "domain": "101ideas.cz",
+  "user_name": "james@101ideas.cz",
+  "password": "3ff5s0sgd4dg1gdsFffhsds5s2s58sf6",
+  "authentication": "plain",
+  "enable_starttls_auto": true
+}
+EOF
+
+# Bundler.
+bundle install
 
 # Upstart.
 for script in upstart/*.conf; do
@@ -18,17 +43,9 @@ for script in upstart/*.conf; do
   cp $script /etc/init/
 done
 
+# Services.
+# start ppt.webs.in
+
 # Nginx.
-cat > /etc/nginx/sites-enabled/$PROJECT.conf << EOF
-include /webs/$PROJECT/vhost.conf;
-EOF
-
-stop nginx 2> /dev/null
-start nginx
-
-# Bundler.
-info "Running bundler."
-bundle install
-
-# RabbitMQ.
-./bin/setup_rabbitmq.rb
+# stop nginx 2> /dev/null
+# start nginx

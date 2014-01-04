@@ -8,6 +8,8 @@
 <a href="how-it-works.png"><img width="450" src="how-it-works.png" /></a>
 
 <h1>Initial Setup</h1>
+git config alias.deploy 'push origin master:deployment'
+cp -f hooks/pre-push .git/hooks/
 <ol>
   <li>Create <code>config/amqp.json</code> with keys <code>user</code>, <code>password</code> and <code>vhost</code>.</li>
   <li>Run <code>./bin/setup_rabbitmq.rb</code> to set up RabbitMQ users and permissions.</li>
