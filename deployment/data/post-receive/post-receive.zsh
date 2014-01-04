@@ -15,10 +15,11 @@ export FN_DIR="$PWD/hooks/functions"
 . $FN_DIR/limit-branch.zsh
 
 echo
+
 info "Reading /etc/environment and setting Ruby version."
 . /etc/environment
 
-source /usr/local/share/chruby/chruby.sh
+. /usr/local/share/chruby/chruby.sh
 chruby $RUBY_VERSION
 
 # The target might not exist yet.

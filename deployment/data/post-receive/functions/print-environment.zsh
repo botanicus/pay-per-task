@@ -3,10 +3,8 @@ debug "PATH: $PATH"
 debug "USER: $USER"
 debug "PWD: $PWD"
 debug "TERM: $TERM"
-debug "Ruby: $(which ruby)"
+debug "Ruby: $(which ruby) $(ruby -v)"
 debug
-debug "NAME: $NAME"
-debug "BRANCH: $BRANCH"
-debug "SOURCE: $SOURCE"
-debug "TARGET: $TARGET"
+debug "$NAME: $BRANCH"
+debug "$SOURCE -> $TARGET"
 debug
