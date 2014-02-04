@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Pricing</title>
+    <link href='/style.css' media='all' rel='stylesheet'>
   </head>
   <body>
     <div class='page-header'>
@@ -12,7 +13,119 @@
         </small>
       </h1>
     </div>
-    Hi, I'm a new item!
+    <div style='padding: 50px'>
+      <p id="switch-to-year">
+        Switch to <a href="#yearly">yearly billing</a>.
+      </p>
+      
+      <p id="switch-to-month" style="display: none">
+        Switch to <a href="#monthly">monthly billing</a>.
+      </p>
+      
+      <table>
+        <tr>
+          <th>Team Size</th>
+          <th>2-4 People</th>
+          <th>5-10 People</th>
+          <th>10-20 People</th>
+        </tr>
+        <tr id="monthly" data-display-style="">
+          <th>Price</th>
+          <td><span class="price">&pound;125</span> per month</td>
+          <td><span class="price">&pound;245</span> per month</td>
+          <td><span class="price">&pound;490</span> per month</td>
+        </tr>
+        <tr id="monthly-sign-up" data-display-style="">
+          <th></th>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="2-4" />
+              <input type="hidden" name="period" value="monthly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="5-10" />
+              <input type="hidden" name="period" value="monthly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="10-20" />
+              <input type="hidden" name="period" value="monthly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+        </tr>
+        <tr id="yearly" style="display: none" data-display-style="">
+          <th>Price</th>
+          <td><span class="price">&pound;820</span> per year</td>
+          <td><span class="price">&pound;1,850</span> per year</td>
+          <td><span class="price">&pound;3,700</span> per year</td>
+        </tr>
+      
+        <tr id="yearly-sign-up" style="display: none" data-display-style="">
+          <th></th>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="2-4" />
+              <input type="hidden" name="period" value="yearly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="5-10" />
+              <input type="hidden" name="period" value="yearly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+          <td>
+            <form action="/sign-up" method="GET">
+              <input type="hidden" name="team" value="10-20" />
+              <input type="hidden" name="period" value="yearly" />
+              <button type="submit">Sign up!</button>
+            </form>
+          </td>
+        </tr>
+      </table>
+      
+      <script type="text/javascript">
+        function $ (id) {
+          return document.getElementById(id);
+        }
+      
+        function toggle (element) {
+          // An empty string is treated like false in JavaScript.
+          var displayStyle = (element.dataset.displayStyle === undefined) ? 'block' : element.dataset.displayStyle;
+          var values = {none: displayStyle, block: 'none', '': 'none'};
+          var value = values[element.style.display];
+          element.style.display = value;
+        }
+      
+        function switchBilling () {
+          toggle($('yearly'));
+          toggle($('monthly'));
+          toggle($('yearly-sign-up'));
+          toggle($('monthly-sign-up'));
+          toggle($('switch-to-year'));
+          toggle($('switch-to-month'));
+        }
+      
+        // Main.
+        ['switch-to-year', 'switch-to-month'].forEach(function (id) {
+          var p = $(id);
+          var a = p.getElementsByTagName('a')[0];
+          a.onclick = switchBilling;
+        });
+      
+        if (window.location.hash == '#yearly') {
+          switchBilling();
+        }
+      </script>
+    </div>
     <!-- / Google Analytics. -->
     <script>
       if (!window.location.host.match('localhost')) {
