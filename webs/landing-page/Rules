@@ -26,6 +26,7 @@ compile '*' do
     # don’t filter binary items
   else
     layout 'default'
+    filter :erb # Remove comments.
   end
 end
 
