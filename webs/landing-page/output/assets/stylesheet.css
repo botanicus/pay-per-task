@@ -2,6 +2,10 @@
   font-size: 25px;
 }
 
+.logo { font-size: 25px; }
+
+.main { padding: 50px; }
+
 /* Landing pages. */
 .spell { font-size: 30px; font-style: italic; }
 
