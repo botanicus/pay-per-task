@@ -17,7 +17,7 @@ homebrew install node
 npm install -g bower
 ```
 
-Then use it:
+Then **in content/**, run:
 
 ```
 bower install angular#1.3

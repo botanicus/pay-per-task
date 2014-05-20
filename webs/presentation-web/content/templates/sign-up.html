@@ -1,14 +1,29 @@
-<!-- https://us3.admin.mailchimp.com/lists/integration/embeddedcode?id=311117 -->
-
-<!-- MailChimp Signup Form. -->
 <h2>Whops, we are so busy working on the product that we didn't even have time to do the payments page yet!</h2>
 
 <h2>Jump on the mailing list now and we'll let you know once this is ready!</h2>
 
-<form name="subscriptionForm" ng-submit="subscribe()">
-  <input type="email" required ng-model="email" name="EMAIL" placeholder="What's your e-mail address? No BS, only the juicy bits!" />
+<!-- Messages. -->
+<message type="success">
+  You were successfully subscribed. Thank you!
+</message>
 
-  <!-- Robot trap -->
+<message type="error">
+  Something went wrong! Please drop me an email to <a href="mailto:james@101ideas.cz">james@101ideas.cz</a>. Thank you.
+</message>
+
+<!-- Notifications. -->
+<div
+  class="notification notification-{{notification.options.type}}"
+  ng-repeat="notification in notifications"
+>
+  {{notification.message}}
+</div>
+
+<!-- Newsletter subscription form. -->
+<form name="subscriptionForm" ng-submit="subscribe()">
+  <input type="email" required ng-model="email" name="email" placeholder="What's your e-mail address? No BS, only the juicy bits!" />
+
+  <!-- Robot trap. -->
   <div style="position: absolute; left: -5000px;">
     <input type="text" name="abc" value="" />
   </div>
