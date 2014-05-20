@@ -1,24 +1,17 @@
 <!-- https://us3.admin.mailchimp.com/lists/integration/embeddedcode?id=311117 -->
 
-<link href="assets/mailchimp.css" media="all" rel="stylesheet" />
-<script src="assets/mailchimp.js"></script>
-
 <!-- MailChimp Signup Form. -->
-<div id="mc_embed_signup">
-  <form action="http://ppt.us3.list-manage.com/subscribe/post?u=d56ce1cfbba4228b9cfa05d3c&amp;id=eaf78103d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <h2>Whops, we are so busy working on the product that we didn't even have time to do the payments page yet!</h2>
-    <h2>Jump on the mailing list now and we'll let you know once this is ready!</h2>
-    <div class="mc-field-group">
-      <input type="email" value="" name="EMAIL" placeholder="What's your e-mail address? No BS, only the juicy bits!" class="required email" id="mce-EMAIL">
-    </div>
-    <div id="mce-responses" class="clear">
-      <div class="response" id="mce-error-response" style="display:none"></div>
-      <div class="response" id="mce-success-response" style="display:none"></div>
-    </div>
+<h2>Whops, we are so busy working on the product that we didn't even have time to do the payments page yet!</h2>
 
-    <!-- Robot trap -->
-    <div style="position: absolute; left: -5000px;"><input type="text" name="b_d56ce1cfbba4228b9cfa05d3c_eaf78103d9" value=""></div>
+<h2>Jump on the mailing list now and we'll let you know once this is ready!</h2>
 
-    <div class="clear"><input type="submit" value="Subscribe NOW!" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-  </form>
-</div>
+<form name="subscriptionForm" ng-submit="subscribe()">
+  <input type="email" required ng-model="email" name="EMAIL" placeholder="What's your e-mail address? No BS, only the juicy bits!" />
+
+  <!-- Robot trap -->
+  <div style="position: absolute; left: -5000px;">
+    <input type="text" name="abc" value="" />
+  </div>
+
+  <button>Subscribe me NOW!</button>
+</form>

@@ -13,12 +13,22 @@ def serve_file(path)
   [200, headers, [content]]
 end
 
+def subscribe(env)
+  request = Rack::Request.new(env)
+  puts "~ New subscription: #{request.params['email']}"
+  [201, Hash.new, []]
+end
+
 run Proc.new { |env|
   path = File.join('content', env['PATH_INFO'])
   path = 'content/app.html' if path == 'content/'
-  if File.exist?(path)
-    serve_file(path)
-  else
-    serve_file('content/app.html')
+  if env['REQUEST_METHOD'] == 'GET'
+    if File.exist?(path)
+      serve_file(path)
+    else
+      serve_file('content/app.html')
+    end
+  elsif env['REQUEST_METHOD'] == 'POST' && env['PATH_INFO'] == '/subscribe'
+    subscribe(env)
   end
 }

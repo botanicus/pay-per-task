@@ -14,8 +14,7 @@ app.config(function ($locationProvider, $routeProvider) {
 
     when('/pricing', {
       templateUrl: 'templates/pricing.html',
-      title: "PPT: Pricing",
-      controller: 'PricingController'
+      title: "PPT: Pricing"
     }).
 
     when('/sign-up', {
@@ -48,10 +47,25 @@ app.controller('MainController', function ($scope, $window, $location) {
 });
 
 /* Per-page controllers */
-app.controller('PricingController', function ($scope) {
-  // TODO
+app.controller('SignUpController', function ($scope, $http) {
+  $scope.subscribe = function () {
+    if ($scope.subscriptionForm.$valid) {
+      console.log("~ Subscribing " + $scope.email);
+
+      $http.post('/subscribe', {email: $scope.email}).
+        success(function (data, status, headers, config) {
+          // Success notification.
+        }).
+
+        error(function (data, status, headers, config) {
+          // Error notification with contact.
+        });
+    } else {
+      // This shouldn't occur unless HTML 5 validations are not supported.
+      console.log("~ Form is invalid!");
+    }
+  };
 });
 
-app.controller('SignUpController', function ($scope) {
-  // TODO
-});
+// Add a service + add it to config.ru.
+// action="http://ppt.us3.list-manage.com/subscribe/post?u=d56ce1cfbba4228b9cfa05d3c&amp;id=eaf78103d9" method="post"
