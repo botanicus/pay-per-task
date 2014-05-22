@@ -1,0 +1,19 @@
+<form ng-submit="logIn()">
+  <div class="modal-header">
+    <h3 class="modal-title">Log In</h3>
+  </div>
+
+  <div ng-show="authenticating">Authenticating ...</div>
+
+  <div class="modal-body">
+    E-mail:
+    <input type="email" placeholder="your@email.com" ng-model="email" />
+    Password:
+    <input type="password" placeholder="Your password" />
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="close()">Cancel</button>
+    <button class="btn btn-primary" ng-click="logIn()">OK</button>
+  </div>
+</form>
