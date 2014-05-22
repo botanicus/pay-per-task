@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ngAnimate', 'notifications']);
+var app = angular.module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngAnimate', 'notifications']);
 
 app.config(function ($locationProvider, $routeProvider) {
   $routeProvider.
@@ -34,14 +34,14 @@ app.config(function ($locationProvider, $routeProvider) {
 });
 
 /* Set up the title. */
-app.run(function($location, $rootScope) {
-  $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-    $rootScope.title = current.$$route.title;
+app.run(function ($location, $scope) {
+  $scope.$on('$routeChangeSuccess', function (event, current, previous) {
+    $scope.title = current.$$route.title;
   });
 });
 
 /* Main controller. */
-app.controller('MainController', function ($scope, $window, $location) {
+app.controller('MainController', function ($scope, $window, $location, $cookies, $http, $modal) {
   $scope.$on('$viewContentLoaded', function(event) {
     console.log("~ Triggering Google Analytics.");
 
@@ -49,6 +49,19 @@ app.controller('MainController', function ($scope, $window, $location) {
       $window.ga('send', 'pageview', {page: $location.path()});
     };
   });
+
+  var email = $cookies.email;
+  if (email) {
+    console.log("~ Trying to log in as " + email);
+    $scope.user = $http.post('http://app.pay-per-task.com/me', {email: email});
+  };
+
+  $scope.displayLogInDialog = function () {
+    $scope.modal = $modal.open({
+      templateUrl: 'templates/login.html',
+      controller: 'ModalController'
+    });
+  };
 });
 
 /* Per-page controllers */
@@ -77,6 +90,27 @@ app.controller('SignUpController', function ($scope, $http, Notifications) {
   };
 });
 
+app.controller('ModalController', function ($scope, $modalInstance, $cookies, $window) {
+  $scope.email = $scookies.email;
+
+  $scope.close = function () {
+    $modalInstance.close();
+  };
+
+  $scope.logIn = function () {
+    $scope.authenticating = true;
+
+    $http.post('http://app.pay-per-task.com/me', {email: email}).
+      success(function () {
+        $window.location = 'http://app.pay-per-task.com';
+      }).
+      error(function (error) {
+        $scope.authenticating = false;
+        $scope.error = error;
+      });
+  };
+});
+
 app.directive('message', function () {
   return {
     restrict: 'E',
@@ -87,6 +121,3 @@ app.directive('message', function () {
     }
   }
 });
-
-// Add a service + add it to config.ru.
-// action="http://ppt.us3.list-manage.com/subscribe/post?u=d56ce1cfbba4228b9cfa05d3c&amp;id=eaf78103d9" method="post"
