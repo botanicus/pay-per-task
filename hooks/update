@@ -18,6 +18,13 @@ bundle install
 stop ppt.webs.in 2> /dev/null
 start ppt.webs.in
 
+# webs/presentation-web/subscribe
+cd /webs/ppt/webs/presentation-web/subscribe
+bundle install
+
+stop ppt.webs.presentation-web.subscribe 2> /dev/null
+start ppt.webs.presentation-web.subscribe
+
 # Nginx.
 stop nginx 2> /dev/null
 start nginx
