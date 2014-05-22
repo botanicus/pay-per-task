@@ -21,7 +21,18 @@
   <body>
     <header>
       <div ng-show="user">
-        <a ng-href="APP_DOMAIN">Account</a>
+        <div dropdown is-open="status.isopen">
+          <a href class="dropdown-toggle">
+            a dropdown <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
       </div>
 
       <div ng-hide="user">
@@ -30,6 +41,10 @@
     </header>
 
     <div ng-view>Loading ...</div>
+
+    <footer>
+      Made with love with whisky in our veins.
+    </footer>
 
     <!-- This is idiotic, come up with a way to extract it into code. -->
     <!-- This is interesting: http://luisfarzati.github.io/angulartics -->
@@ -44,7 +59,7 @@
         ga('create', 'UA-47784024-1', '101ideas.cz');
 
         // We don't need the following line since we're
-        // tracking manually in the MainController.
+        // tracking it manually in the MainController.
         // ga('send', 'pageview');
       }
     </script>

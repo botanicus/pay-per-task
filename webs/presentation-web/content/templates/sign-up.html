@@ -19,6 +19,11 @@
   {{notification.message}}
 </div>
 
+<!-- From: angular-ui-bootstrap: -->
+<!-- <div>
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+</div> -->
+
 <!-- Newsletter subscription form. -->
 <form name="subscriptionForm" ng-submit="subscribe()">
   <input type="email" required ng-model="email" name="email" placeholder="What's your e-mail address? No BS, only the juicy bits!" />
