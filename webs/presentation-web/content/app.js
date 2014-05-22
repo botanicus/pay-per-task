@@ -12,6 +12,11 @@ app.config(function ($locationProvider, $routeProvider) {
       title: "PPT: GET PAID for your work in REALTIME!"
     }).
 
+    when('/about-us', {
+      templateUrl: 'templates/about-us.html',
+      title: "PPT: About Us"
+    }).
+
     when('/pricing', {
       templateUrl: 'templates/pricing.html',
       title: "PPT: Pricing"
