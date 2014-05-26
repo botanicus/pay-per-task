@@ -12,14 +12,19 @@ app.config(function ($locationProvider, $routeProvider) {
       title: "PPT: GET PAID for your work in REALTIME!"
     }).
 
+    when('/pricing', {
+      templateUrl: 'templates/pricing.html',
+      title: "PPT: Pricing"
+    }).
+
     when('/about-us', {
       templateUrl: 'templates/about-us.html',
       title: "PPT: About Us"
     }).
 
-    when('/pricing', {
-      templateUrl: 'templates/pricing.html',
-      title: "PPT: Pricing"
+    when('/contact', {
+      templateUrl: 'templates/contact.html',
+      title: "PPT: Contact"
     }).
 
     when('/sign-up', {
@@ -159,4 +164,21 @@ app.directive('message', function () {
       scope.$parent.messages[attrs.type] = element.html();
     }
   }
+});
+
+app.directive('page', function ($rootScope, $location) {
+  return {
+    restrict: 'E',
+    scope: true,
+    transclude: true,
+    template: '<a ng-hide="isCurrent" href="{{link}}"><div ng-transclude></div></a>  <span ng-show="isCurrent"><div ng-transclude></div></span>',
+    link: function (scope, element, attrs) {
+      scope.link = attrs.link;
+      scope.text = element.html();
+
+      $rootScope.$on('$routeChangeStart', function () {
+        scope.isCurrent = ($location.path() === attrs.link);
+      });
+    }
+  };
 });
