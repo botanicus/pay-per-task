@@ -38,7 +38,13 @@
           </div>
         </div>
 
-        <div ng-hide="user">
+        <div ng-show="currentUser.loggedIn">
+          <a href="{{Links.profile}}" ng-show="currentUser.gravatarLink">
+            <img src="{{currentUser.gravatarLink}}" alt="currentUser.name" />
+          </a>
+        </div>
+
+        <div ng-hide="currentUser.loggedIn">
           <a href ng-click="displayLogInDialog()">Log In</a>
         </div>
       </header>

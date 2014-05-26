@@ -40,21 +40,46 @@ app.run(function ($location, $rootScope) {
   });
 });
 
+/* Services. */
+app.factory('Links', function ($location) {
+  if ($location.host() == 'localhost') {
+    return {
+      login: 'http://localhost:4002/me',
+      profile: 'http://localhost:4002/profile'
+    };
+  } else {
+    return {
+      login: 'https://app.pay-per-task.com/me',
+      profile: 'https://app.pay-per-task.com/profile'
+    }
+  }
+});
+
+app.factory('currentUser', function () {
+  var user = {loggedIn: false};
+
+  user.init = function (data) {
+    this.loggedIn = true;
+    user.__proto__ = data;
+  };
+
+  user.reset = function () {
+    this.loggedIn = false;
+    user.__proto__ = {};
+  };
+
+  return user;
+});
+
 /* Main controller. */
-app.controller('MainController', function ($scope, $window, $location, $http, $modal) {
+app.controller('MainController', function ($scope, $window, $location, $http, $modal, Links, currentUser) {
   $scope.$on('$viewContentLoaded', function(event) {
     console.log("~ Triggering Google Analytics.");
 
-    if (!window.location.host.match('localhost')) {
+    if ($location.host() != 'localhost') {
       $window.ga('send', 'pageview', {page: $location.path()});
     };
   });
-
-  // var email = $cookies.email;
-  // if (email) {
-  //   console.log("~ Trying to log in as " + email);
-  //   $scope.user = $http.post('http://app.pay-per-task.com/me', {email: email});
-  // };
 
   $scope.displayLogInDialog = function () {
     $scope.modal = $modal.open({
@@ -62,6 +87,22 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
       controller: 'ModalController'
     });
   };
+
+  $scope.Links = Links;
+
+  // Try to log in.
+  $scope.currentUser = currentUser;
+
+  $http.get(Links.login).
+    success(function (data) {
+      currentUser.init(data);
+      console.log("~ Logged in", currentUser);
+      window.u = currentUser;
+    }).
+    error(function (error) {
+      currentUser.reset();
+      console.log("~ Not logged in.")
+    });
 });
 
 /* Per-page controllers */
@@ -90,25 +131,23 @@ app.controller('SignUpController', function ($scope, $http, Notifications) {
   };
 });
 
-app.controller('ModalController', function ($scope, $modalInstance, $window, $http) {
-  // $scope.email = $scookies.email;
-
+app.controller('ModalController', function ($scope, $modalInstance, Links, $window, $http) {
   $scope.close = function () {
     $modalInstance.close();
   };
 
-  $scope.logIn = function () {
-    $scope.authenticating = true;
+  // $scope.logIn = function () {
+  //   $scope.authenticating = true;
 
-    $http.post('http://app.pay-per-task.com/me', {email: email}).
-      success(function () {
-        $window.location = 'http://app.pay-per-task.com';
-      }).
-      error(function (error) {
-        $scope.authenticating = false;
-        $scope.error = error;
-      });
-  };
+  //   $http.post(Links.login, {email: email}).
+  //     success(function () {
+  //       $window.location = 'http://app.pay-per-task.com';
+  //     }).
+  //     error(function (error) {
+  //       $scope.authenticating = false;
+  //       $scope.error = error;
+  //     });
+  // };
 });
 
 app.directive('message', function () {
