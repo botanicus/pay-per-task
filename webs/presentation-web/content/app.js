@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'notifications', 'services', 'directives']);
+var app = angular.module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngAnimate', 'notifications', 'services', 'directives']);
 
 app.config(function ($locationProvider, $routeProvider, $httpProvider) {
   $routeProvider.
@@ -45,18 +45,20 @@ app.config(function ($locationProvider, $routeProvider, $httpProvider) {
 });
 
 /* Set up the title. */
-app.run(function ($location, $rootScope) {
+app.run(function ($location, $rootScope, Session) {
+  Session.development = true;
+
   $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
     $rootScope.title = current.$$route ? current.$$route.title : null;
   });
 });
 
 /* Main controller. */
-app.controller('MainController', function ($scope, $window, $location, $http, $modal, Links, currentUser) {
+app.controller('MainController', function ($scope, $window, $location, $http, $modal, Links, Session, currentUser, $cookies) {
   $scope.$on('$viewContentLoaded', function (event) {
     console.log("~ Triggering Google Analytics.");
 
-    if ($location.host() != 'localhost') {
+    if (Session.development) {
       $window.ga('send', 'pageview', {page: $location.path()});
     };
   });
@@ -68,12 +70,18 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
     });
   };
 
+  // This is bullet-proof. Server could be down.
+  // Subdomains MUST be used, however.
+  $scope.logOut = function () {
+    delete $cookies['rack.session'];
+  };
+
   $scope.Links = Links;
 
   // Try to log in.
   $scope.currentUser = currentUser;
 
-  // if ($cookies['rack.session']) {
+  if ($cookies['rack.session']) {
     $http.get(Links.login).
       success(function (data, status, headers) {
         currentUser.init(data);
@@ -83,7 +91,7 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
         currentUser.reset();
         console.log("~ Not logged in.")
       });
-    // };
+  };
 });
 
 /* Per-page controllers */

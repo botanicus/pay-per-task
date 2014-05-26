@@ -4,7 +4,7 @@ require 'json'
 require 'sinatra'
 
 # DOMAIN = 'pay-per-task.com'
-DOMAIN = 'http://localhost:4000'
+DOMAIN = 'http://pay-per-task.dev'
 
 before do
   content_type :json

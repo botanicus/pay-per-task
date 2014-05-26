@@ -10,6 +10,7 @@
     <script defer src="/bower_components/angular/angular.min.js"></script>
     <script defer src="/bower_components/angular-route/angular-route.min.js"></script>
     <script defer src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script defer src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script defer src="/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <script defer src="/assets/notifications.js"></script>
     <script defer src="/app.js"></script>
@@ -17,6 +18,7 @@
     <script defer src="/directives.js"></script>
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/app.css">
   </head>
 
@@ -30,18 +32,19 @@
 
         <h1 class="page-header text-center">{{title}}</h1>
 
-        <div ng-show="currentUser.loggedIn">
-          <div dropdown is-open="status.isopen">
-            <a href="{{Links.profile}}" ng-show="currentUser.gravatarLink">
-              <img ng-src="{{currentUser.gravatarLink}}" alt="currentUser.name" />
-            </a>
+        <div ng-show="currentUser.loggedIn" class="dropdown">
+          <div dropdown menu="account-dropdown">
+            <img ng-src="{{currentUser.gravatarLink}}" ng-show="currentUser.gravatarLink" alt="ACCOUNT" />
+            <i class="icon-caret-down"></i>
 
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
+            <ul class="dropdown-menu" role="menu" id="account-dropdown">
+              <li role="presentation" class="dropdown-header">This week</li>
+              <li role="text"><strong>Done:</strong> <em>20 stories at $1250.</em></li>
+              <li role="text"><strong>WIP:</strong> <em>4 stories at $350.</em></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation" class="dropdown-header">Your Account</li>
+              <li role="menuitem"><a href="{{Links.profile}}">Your Profile</a></li>
+              <li role="menuitem"><a href ng-click="logOut()">Log out</a></li>
             </ul>
           </div>
         </div>

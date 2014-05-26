@@ -27,3 +27,29 @@ module.directive('page', function ($rootScope, $location) {
     }
   };
 });
+
+module.directive('dropdown', function () {
+  return {
+    link: function (scope, element, attrs) {
+      element.on('click', function () {
+        (attrs.isToggled == undefined) ? attrs.isToggled = false : attrs.isToggled = !attrs.isToggled;
+
+        if (!attrs.menu) {
+          throw("You have to provide menu attribute with value of ID of the menu you want to show.");
+        };
+
+        var menu = document.getElementById(attrs.menu);
+
+        if (!menu) {
+          throw("There's no element with ID " + attrs.menu);
+        };
+
+        if (attrs.isToggled) {
+          menu.style.display = 'none';
+        } else {
+          menu.style.display = 'block';
+        }
+      });
+    }
+  };
+});

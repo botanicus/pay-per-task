@@ -1,14 +1,19 @@
 var services = angular.module('services', []);
 
-services.factory('Links', function ($location) {
-  if ($location.host() == 'localhost') {
+services.factory('Session', function () {
+  var session = {development: false};
+  return session;
+});
+
+services.factory('Links', function (Session) {
+  if (Session.development) {
     return {
-      login: 'http://localhost:4002/me',
-      profile: 'http://localhost:4002/profile'
+      login: 'http://api.pay-per-task.dev/me',
+      profile: 'http://app.pay-per-task.dev/profile'
     };
   } else {
     return {
-      login: 'https://app.pay-per-task.com/me',
+      login: 'https://api.pay-per-task.com/me',
       profile: 'https://app.pay-per-task.com/profile'
     }
   }
