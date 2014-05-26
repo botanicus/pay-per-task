@@ -1,4 +1,4 @@
-#!/usr/bin/env bundle exec ruby -I../../lib -S rackup -s thin -p 9999
+#!/usr/bin/env bundle exec rackup -s thin -p 4003
 
 # WebHooks API POSTs to:
 # https://in.ppt.com/jira/botanicus/5c32e90nsf10
