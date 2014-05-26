@@ -35,12 +35,13 @@
         <div ng-show="currentUser.loggedIn" class="dropdown">
           <div dropdown menu="account-dropdown">
             <img ng-src="{{currentUser.gravatarLink}}" ng-show="currentUser.gravatarLink" alt="ACCOUNT" />
-            <i class="icon-caret-down"></i>
+            <i class="fa fa-caret-down"></i>
 
             <ul class="dropdown-menu" role="menu" id="account-dropdown">
               <li role="presentation" class="dropdown-header">This week</li>
-              <li role="text"><strong>Done:</strong> <em>20 stories at $1250.</em></li>
-              <li role="text"><strong>WIP:</strong> <em>4 stories at $350.</em></li>
+              <div ng-repeat="(title, statistic) in currentUser.stats">
+                <li role="text"><strong>{{title}}:</strong> <em>{{statistic}}.</em></li>
+              </div>
               <li role="presentation" class="divider"></li>
               <li role="presentation" class="dropdown-header">Your Account</li>
               <li role="menuitem"><a href="{{Links.profile}}">Your Profile</a></li>
@@ -54,7 +55,7 @@
         </div>
       </header>
 
-      <div ng-view>Loading ...</div>
+      <div ng-view><i class="fa fa-spinner"></i></div>
 
       <footer>
         Built with ♥ and whisky in our veins.

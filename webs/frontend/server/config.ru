@@ -3,17 +3,26 @@
 require 'json'
 require 'sinatra'
 
-# DOMAIN = 'pay-per-task.com'
-DOMAIN = 'http://pay-per-task.dev'
+DEVELOPMENT = true
 
+if DEVELOPMENT
+  PROTOCOL = 'http'
+  DOMAIN = 'pay-per-task.dev'
+else
+  PROTOCOL = 'http'
+  DOMAIN = 'pay-per-task.com'
+end
+
+# CORS.
 before do
   content_type :json
-  headers 'Access-Control-Allow-Origin'  => DOMAIN,
+  headers 'Access-Control-Allow-Origin'  => "#{PROTOCOL}://#{DOMAIN}",
           'Access-Control-Allow-Headers' => ['Content-Type', '*'].join(', '),
           'Access-Control-Allow-Credentials' => 'true',
           'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST', 'PUT'].join(', ')
 end
 
+# Helpers.
 helpers do
   def gravatar_link(email)
     require 'digest/md5'
@@ -28,11 +37,20 @@ helpers do
     # return if session[:username].nil?
     # return User.find(session[:username])
     if session[:email] == 'james@101ideas.cz'
-      return {name: "James C Russell", email: 'james@101ideas.cz', gravatarLink: gravatar_link('james@101ideas.cz')}
+      return {
+        name: "James C Russell",
+        stats: {
+          "Done" => "20 stories at $1250",
+          "WIP"  => "4 stories at $350"
+        },
+        email: 'james@101ideas.cz',
+        gravatarLink: gravatar_link('james@101ideas.cz')
+      }
     end
   end
 end
 
+# API.
 get '/me' do
   if current_user
     body current_user.to_json
@@ -62,10 +80,7 @@ post '/me' do
   puts "~ Session #{session.inspect}"
 end
 
-enable :sessions
-set :session_secret, '79APgXadpzJswvQuGFsoTaRjXabBEZ'
-set :session_domain, DOMAIN
-
-# use Rack::Session::Cookie, key: 'rack.session',  domain: DOMAIN, secret: '79APgXadpzJswvQuGFsoTaRjXabBEZ'
+# Cookies.
+use Rack::Session::Cookie, key: 'session', domain: ".#{DOMAIN}", httponly: false, secret: '79APgXadpzJswvQuGFsoTaRjXabBEZ'
 
 run Sinatra::Application
