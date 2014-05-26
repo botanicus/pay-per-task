@@ -141,18 +141,18 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
     $modalInstance.close();
   };
 
-  // $scope.logIn = function () {
-  //   $scope.authenticating = true;
+  $scope.logIn = function () {
+    $scope.authenticating = true;
 
-  //   $http.post(Links.login, {email: email}).
-  //     success(function () {
-  //       $window.location = 'http://app.pay-per-task.com';
-  //     }).
-  //     error(function (error) {
-  //       $scope.authenticating = false;
-  //       $scope.error = error;
-  //     });
-  // };
+    $http.post(Links.login, {email: email}).
+      success(function () {
+        $window.location = Links.profile;
+      }).
+      error(function (error) {
+        $scope.authenticating = false;
+        $scope.error = error;
+      });
+  };
 });
 
 app.directive('message', function () {
