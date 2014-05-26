@@ -1,6 +1,6 @@
-var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'notifications']);
+var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'notifications', 'services', 'directives']);
 
-app.config(function ($locationProvider, $routeProvider) {
+app.config(function ($locationProvider, $routeProvider, $httpProvider) {
   $routeProvider.
     when('/', {
       templateUrl: 'templates/business-owners.html',
@@ -36,49 +36,24 @@ app.config(function ($locationProvider, $routeProvider) {
     otherwise({'redirectTo': '/'});
 
   $locationProvider.html5Mode(true);
+
+  // Transmit cookies.
+  // As far as I know, we can't read those cookies
+  // which the server sets in the response, but those
+  // are being set properly, so the login works.
+  $httpProvider.defaults.withCredentials = true;
 });
 
 /* Set up the title. */
 app.run(function ($location, $rootScope) {
   $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-    $rootScope.title = current.$$route.title;
+    $rootScope.title = current.$$route ? current.$$route.title : null;
   });
-});
-
-/* Services. */
-app.factory('Links', function ($location) {
-  if ($location.host() == 'localhost') {
-    return {
-      login: 'http://localhost:4002/me',
-      profile: 'http://localhost:4002/profile'
-    };
-  } else {
-    return {
-      login: 'https://app.pay-per-task.com/me',
-      profile: 'https://app.pay-per-task.com/profile'
-    }
-  }
-});
-
-app.factory('currentUser', function () {
-  var user = {loggedIn: false};
-
-  user.init = function (data) {
-    this.loggedIn = true;
-    user.__proto__ = data;
-  };
-
-  user.reset = function () {
-    this.loggedIn = false;
-    user.__proto__ = {};
-  };
-
-  return user;
 });
 
 /* Main controller. */
 app.controller('MainController', function ($scope, $window, $location, $http, $modal, Links, currentUser) {
-  $scope.$on('$viewContentLoaded', function(event) {
+  $scope.$on('$viewContentLoaded', function (event) {
     console.log("~ Triggering Google Analytics.");
 
     if ($location.host() != 'localhost') {
@@ -98,16 +73,17 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
   // Try to log in.
   $scope.currentUser = currentUser;
 
-  $http.get(Links.login).
-    success(function (data) {
-      currentUser.init(data);
-      console.log("~ Logged in", currentUser);
-      window.u = currentUser;
-    }).
-    error(function (error) {
-      currentUser.reset();
-      console.log("~ Not logged in.")
-    });
+  // if ($cookies['rack.session']) {
+    $http.get(Links.login).
+      success(function (data, status, headers) {
+        currentUser.init(data);
+        console.log("~ Logged in", currentUser);
+      }).
+      error(function (error) {
+        currentUser.reset();
+        console.log("~ Not logged in.")
+      });
+    // };
 });
 
 /* Per-page controllers */
@@ -141,10 +117,12 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
     $modalInstance.close();
   };
 
+  $scope.user = {};
+
   $scope.logIn = function () {
     $scope.authenticating = true;
 
-    $http.post(Links.login, {email: email}).
+    $http.post(Links.login, $scope.user).
       success(function () {
         $window.location = Links.profile;
       }).
@@ -152,33 +130,5 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
         $scope.authenticating = false;
         $scope.error = error;
       });
-  };
-});
-
-app.directive('message', function () {
-  return {
-    restrict: 'E',
-    link: function (scope, element, attrs) {
-      element[0].style.display = 'none';
-      if (!scope.$parent.messages) scope.$parent.messages = {};
-      scope.$parent.messages[attrs.type] = element.html();
-    }
-  }
-});
-
-app.directive('page', function ($rootScope, $location) {
-  return {
-    restrict: 'E',
-    scope: true,
-    transclude: true,
-    template: '<a ng-hide="isCurrent" href="{{link}}"><div ng-transclude></div></a>  <span ng-show="isCurrent"><div ng-transclude></div></span>',
-    link: function (scope, element, attrs) {
-      scope.link = attrs.link;
-      scope.text = element.html();
-
-      $rootScope.$on('$routeChangeStart', function () {
-        scope.isCurrent = ($location.path() === attrs.link);
-      });
-    }
   };
 });
