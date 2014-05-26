@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngAnimate', 'notifications']);
+var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'notifications']);
 
 app.config(function ($locationProvider, $routeProvider) {
   $routeProvider.
@@ -41,7 +41,7 @@ app.run(function ($location, $rootScope) {
 });
 
 /* Main controller. */
-app.controller('MainController', function ($scope, $window, $location, $cookies, $http, $modal) {
+app.controller('MainController', function ($scope, $window, $location, $http, $modal) {
   $scope.$on('$viewContentLoaded', function(event) {
     console.log("~ Triggering Google Analytics.");
 
@@ -50,11 +50,11 @@ app.controller('MainController', function ($scope, $window, $location, $cookies,
     };
   });
 
-  var email = $cookies.email;
-  if (email) {
-    console.log("~ Trying to log in as " + email);
-    $scope.user = $http.post('http://app.pay-per-task.com/me', {email: email});
-  };
+  // var email = $cookies.email;
+  // if (email) {
+  //   console.log("~ Trying to log in as " + email);
+  //   $scope.user = $http.post('http://app.pay-per-task.com/me', {email: email});
+  // };
 
   $scope.displayLogInDialog = function () {
     $scope.modal = $modal.open({
@@ -90,8 +90,8 @@ app.controller('SignUpController', function ($scope, $http, Notifications) {
   };
 });
 
-app.controller('ModalController', function ($scope, $modalInstance, $cookies, $window) {
-  $scope.email = $scookies.email;
+app.controller('ModalController', function ($scope, $modalInstance, $window, $http) {
+  // $scope.email = $scookies.email;
 
   $scope.close = function () {
     $modalInstance.close();

@@ -5,46 +5,50 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-    <script defer src="bower_components/angular/angular.min.js"></script>
-    <script defer src="bower_components/angular-route/angular-route.min.js"></script>
-    <script defer src="bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script defer src="bower_components/angular-animate/angular-animate.js"></script>
-    <script defer src="bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.min.js"></script>
-    <script defer src="assets/notifications.js"></script>
-    <script defer src="app.js"></script>
+    <script defer src="/bower_components/angular/angular.min.js"></script>
+    <script defer src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script defer src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script defer src="/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script defer src="/assets/notifications.js"></script>
+    <script defer src="/app.js"></script>
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/app.css">
   </head>
 
   <body>
-    <header>
-      <div ng-show="user">
-        <div dropdown is-open="status.isopen">
-          <a href class="dropdown-toggle">
-            a dropdown <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
+    <div class="container">
+      <header>
+        <h1 class="page-header text-center">{{title}}</h1>
+
+        <div ng-show="user">
+          <div dropdown is-open="status.isopen">
+            <a href class="dropdown-toggle">
+              a dropdown <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <div ng-hide="user">
-        <a href ng-click="displayLogInDialog()">Log In</a>
-      </div>
-    </header>
+        <div ng-hide="user">
+          <a href ng-click="displayLogInDialog()">Log In</a>
+        </div>
+      </header>
 
-    <div ng-view>Loading ...</div>
+      <div ng-view>Loading ...</div>
 
-    <footer>
-      Built with ♥ and whisky in our veins.
-    </footer>
+      <footer>
+        Built with ♥ and whisky in our veins.
+      </footer>
+    </div>
 
     <!-- This is idiotic, come up with a way to extract it into code. -->
     <!-- This is interesting: http://luisfarzati.github.io/angulartics -->
