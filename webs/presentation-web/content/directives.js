@@ -16,7 +16,7 @@ module.directive('page', function ($rootScope, $location) {
     restrict: 'E',
     scope: true,
     transclude: true,
-    template: '<a ng-hide="isCurrent" href="{{link}}"><div ng-transclude></div></a>  <span ng-show="isCurrent"><div ng-transclude></div></span>',
+    template: '<a ng-hide="isCurrent" href="{{link}}"><span ng-transclude></span></a>  <span ng-show="isCurrent"><span ng-transclude></span></span>',
     link: function (scope, element, attrs) {
       scope.link = attrs.link;
       scope.text = element.html();
@@ -28,28 +28,28 @@ module.directive('page', function ($rootScope, $location) {
   };
 });
 
-module.directive('dropdown', function () {
-  return {
-    link: function (scope, element, attrs) {
-      element.on('click', function () {
-        (attrs.isToggled == undefined) ? attrs.isToggled = false : attrs.isToggled = !attrs.isToggled;
+// module.directive('dropdown', function () {
+//   return {
+//     link: function (scope, element, attrs) {
+//       element.on('click', function () {
+//         (attrs.isToggled == undefined) ? attrs.isToggled = false : attrs.isToggled = !attrs.isToggled;
 
-        if (!attrs.menu) {
-          throw("You have to provide menu attribute with value of ID of the menu you want to show.");
-        };
+//         if (!attrs.menu) {
+//           throw("You have to provide menu attribute with value of ID of the menu you want to show.");
+//         };
 
-        var menu = document.getElementById(attrs.menu);
+//         var menu = document.getElementById(attrs.menu);
 
-        if (!menu) {
-          throw("There's no element with ID " + attrs.menu);
-        };
+//         if (!menu) {
+//           throw("There's no element with ID " + attrs.menu);
+//         };
 
-        if (attrs.isToggled) {
-          menu.style.display = 'none';
-        } else {
-          menu.style.display = 'block';
-        }
-      });
-    }
-  };
-});
+//         if (attrs.isToggled) {
+//           menu.style.display = 'none';
+//         } else {
+//           menu.style.display = 'block';
+//         }
+//       });
+//     }
+//   };
+// });

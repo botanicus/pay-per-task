@@ -23,44 +23,58 @@
   </head>
 
   <body>
-    <div class="container">
-      <header>
-        <page link="/">Introduction</page>
-        <page link="/pricing">Pricing</page>
-        <page link="/about-us">About Us</page>
-        <page link="/contact">Contact</page>
+    <header class="navbar navbar-default">
+      <div class="content">
+        <div class="pull-left">
+          <a id="logo" role="button" href="/">PAY PER TASK</a>
 
-        <h1 class="page-header text-center">{{title}}</h1>
+          <span id="main-navigation">
+            <page link="/pricing">Pricing</page> |
+            <page link="/about-us">About Us</page> |
+            <page link="/contact">Contact</page>
+          </span>
+        </div>
 
-        <div ng-show="currentUser.loggedIn" class="dropdown">
-          <div dropdown menu="account-dropdown">
-            <img ng-src="{{currentUser.gravatarLink}}" ng-show="currentUser.gravatarLink" alt="ACCOUNT" />
-            <i class="fa fa-caret-down"></i>
-
-            <ul class="dropdown-menu" role="menu" id="account-dropdown">
-              <li role="presentation" class="dropdown-header">This week</li>
-              <div ng-repeat="(title, statistic) in currentUser.stats">
-                <li role="text"><strong>{{title}}:</strong> <em>{{statistic}}.</em></li>
+        <div class="pull-right">
+          <!-- Authenticated user. -->
+          <ul class="nav dropdown">
+            <div ng-show="currentUser.loggedIn" id="right-corner" class="dropdown">
+              <div data-toggle="dropdown" class="dropdown-toggle">
+                <img ng-src="{{currentUser.gravatarLink}}" ng-show="currentUser.gravatarLink" alt="ACCOUNT" />
+                <i class="fa fa-caret-down"></i>
               </div>
-              <li role="presentation" class="divider"></li>
-              <li role="presentation" class="dropdown-header">Your Account</li>
-              <li role="menuitem"><a href="{{Links.profile}}">Your Profile</a></li>
-              <li role="menuitem"><a href ng-click="logOut()">Log out</a></li>
-            </ul>
+
+              <ul class="dropdown-menu" role="menu" id="account-dropdown">
+                <li role="presentation" class="dropdown-header">This week</li>
+                <div ng-repeat="(title, statistic) in currentUser.stats">
+                  <li role="text"><strong>{{title}}:</strong> <em>{{statistic}}.</em></li>
+                </div>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Your Account</li>
+                <li role="menuitem"><a href="{{Links.profile}}">Your Profile</a></li>
+                <li role="menuitem"><a href ng-click="logOut()">Log out</a></li>
+              </ul>
+            </div>
+          </ul>
+
+          <!-- Unauthenticated user. -->
+          <div ng-hide="currentUser.loggedIn">
+            <a href ng-click="displayLogInDialog()">LOG IN</a>
           </div>
         </div>
+      </div>
+    </header>
 
-        <div ng-hide="currentUser.loggedIn">
-          <a href ng-click="displayLogInDialog()">Log In</a>
-        </div>
-      </header>
-
+    <div class="container">
       <div ng-view><i class="fa fa-spinner"></i></div>
-
-      <footer>
-        Built with ♥ and whisky in our veins.
-      </footer>
+      <div class="push"></div>
     </div>
+
+    <footer>
+      <div class="footer">
+        Built with ♥ and whisky in our veins.
+      </div>
+    </footer>
 
     <!-- This is idiotic, come up with a way to extract it into code. -->
     <!-- This is interesting: http://luisfarzati.github.io/angulartics -->

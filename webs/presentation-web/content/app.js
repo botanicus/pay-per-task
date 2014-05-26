@@ -80,7 +80,6 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
 
   // Try to log in.
   $scope.currentUser = currentUser;
-  window.c = $cookies; // TODO: I can just test document.cookie, I don't need the external lib
 
   if ($cookies.session) {
     $http.get(Links.login).
@@ -133,7 +132,7 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
 
     $http.post(Links.login, $scope.user).
       success(function () {
-        // $window.location = Links.profile;
+        $window.location = Links.profile;
       }).
       error(function (error) {
         $scope.authenticating = false;
