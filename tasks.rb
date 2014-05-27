@@ -4,7 +4,8 @@ require 'json'
 require 'nokogiri'
 
 content = File.read(File.expand_path("../webs/pay-per-task.com/content/routes.js", __FILE__))
-routes = JSON.parse(content.sub(/^ROUTES = /, ''))
+json = content.match(/\/\* start \*\/(.+)\/\* stop \*\//m)[1]
+routes = JSON.parse(json)
 
 layout_path = File.expand_path("../webs/pay-per-task.com/content/app.html", __FILE__)
 layout = Nokogiri::HTML(File.read(layout_path))

@@ -1,7 +1,7 @@
 var app = angular.module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngAnimate', 'notifications', 'services', 'directives']);
 
 app.config(function ($locationProvider, $routeProvider, $httpProvider) {
-  ROUTES.forEach(function (route) {
+  window.routes.forEach(function (route) {
     $routeProvider.when(route.path, route);
   });
 
