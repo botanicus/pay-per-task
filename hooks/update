@@ -14,6 +14,9 @@ done
 info "Running bundler."
 bundle install
 
+# Generate prerender files.
+bundle exec ruby tasks.rb
+
 # Services.
 stop ppt.webs.in 2> /dev/null
 start ppt.webs.in
