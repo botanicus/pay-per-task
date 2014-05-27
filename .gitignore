@@ -2,4 +2,4 @@ config/*.json
 *.log
 /data
 node_modules
-prerender/
+prerender/*.html
