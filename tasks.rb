@@ -3,7 +3,8 @@
 require 'json'
 require 'nokogiri'
 
-routes = JSON.parse(DATA.read)
+content = File.read(File.expand_path("../webs/pay-per-task.com/content/routes.js", __FILE__))
+routes = JSON.parse(content.sub(/^ROUTES = /, ''))
 
 layout_path = File.expand_path("../webs/pay-per-task.com/content/app.html", __FILE__)
 layout = Nokogiri::HTML(File.read(layout_path))
@@ -40,43 +41,3 @@ routes.each do |route|
 
   puts
 end
-
-__END__
-
-[
-  {
-    "path": "/",
-    "templateUrl": "templates/business-owners.html",
-    "title": "PPT: The secret weapon in MOTIVATING your IT team!"
-  },
-
-  {
-    "path": "/contractors",
-    "templateUrl": "templates/contractors.html",
-    "title": "PPT: GET PAID for your work in REALTIME!"
-  },
-
-  {
-    "path": "/pricing",
-    "templateUrl": "templates/pricing.html",
-    "title": "PPT: Pricing"
-  },
-
-  {
-    "path": "/about-us",
-    "templateUrl": "templates/about-us.html",
-    "title": "PPT: About Us"
-  },
-
-  {
-    "path": "/contact",
-    "templateUrl": "templates/contact.html",
-    "title": "PPT: Contact"
-  },
-
-  {
-    "path": "/sign-up",
-    "templateUrl": "templates/sign-up.html",
-    "title": "PPT: Sign up now!"
-  }
-]

@@ -1,39 +1,11 @@
 var app = angular.module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngAnimate', 'notifications', 'services', 'directives']);
 
 app.config(function ($locationProvider, $routeProvider, $httpProvider) {
-  $routeProvider.
-    when('/', {
-      templateUrl: 'templates/business-owners.html',
-      title: "PPT: The secret weapon in MOTIVATING your IT team!"
-    }).
+  ROUTES.forEach(function (route) {
+    $routeProvider.when(route.path, route);
+  });
 
-    when('/contractors', {
-      templateUrl: 'templates/contractors.html',
-      title: "PPT: GET PAID for your work in REALTIME!"
-    }).
-
-    when('/pricing', {
-      templateUrl: 'templates/pricing.html',
-      title: "PPT: Pricing"
-    }).
-
-    when('/about-us', {
-      templateUrl: 'templates/about-us.html',
-      title: "PPT: About Us"
-    }).
-
-    when('/contact', {
-      templateUrl: 'templates/contact.html',
-      title: "PPT: Contact"
-    }).
-
-    when('/sign-up', {
-      templateUrl: 'templates/sign-up.html',
-      title: "PPT: Sign up now!",
-      controller: 'SignUpController'
-    }).
-
-    otherwise({'redirectTo': '/'});
+  $routeProvider.otherwise({'redirectTo': '/'});
 
   $locationProvider.html5Mode(true);
 
