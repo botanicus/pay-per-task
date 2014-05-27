@@ -73,7 +73,9 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
   // This is bullet-proof. Server could be down.
   // Subdomains MUST be used, however.
   $scope.logOut = function () {
+    $cookies.session = ''
     delete $cookies.session;
+    currentUser.reset();
   };
 
   $scope.Links = Links;
