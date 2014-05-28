@@ -56,6 +56,8 @@ Alternatively, you can configure a **convenience shortcut** like so: `git config
 
 Now just run `git deploy` and time you want to deploy. Easy enough, innit?
 
+**TODO:** Can I install pre-push through Vagrant?
+
 ### Advanced Topics
 
 **TODO:** Write the documentation.
