@@ -21,7 +21,7 @@ app.config(function ($locationProvider, $routeProvider) {
 /* Set up the title. */
 app.run(function($location, $rootScope) {
   $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-    $rootScope.title = current.$$route.title;
+    $rootScope.title = current.$$route ? current.$$route.title : null;
   });
 });
 
