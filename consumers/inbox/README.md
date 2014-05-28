@@ -4,6 +4,8 @@
 * If authentication was successful, the data are published to `inbox-exchange` fanout.
 * There's queue called `inbox` which is bound to the `inbox-exchange`.
 
+TODO: The image doesn't work, rewrite to Markdown.
+
 <a href="how-it-works.png"><img width="450" src="how-it-works.png" /></a>
 
 # Initial Setup

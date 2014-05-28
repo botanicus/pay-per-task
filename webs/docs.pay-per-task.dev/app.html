@@ -16,11 +16,16 @@
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bower_components/highlightjs/styles/github.css">
-    <link rel="stylesheet" href="/app.css">
+
+    <style>
+      ul, ol { padding-left: 17px; }
+    </style>
   </head>
 
   <body>
     <div class="container">
+      <h1 class="text-center">PPT Docs <small>{{rawReadmePath}}</small></h1>
+      <hr />
       <div id="readme" btf-markdown ng-include="rawReadmeURL">
       </div>
     </div>
