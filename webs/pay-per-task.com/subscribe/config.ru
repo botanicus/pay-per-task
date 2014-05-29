@@ -1,4 +1,4 @@
-#!/usr/bin/env bundle exec rackup -s thin -p 4001
+#!/usr/bin/env bundle exec rackup -s Puma -p 4001
 
 API_KEY = '49c462153a6ef57de56ad49fc388396e-us3'
 LIST_ID = 'eaf78103d9' # mailchimp.lists.list

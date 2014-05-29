@@ -1,4 +1,4 @@
-#!/usr/bin/env bundle exec rackup -s thin -p 4000
+#!/usr/bin/env bundle exec rackup -s Puma -p 4000
 
 require 'json'
 
