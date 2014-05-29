@@ -22,6 +22,7 @@ If this command fails, you probably don't have **permissions** to access the ser
 ### The Rest
 
 * Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](http://www.vagrantup.com).
+* Run `vagrant plugin install vagrant-triggers`.
 * In the project root run `vagrant up`.
 * Add the following lines into `/etc/hosts`:
 

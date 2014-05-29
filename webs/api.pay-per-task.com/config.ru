@@ -1,4 +1,4 @@
-#!/usr/bin/env bundle exec rackup -s Puma -p 4002
+#!/usr/bin/env bundle exec rackup -s Puma -p 7001
 
 require 'json'
 require 'sinatra'

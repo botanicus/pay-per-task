@@ -8,15 +8,28 @@ Vagrant.configure('2') do |config|
   # Port forwarding.
 
   # Nginx.
-  # => READ http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
   config.vm.network :forwarded_port, guest: 80, host: 1025
 
-  # The API.
+  # 7000: in.pay-per-task.dev
   config.vm.network :forwarded_port, guest: 7000, host: 7000
+
+  # 7001: api.pay-per-task.dev
+  config.vm.network :forwarded_port, guest: 7001, host: 7001
 
   # RabbitMQ & RabbitMQ management plugin.
   config.vm.network :forwarded_port, guest: 5672, host: 1026
   config.vm.network :forwarded_port, guest: 15672, host: 1027
+
+  # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
+  # vagrant plugin install vagrant-triggers
+  config.trigger.after [:provision, :up, :reload] do
+    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 8080' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 80 To 8080'")
+    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 8443' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 443 To 8443'")
+  end
+
+  config.trigger.after [:halt, :destroy] do
+    system("sudo pfctl -f /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding'")
+  end
 
   services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
   services.unshift('nginx', 'rabbitmq')
