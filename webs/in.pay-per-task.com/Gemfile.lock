@@ -4,6 +4,7 @@ GEM
     puma (2.8.2)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
+    redis (3.0.7)
 
 PLATFORMS
   ruby
@@ -11,3 +12,4 @@ PLATFORMS
 DEPENDENCIES
   puma
   rack
+  redis

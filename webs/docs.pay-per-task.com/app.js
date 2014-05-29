@@ -1,14 +1,8 @@
 var app = angular.module('app', ['ngSanitize', 'btford.markdown']);
 
-app.config(function($sceDelegateProvider) {
-  $sceDelegateProvider.resourceUrlWhitelist([
-    'http://raw.pay-per-task.dev/**'
-  ]);
-});
-
 /* Main controller. */
 app.controller('MainController', function ($scope, $location) {
-  var domain = 'http://raw.pay-per-task.dev';
+  var domain = 'http://docs.pay-per-task.dev/source';
   var pathname = window.location.pathname;
   var path = pathname.replace(/\/$/, '/README.md');
   $scope.rawReadmePath = path.replace(/^\//, '');
@@ -28,3 +22,4 @@ app.controller('MainController', function ($scope, $location) {
     $('p:contains("TODO")').css('background-color', 'yellow');
   }, 100);
 });
+

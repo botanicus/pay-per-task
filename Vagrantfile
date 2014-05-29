@@ -25,13 +25,21 @@ Vagrant.configure('2') do |config|
 
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
   # vagrant plugin install vagrant-triggers
+  File.open('/tmp/pf.conf', 'w') do |file|
+    file.puts <<-EOF
+      rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port #{HTTP_PORT}
+      rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port #{HTTPS_PORT}
+    EOF
+  end
+
   config.trigger.after [:provision, :up, :reload] do
-    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port #{HTTP_PORT}' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 80 To #{HTTP_PORT}'")
-    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port #{HTTPS_PORT}' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 443 To #{HTTPS_PORT}'")
+    system("sudo pfctl -ef /tmp/pf.conf")
+    puts '~ Setting up port forwarding.'
   end
 
   config.trigger.after [:halt, :destroy] do
-    system("sudo pfctl -f /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding'")
+    system("sudo pfctl -f /etc/pf.conf > /dev/null 2>&1")
+    puts '~ Removing port forwarding.'
   end
 
   # Create a private network, which allows host-only access to the machine
@@ -100,8 +108,6 @@ Vagrant.configure('2') do |config|
   services.unshift('nginx', 'rabbitmq-server')
 
   config.vm.provision :shell, privileged: false, inline: <<-EOF
-    #. /etc/environment # Do we need this?
-
     # HACKS
     sudo rm -rf ~/* # It leaves all the scripts and mess there.
 
@@ -128,6 +134,7 @@ Vagrant.configure('2') do |config|
 
     ### HACKS
     sudo /etc/init.d/rabbitmq-server stop
+    sudo rm /etc/init.d/rabbitmq-server # Make sure we're running from the right one.
     sudo start rabbitmq-server
 
 
@@ -147,14 +154,14 @@ Vagrant.configure('2') do |config|
     echo "~ Using Rubinius $(ruby -v)"
 
     cd /webs/ppt/webs/api.pay-per-task.com
-    bundle install --deployment
+    bundle install
     sudo start ppt.webs.api
 
     cd /webs/ppt/webs/pay-per-task.com
-    bundle install --deployment
+    bundle install
 
     cd /webs/ppt/webs/pay-per-task.com/subscribe
-    bundle install --deployment
+    bundle install
 
     echo "\n\n== Environment =="
     echo "PATH=$PATH"
@@ -173,3 +180,4 @@ end
 
 __END__
 Bundler executable can't be found
+Proper run levels, so I don't have to start them after boot and so it's the same as on the server.
