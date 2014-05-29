@@ -7,7 +7,8 @@ require 'fileutils'
 
 PROJECT = 'ppt' # TODO: this should NOT be here!
 
-config_path = "/etc/provisioners/#{PROJECT}.yml"
+# config_path = "/etc/provisioners/#{PROJECT}.yml"
+config_path = File.join(ENV['HOME'], "#{PROJECT}.yml") # otherwise we need sudo
 
 save_config = lambda do |config = {run: Array.new}|
   File.open(config_path, 'w') do |file|
@@ -32,7 +33,7 @@ begin
   ARGV.each do |provisioner|
     if File.exist?(provisioner) && File.executable?(provisioner)
       if (! config[:run].include?(provisioner)) || opts[:redeploy]
-        system(provisioner)
+        system("#{provisioner} #{PROJECT}")
         if $?.exitstatus == 0
           puts "~ Provisioner #{provisioner} finished"
           config[:run] << provisioner unless config[:run].include?(provisioner)

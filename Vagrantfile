@@ -8,7 +8,10 @@ Vagrant.configure('2') do |config|
   # Port forwarding.
 
   # Nginx.
+  HTTP_PORT = 1025; HTTPS_PORT = 1026
+
   config.vm.network :forwarded_port, guest: 80, host: 1025
+  config.vm.network :forwarded_port, guest: 80, host: 1026
 
   # 7000: in.pay-per-task.dev
   config.vm.network :forwarded_port, guest: 7000, host: 7000
@@ -17,31 +20,19 @@ Vagrant.configure('2') do |config|
   config.vm.network :forwarded_port, guest: 7001, host: 7001
 
   # RabbitMQ & RabbitMQ management plugin.
-  config.vm.network :forwarded_port, guest: 5672, host: 1026
-  config.vm.network :forwarded_port, guest: 15672, host: 1027
+  config.vm.network :forwarded_port, guest: 5672, host: 1027
+  config.vm.network :forwarded_port, guest: 15672, host: 1028
 
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
   # vagrant plugin install vagrant-triggers
   config.trigger.after [:provision, :up, :reload] do
-    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 8080' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 80 To 8080'")
-    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 8443' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 443 To 8443'")
+    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port #{HTTP_PORT}' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 80 To #{HTTP_PORT}'")
+    system("echo 'rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port #{HTTPS_PORT}' | sudo pfctl -ef - > /dev/null 2>&1; echo '==> Fowarding Port 443 To #{HTTPS_PORT}'")
   end
 
   config.trigger.after [:halt, :destroy] do
     system("sudo pfctl -f /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding'")
   end
-
-  services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
-  services.unshift('nginx', 'rabbitmq')
-
-  config.vm.post_up_message = <<-EOF
-=> All you need to know can be found on http://docs.pay-per-task.dev
-
-== Available Services ==
-* #{services.join("\n* ")}
-
-Use [status|stop|start|restart] [service].
-  EOF
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -105,37 +96,59 @@ Use [status|stop|start|restart] [service].
     'deployment/provisioners/dotfiles.sh'
   ]
 
-  # TODO: Dotfiles!
-  config.vm.provision :shell, inline: <<-EOF
-    echo "=> /etc/environment"
-    cat /etc/environment
-    . /etc/environment
-    echo ""
+  services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
+  services.unshift('nginx', 'rabbitmq-server')
 
-    echo "~ Adding Ruby to \$PATH"
-    source /etc/profile.d/rubinius.sh
+  config.vm.provision :shell, privileged: false, inline: <<-EOF
+    #. /etc/environment # Do we need this?
 
-    ruby -v
+    # HACKS
+    sudo rm -rf ~/* # It leaves all the scripts and mess there.
+
+    sudo apt-get -y remove ruby
+
+    RUBYBIN="$(echo /opt/rubies/ruby-*)/bin"
+    echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/ruby.sh
+
+    RUBYBIN="$(echo /opt/rubies/rbx-*)/bin"
+    echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/rubinius.sh
+
+    sudo ln -s /opt/rubies/rbx-2.2.6/gems/gems/bundler-1.6.2/bin/bundle /opt/rubies/rbx-2.2.6/bin
+
+
+
+
+    source /etc/profile.d/ruby.sh
+    echo "~ Using Ruby $(ruby -v)"
+
     cd /webs/ppt
-
-    for file in upstart/*.conf; do
-      echo "~ Copying $file"
-      cp -f $file /etc/init/
-    done
-
-    mkdir /etc/provisioners
     ./bin/provision.rb #{provisioners.join(' ')}
     echo ""
 
+
+    ### HACKS
+    sudo /etc/init.d/rabbitmq-server stop
+    sudo start rabbitmq-server
+
+
     # The app.
-    start nginx
-    start rabbitmq
+    cd /webs/ppt
+
+    source /etc/environment # reset PATH to deafult
+    source /etc/profile.d/rubinius.sh
+
+    sudo chown vagrant -R ~vagrant/.rbx
+
+    for file in upstart/*.conf; do
+      echo "~ Copying $file"
+      sudo cp -f $file /etc/init/
+    done
+
+    echo "~ Using Rubinius $(ruby -v)"
 
     cd /webs/ppt/webs/api.pay-per-task.com
     bundle install --deployment
-
-    cd /webs/ppt/webs/app.pay-per-task.com/server
-    bundle install --deployment
+    sudo start ppt.webs.api
 
     cd /webs/ppt/webs/pay-per-task.com
     bundle install --deployment
@@ -143,9 +156,20 @@ Use [status|stop|start|restart] [service].
     cd /webs/ppt/webs/pay-per-task.com/subscribe
     bundle install --deployment
 
-    echo "== Services =="
+    echo "\n\n== Environment =="
+    echo "PATH=$PATH"
+    echo "Ruby: $(ruby -v)"
+
+    echo "\n== Services =="
     for service in #{services.join(" ")}; do
-      echo "* $service $(status $service)"
+      echo "* $(status $service)"
     done
+
+    echo "\nUse sudo [status|stop|start|restart] [service]."
+
+    echo "\nAll you need to know can be found on http://docs.pay-per-task.dev"
   EOF
 end
+
+__END__
+Bundler executable can't be found

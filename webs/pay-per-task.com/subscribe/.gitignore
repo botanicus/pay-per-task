@@ -2,7 +2,3 @@
 
 # There's cache in it, that's potentially useful, the rest of it, no.
 vendor
-
-content/prerender
-
-node_modules

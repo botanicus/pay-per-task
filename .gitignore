@@ -1,5 +1,3 @@
-config/*.json
-*.log
+.vagrant
+/config/*.json
 /data
-node_modules
-prerender/*.html
