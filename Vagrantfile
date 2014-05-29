@@ -3,20 +3,32 @@ Vagrant.configure('2') do |config|
   config.vm.box_url = 'http://static.101ideas.cz/ubuntu-14.04-amd64.box'
 
   # Log in as root.
-  config.ssh.username = 'root'
+  # config.ssh.username = 'root'
 
   # Port forwarding.
 
   # Nginx.
   # => READ http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
-  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 80, host: 1025
 
   # The API.
-  config.vm.network :forwarded_port, guest: 4000, host: 4000
+  config.vm.network :forwarded_port, guest: 7000, host: 7000
 
   # RabbitMQ & RabbitMQ management plugin.
-  config.vm.network :forwarded_port, guest: 5672, host: 8081
-  config.vm.network :forwarded_port, guest: 15672, host: 8082
+  config.vm.network :forwarded_port, guest: 5672, host: 1026
+  config.vm.network :forwarded_port, guest: 15672, host: 1027
+
+  services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
+  services.unshift('nginx', 'rabbitmq')
+
+  config.vm.post_up_message = <<-EOF
+=> All you need to know can be found on http://docs.pay-per-task.dev
+
+== Available Services ==
+* #{services.join("\n* ")}
+
+Use [status|stop|start|restart] [service].
+  EOF
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -73,26 +85,54 @@ Vagrant.configure('2') do |config|
 
 
   provisioners = [
-    'deployment/shared/rabbitmq.sh',
-    'deployment/vagrant/rabbitmq-management.sh',
-    'deployment/shared/hosts.sh',
-    'deployment/vagrant/ssh-keys.sh',
-    'deployment/shared/nginx.sh',
-    # 'deployment/shared/logging_pipe.sh',
-    'deployment/shared/htpasswd.sh',
-    'deployment/vagrant/matcher.sh'
+    'deployment/provisioners/setup-rabbitmq.sh',
+    'deployment/provisioners/hosts.sh',
+    'deployment/provisioners/vhost.sh',
+    'deployment/provisioners/ssh-key.sh',
+    'deployment/provisioners/dotfiles.sh'
   ]
 
+  # TODO: Dotfiles!
   config.vm.provision :shell, inline: <<-EOF
+    echo "=> /etc/environment"
+    cat /etc/environment
     . /etc/environment
+    echo ""
+
+    echo "~ Adding Ruby to \$PATH"
+    source /etc/profile.d/rubinius.sh
+
     ruby -v
-    cd /webs/matcher
+    cd /webs/ppt
 
     for file in upstart/*.conf; do
       echo "~ Copying $file"
       cp -f $file /etc/init/
     done
 
+    mkdir /etc/provisioners
     ./bin/provision.rb #{provisioners.join(' ')}
+    echo ""
+
+    # The app.
+    start nginx
+    start rabbitmq
+
+    cd /webs/ppt/webs/api.pay-per-task.com
+    bundle install --deployment
+
+    cd /webs/ppt/webs/app.pay-per-task.com/server
+    bundle install --deployment
+
+    cd /webs/ppt/webs/pay-per-task.com
+    bundle install --deployment
+
+    cd /webs/ppt/webs/pay-per-task.com/subscribe
+    bundle install --deployment
+
+    echo "== Services =="
+    for service in #{services.join(" ")}; do
+      echo "* $service $(status $service)"
+    done
   EOF
 end
