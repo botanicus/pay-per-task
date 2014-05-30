@@ -121,44 +121,30 @@ Vagrant.configure('2') do |config|
   services.unshift('nginx', 'rabbitmq-server')
 
   config.vm.provision :shell, privileged: false, inline: <<-EOF
-    # HACKS
-    #sudo rm -rf ~/* # It leaves all the scripts and mess there.
-
-    # sudo apt-get -y remove ruby
-
-    # RUBYBIN="$(echo /opt/rubies/ruby-*)/bin"
-    # echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/ruby.sh
-
-    # RUBYBIN="$(echo /opt/rubies/rbx-*)/bin"
-    # echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/rubinius.sh
-
-    # sudo ln -s /opt/rubies/rbx-2.2.6/gems/gems/bundler-1.6.2/bin/bundle /opt/rubies/rbx-2.2.6/bin
-
-
-
-
     source /etc/profile.d/ruby.sh
     echo "~ Using Ruby $(ruby -v)"
 
     cd /webs/ppt
+
+# The following has been fixed.
+sudo tee /etc/profile.d/rubinius.sh <<EOF2
+PATH=/opt/rubies/rbx-2.2.6/bin:/opt/rubies/rbx-2.2.6/gems/bin:\$PATH
+EOF2
+
+# TODO: Fix this, what the hell?
+sudo restart rabbitmq-server
+sleep 2.5
+
     ./bin/provision.rb #{provisioners.join(' ')}
     echo ""
-
-
-    ### HACKS
-    # sudo /etc/init.d/rabbitmq-server stop
-    # sudo update-rc.d rabbitmq-server disable
-    # sudo rm /etc/init.d/rabbitmq-server # <== not that!
-    # sudo start rabbitmq-server
-
 
     # The app.
     cd /webs/ppt
 
-    source /etc/environment # reset PATH to deafult
+    source /etc/environment # reset PATH to deafault
     source /etc/profile.d/rubinius.sh
 
-    sudo chown vagrant -R ~vagrant/.rbx #### <= Do I need this??
+    sudo chown vagrant -R ~vagrant/.rbx #### <= Do I need this?? YES
 
     for file in upstart/*.conf; do
       echo "~ Copying $file"
