@@ -5,6 +5,13 @@ Vagrant.configure('2') do |config|
   # Log in as root.
   # config.ssh.username = 'root'
 
+  # The hostname the machine should have. Defaults to nil. If nil,
+  # Vagrant won't manage the hostname. If set to a string, the hostname
+  # will be set on boot.
+  #
+  # We want this for Oh my ZSH profiles.
+  config.vm.hostname = 'ppt.vagrant'
+
   # Port forwarding.
 
   # Nginx.
@@ -42,9 +49,14 @@ Vagrant.configure('2') do |config|
     puts '~ Removing port forwarding.'
   end
 
+  # This is required for NFS shared folders (https://coderwall.com/p/uaohzg).
+  #
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network 'private_network', ip: '192.168.33.10'
+  #
+  # http://docs.vagrantup.com/v2/networking/private_network.html
+  # http://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
+  config.vm.network 'private_network', ip: '192.168.33.10'
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -60,9 +72,10 @@ Vagrant.configure('2') do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder '../data', '/vagrant_data'
-  config.vm.synced_folder '.', '/webs/ppt'
+  config.vm.synced_folder 'v-root', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/webs/ppt', nfs: true
 
-  config.vm.synced_folder File.join(ENV['HOME'], '.ssh'), '/host/ssh'
+  config.vm.synced_folder File.join(ENV['HOME'], '.ssh'), '/host/ssh', nfs: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -109,17 +122,17 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :shell, privileged: false, inline: <<-EOF
     # HACKS
-    sudo rm -rf ~/* # It leaves all the scripts and mess there.
+    #sudo rm -rf ~/* # It leaves all the scripts and mess there.
 
-    sudo apt-get -y remove ruby
+    # sudo apt-get -y remove ruby
 
-    RUBYBIN="$(echo /opt/rubies/ruby-*)/bin"
-    echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/ruby.sh
+    # RUBYBIN="$(echo /opt/rubies/ruby-*)/bin"
+    # echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/ruby.sh
 
-    RUBYBIN="$(echo /opt/rubies/rbx-*)/bin"
-    echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/rubinius.sh
+    # RUBYBIN="$(echo /opt/rubies/rbx-*)/bin"
+    # echo "PATH=$RUBYBIN:\$PATH" | sudo tee /etc/profile.d/rubinius.sh
 
-    sudo ln -s /opt/rubies/rbx-2.2.6/gems/gems/bundler-1.6.2/bin/bundle /opt/rubies/rbx-2.2.6/bin
+    # sudo ln -s /opt/rubies/rbx-2.2.6/gems/gems/bundler-1.6.2/bin/bundle /opt/rubies/rbx-2.2.6/bin
 
 
 
@@ -133,9 +146,10 @@ Vagrant.configure('2') do |config|
 
 
     ### HACKS
-    sudo /etc/init.d/rabbitmq-server stop
-    sudo rm /etc/init.d/rabbitmq-server # Make sure we're running from the right one.
-    sudo start rabbitmq-server
+    # sudo /etc/init.d/rabbitmq-server stop
+    # sudo update-rc.d rabbitmq-server disable
+    # sudo rm /etc/init.d/rabbitmq-server # <== not that!
+    # sudo start rabbitmq-server
 
 
     # The app.
@@ -144,7 +158,7 @@ Vagrant.configure('2') do |config|
     source /etc/environment # reset PATH to deafult
     source /etc/profile.d/rubinius.sh
 
-    sudo chown vagrant -R ~vagrant/.rbx
+    sudo chown vagrant -R ~vagrant/.rbx #### <= Do I need this??
 
     for file in upstart/*.conf; do
       echo "~ Copying $file"
@@ -177,7 +191,3 @@ Vagrant.configure('2') do |config|
     echo "\nAll you need to know can be found on http://docs.pay-per-task.dev"
   EOF
 end
-
-__END__
-Bundler executable can't be found
-Proper run levels, so I don't have to start them after boot and so it's the same as on the server.
