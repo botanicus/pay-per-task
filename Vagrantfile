@@ -124,6 +124,11 @@ Vagrant.configure('2') do |config|
     source /etc/profile.d/ruby.sh
     echo "~ Using Ruby $(ruby -v)"
 
+cd /etc
+sudo git init
+sudo git add .
+sudo git commit -m "Blankslate." &> /dev/null
+
     cd /webs/ppt
 
 # The following has been fixed.
@@ -138,6 +143,10 @@ sleep 2.5
     ./bin/provision.rb #{provisioners.join(' ')}
     echo ""
 
+    # Where to put this?
+sudo ruby -pi.backup -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/nginx.conf
+# Do I need to start it just this time manually? Since It was already supposed to run.
+
     # The app.
     cd /webs/ppt
 
@@ -149,6 +158,8 @@ sleep 2.5
     for file in upstart/*.conf; do
       echo "~ Copying $file"
       sudo cp -f $file /etc/init/
+sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
+# Do I need to start it just this time manually? Since It was already supposed to run.
     done
 
     echo "~ Using Rubinius $(ruby -v)"
