@@ -1,68 +1,56 @@
-## Installation
-
-**TODO:** This has to be available on the server, under HTTP Basic Auth.
-
-### Accessing the Server
-
-Add the following lines into your `~/.ssh/config`:
-
-```
-Host server
-  HostName 178.79.138.233
-  User root
-  compression yes
-```
-
-### Getting the Code
-
-Now you should be able to run `git clone server:/repos/ppt`.
-
-If this command fails, you probably don't have **permissions** to access the server. Run `cat ~/.ssh/id_rsa.pub | pbcopy` and send it to James. **Hint:** it's in your clipboard ;)
-
-### The Rest
+## Installation <small>in 3 easy steps</small>
 
 * Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](http://www.vagrantup.com).
-* Run `vagrant plugin install vagrant-triggers`.
-* Edit `/etc/sudoers`, you'll need to use sudo for that. Thusly: `%staff localhost=(root) NOPASSWD: /sbin/pfctl`.
-* In the project root run `vagrant up`.
-* Add the following lines into `/etc/hosts`:
+* Then **go** to the **project root** in terminal and run `./setup-mac-os-x.sh`.
+* And finally **set up** and **boot** the **virtual machine** using `vagrant up`.
 
-```
-127.0.0.1 pay-per-task.dev
-127.0.0.1 api.pay-per-task.dev
-127.0.0.1 app.pay-per-task.dev
-127.0.0.1 raw.pay-per-task.dev
-127.0.0.1 docs.pay-per-task.dev
-```
+*That's it! You're done!*
 
-* Now you should be able to go [here](http://docs.pay-per-task.dev) and see this documentation server **running on your machine**. Yay!
+## Development <small>... in an instant!</small>
 
-**TODO:** Set up Vagrant.
+### Working with Vagrant <small>without even knowing it's there!</small>
 
-## Development
+Working with Vagrant is **easy**. Any time you work on the project, you go to the project root and run `vagrant up` and any time you are done with it run `vagrant halt`. It's important, because the whole virtual machine is **in your RAM**, so you want to make sure to turn it off.
 
-**TODO:** Write the documentation.
+If you need to log in to the virtual server to **inspect logs** or **restart services**, use `vagrant ssh`. In case you'd need so, here's more about our [Vagrant environment](/docs/vagrant.md).
 
-Since the app is **modular**, each module has **its own documentation**:
+### [PPT Documentation App](http://docs.pay-per-task.dev)
 
-* [Backend documentation](consumers/README.md).
-* [Frontend documentation](webs/README.md).
+<a href="/source/docs/docs.ppt.png">
+  <img height="120" src="/source/docs/docs.ppt.png" style="padding-right: 10px; float: left" />
+</a>
+
+Every piece of **development-related documentation** is available through this app. Basically it's an extremely simple AngularJS app which **renders READMEs** and other documentation written **in Markdown**. Those files are **linked together**, so you can click through any documentation in an instant.
+
+Since this **runs locally** any change you make is **immediately viewable**, unlike on GitHub where you have to push first.
+
+<br>
+
+### PPT Modules
+
+*Since the app is **modular**, each module has **its own documentation**:*
+
+#### [Documentation for Webs and Web API](webs/README.md)
+
+Everything web-related is located in `webs/` directory.
+
+#### [Backend Documentation](consumers/README.md)
+
+Everything related to processing data from issue trackers, mailers and payments is located in `consumers/` directory.
 
 ## Production
 
-### How to Deploy
+### Accessing the Server
 
-**Same as on Heroku**, you can just run `push origin master:deployment` and all is going to be taken care of.
+Run `ssh server`. If if fails, you probably don't have **permissions** to access the server. Run `cat ~/.ssh/id_rsa.pub | pbcopy` and send it to James.
 
-Alternatively, you can configure a **convenience shortcut** like so: `git config alias.deploy 'push origin master:deployment'`.
+**Hint:** It's in your clipboard.
 
-Now just run `git deploy` and time you want to deploy. Easy enough, innit?
+### Deploying to Production
 
-**TODO:** Can I install pre-push through Vagrant?
+**Same as on Heroku**, you can just run `git deploy` and all is going to be taken care of. If the command fails, mostly likely you don't have the permissions to SSH the server. The solution is described in the section above.
 
 ### Advanced Topics
-
-**TODO:** Write the documentation.
 
 * [How it all works?](docs/server.md)
 * [Backups](docs/backups.md)
