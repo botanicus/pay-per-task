@@ -2,7 +2,7 @@ var listRoutes = function () {
   return /* start */ [
     {
       "path": "/",
-      "templateUrl": "templates/business-owners.html",
+      "templateUrl": "templates/index.html",
       "title": "PPT: The secret weapon in MOTIVATING your IT team!"
     },
 
