@@ -10,10 +10,7 @@ for script in upstart/*.conf; do
   cp $script /etc/init/
 done
 
-# Bundler.
-info "Running bundler."
-bundle install
-
+# Backend.
 cd consumers
 bundle install
 cd ..
