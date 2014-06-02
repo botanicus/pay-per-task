@@ -26,6 +26,9 @@ Vagrant.configure('2') do |config|
   # 7001: api.pay-per-task.dev
   config.vm.network :forwarded_port, guest: 7001, host: 7001
 
+  # Redis Server.
+  config.vm.network :forwarded_port, guest: 6380, host: 6380
+
   # RabbitMQ & RabbitMQ management plugin.
   config.vm.network :forwarded_port, guest: 5672, host: 5672
   config.vm.network :forwarded_port, guest: 15672, host: 15672
