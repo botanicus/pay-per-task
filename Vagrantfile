@@ -15,20 +15,20 @@ Vagrant.configure('2') do |config|
   # Port forwarding.
 
   # Nginx.
-  HTTP_PORT = 1234; HTTPS_PORT = 1234
+  HTTP_PORT = 8080; HTTPS_PORT = 8081
 
   config.vm.network :forwarded_port, guest: 80, host: HTTP_PORT
   config.vm.network :forwarded_port, guest: 443, host: HTTPS_PORT
 
   # 7000: in.pay-per-task.dev
-  config.vm.network :forwarded_port, guest: 7000, host: 17000
+  config.vm.network :forwarded_port, guest: 7000, host: 7000
 
   # 7001: api.pay-per-task.dev
-  config.vm.network :forwarded_port, guest: 7001, host: 17001
+  config.vm.network :forwarded_port, guest: 7001, host: 7001
 
   # RabbitMQ & RabbitMQ management plugin.
-  config.vm.network :forwarded_port, guest: 5672, host: 11027
-  config.vm.network :forwarded_port, guest: 15672, host: 11028
+  config.vm.network :forwarded_port, guest: 5672, host: 5672
+  config.vm.network :forwarded_port, guest: 15672, host: 15672
 
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
   # vagrant plugin install vagrant-triggers
@@ -131,13 +131,13 @@ Vagrant.configure('2') do |config|
     sudo restart rabbitmq-server
     sleep 2.5
 
+    cd /webs/ppt
     ./bin/provision.rb #{provisioners.join(' ')}
     echo ""
 
     sudo git add --all .
     sudo git commit -m "After running provisioners." &> /dev/null
 
-    cd /webs/ppt
     for file in /webs/ppt/upstart/*.conf; do
       echo "~ Copying $file"
       sudo cp -f $file /etc/init/
@@ -148,6 +148,8 @@ Vagrant.configure('2') do |config|
     sudo git add --all .
     sudo git commit -m "After vagrant up." &> /dev/null
 
+    source /etc/environment
+    source /etc/profile.d/rubinius.sh
     echo "~ Using Rubinius $(ruby -v)"
 
     cd /webs/ppt/webs/api.pay-per-task.com
