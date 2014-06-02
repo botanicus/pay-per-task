@@ -14,19 +14,30 @@ done
 info "Running bundler."
 bundle install
 
+cd consumers
+bundle install
+cd ..
+
 # Generate prerender files.
+cd webs/pay-per-task.com
+bundle install
 bundle exec ruby tasks.rb
 
-# Services.
+# API.
+cd webs/api.pay-per-task.com
+bundle install
+cd ...
+
+stop ppt.webs.api 2> /dev/null
+start ppt.webs.api
+
+# In.
+cd webs/in.pay-per-task.com
+bundle install
+cd ...
+
 stop ppt.webs.in 2> /dev/null
 start ppt.webs.in
-
-# webs/presentation-web/subscribe
-cd /webs/ppt/webs/presentation-web/subscribe
-bundle install
-
-stop ppt.webs.presentation-web.subscribe 2> /dev/null
-start ppt.webs.presentation-web.subscribe
 
 # Nginx.
 stop nginx 2> /dev/null
