@@ -117,7 +117,7 @@ Vagrant.configure('2') do |config|
   ]
 
   services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
-  services.unshift('nginx', 'rabbitmq-server')
+  services.unshift('nginx', 'redis-server', 'rabbitmq-server')
 
   config.vm.provision :shell, privileged: false, inline: <<-EOF
     source /etc/profile.d/ruby.sh
