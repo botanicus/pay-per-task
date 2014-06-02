@@ -15,7 +15,7 @@ export FN_DIR="$PWD/hooks/functions"
 
 . $FN_DIR/environment.zsh
 
-. $FN_DIR/limit-branch.zsh
+# . $FN_DIR/limit-branch.zsh
 
 echo
 

@@ -1,7 +1,19 @@
 #!/bin/sh
 
+# The repo was cloned from GitHub, so GitHub is the origin.
+git remote rename origin github
+
+# Add server.
+git remote add server server:/repos/ppt
+
+# Set up Git remote tracking.
+git push --set-upstream github master
+git push --set-upstream server master
+
 # Set up alias to git deploy.
-git config alias.deploy 'push origin master:deployment'
+
+#git config alias.deploy 'push server'
+git config alias.deploy "\!sh -c 'test -z \"\$1\" && git push server \$(git rev-parse --abbrev-ref HEAD) || git push server master' -"
 
 # Make sure to push to master before deploying.
 tee .git/hooks/pre-push <<EOF
@@ -9,10 +21,9 @@ tee .git/hooks/pre-push <<EOF
 
 IFS=' '
 while read local_ref local_sha remote_ref remote_sha; do
-  if [ $(basename $remote_ref) = "deployment" ]; then
-    echo "~ Updating master branch first."
-    git push origin master &> /dev/null
-  fi
+  branch=$(basename $remote_ref)
+  echo "~ Updating '$branch' branch first."
+  git push origin $branch &> /dev/null
 done
 EOF
 
