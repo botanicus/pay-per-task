@@ -19,11 +19,12 @@ cd ..
 cd webs/pay-per-task.com
 bundle install
 bundle exec ruby tasks.rb
+cd ../..
 
 # API.
 cd webs/api.pay-per-task.com
 bundle install
-cd ...
+cd ../..
 
 stop ppt.webs.api 2> /dev/null
 start ppt.webs.api
@@ -31,7 +32,7 @@ start ppt.webs.api
 # In.
 cd webs/in.pay-per-task.com
 bundle install
-cd ...
+cd ../..
 
 stop ppt.webs.in 2> /dev/null
 start ppt.webs.in
