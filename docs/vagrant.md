@@ -21,4 +21,4 @@ Besides of those, we are using `nginx`, `redis` and `rabbitmq-server`.
 
 All the logs are located in `/var/log/upstart/<service-name>.log`
 
-vagrant ssh -c 'tail -f /var/log/upstart/nginx.log'
+vagrant ssh -c 'vagrant ssh -c 'sudo tail -f /var/log/upstart/*.log''
