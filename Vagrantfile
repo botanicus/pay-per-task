@@ -15,20 +15,20 @@ Vagrant.configure('2') do |config|
   # Port forwarding.
 
   # Nginx.
-  HTTP_PORT = 1025; HTTPS_PORT = 1026
+  HTTP_PORT = 1234; HTTPS_PORT = 1234
 
-  config.vm.network :forwarded_port, guest: 80, host: 1025
-  config.vm.network :forwarded_port, guest: 80, host: 1026
+  config.vm.network :forwarded_port, guest: 80, host: HTTP_PORT
+  config.vm.network :forwarded_port, guest: 443, host: HTTPS_PORT
 
   # 7000: in.pay-per-task.dev
-  config.vm.network :forwarded_port, guest: 7000, host: 7000
+  config.vm.network :forwarded_port, guest: 7000, host: 17000
 
   # 7001: api.pay-per-task.dev
-  config.vm.network :forwarded_port, guest: 7001, host: 7001
+  config.vm.network :forwarded_port, guest: 7001, host: 17001
 
   # RabbitMQ & RabbitMQ management plugin.
-  config.vm.network :forwarded_port, guest: 5672, host: 1027
-  config.vm.network :forwarded_port, guest: 15672, host: 1028
+  config.vm.network :forwarded_port, guest: 5672, host: 11027
+  config.vm.network :forwarded_port, guest: 15672, host: 11028
 
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/ to get it on port 80.
   # vagrant plugin install vagrant-triggers
@@ -108,7 +108,6 @@ Vagrant.configure('2') do |config|
   #   cf.policy_server_address = '10.0.2.15'
   # end
 
-
   provisioners = [
     'deployment/provisioners/setup-rabbitmq.sh',
     'deployment/provisioners/hosts.sh',
@@ -124,43 +123,30 @@ Vagrant.configure('2') do |config|
     source /etc/profile.d/ruby.sh
     echo "~ Using Ruby $(ruby -v)"
 
-cd /etc
-sudo git init
-sudo git add .
-sudo git commit -m "Blankslate." &> /dev/null
+    cd /etc
+    sudo git add --all .
+    sudo git commit -m "Before vagrant up." &> /dev/null
 
-    cd /webs/ppt
-
-# The following has been fixed.
-sudo tee /etc/profile.d/rubinius.sh <<EOF2
-PATH=/opt/rubies/rbx-2.2.6/bin:/opt/rubies/rbx-2.2.6/gems/bin:\$PATH
-EOF2
-
-# TODO: Fix this, what the hell?
-sudo restart rabbitmq-server
-sleep 2.5
+    # TODO: Fix this, what the hell?
+    sudo restart rabbitmq-server
+    sleep 2.5
 
     ./bin/provision.rb #{provisioners.join(' ')}
     echo ""
 
-    # Where to put this?
-sudo ruby -pi.backup -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/nginx.conf
-# Do I need to start it just this time manually? Since It was already supposed to run.
+    sudo git add --all .
+    sudo git commit -m "After running provisioners." &> /dev/null
 
-    # The app.
     cd /webs/ppt
-
-    source /etc/environment # reset PATH to deafault
-    source /etc/profile.d/rubinius.sh
-
-    sudo chown vagrant -R ~vagrant/.rbx #### <= Do I need this?? YES
-
-    for file in upstart/*.conf; do
+    for file in /webs/ppt/upstart/*.conf; do
       echo "~ Copying $file"
       sudo cp -f $file /etc/init/
-sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
-# Do I need to start it just this time manually? Since It was already supposed to run.
+      sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
     done
+
+    cd /etc
+    sudo git add --all .
+    sudo git commit -m "After vagrant up." &> /dev/null
 
     echo "~ Using Rubinius $(ruby -v)"
 
@@ -183,7 +169,7 @@ sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(
       echo "* $(status $service)"
     done
 
-    echo "\nUse sudo [status|stop|start|restart] [service]."
+    echo "\nUse [status|stop|start|restart] [service]."
 
     echo "\nAll you need to know can be found on http://docs.pay-per-task.dev"
   EOF
