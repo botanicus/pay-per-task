@@ -3,17 +3,17 @@
 require 'json'
 require 'nokogiri'
 
-content = File.read(File.expand_path("../webs/pay-per-task.com/content/routes.js", __FILE__))
+content = File.read(File.expand_path("../content/routes.js", __FILE__))
 json = content.match(/\/\* start \*\/(.+)\/\* stop \*\//m)[1]
 routes = JSON.parse(json)
 
-layout_path = File.expand_path("../webs/pay-per-task.com/content/app.html", __FILE__)
+layout_path = File.expand_path("../content/app.html", __FILE__)
 layout = Nokogiri::HTML(File.read(layout_path))
 
 routes.each do |route|
   puts "~ Processing #{route.inspect}"
   template_path = File.join(*File.split(route['templateUrl'])[1..-1])
-  path = File.expand_path("../webs/pay-per-task.com/content/templates/#{template_path}", __FILE__)
+  path = File.expand_path("../content/templates/#{template_path}", __FILE__)
   page = Nokogiri::HTML(File.read(path)) unless File.read(path).empty?
 
   # 1. Set the document title.
@@ -36,7 +36,7 @@ routes.each do |route|
     puts "~ Ignoring '#{route['templateUrl']}', it's empty"
   end
 
-  File.open(File.expand_path("../webs/pay-per-task.com/content/prerender/#{template_path}", __FILE__), 'w') do |file|
+  File.open(File.expand_path("../content/prerender/#{template_path}", __FILE__), 'w') do |file|
     file.puts(layout.to_html)
   end
 
