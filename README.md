@@ -16,8 +16,8 @@ If you need to log in to the virtual server to **inspect logs** or **restart ser
 
 ### [PPT Documentation App](http://docs.pay-per-task.dev)
 
-<a href="/source/docs/docs.ppt.png">
-  <img height="120" src="/source/docs/docs.ppt.png" style="padding-right: 10px; float: left" />
+<a href="https://raw.githubusercontent.com/botanicus/pay-per-task/master/docs/docs.ppt.png?token=6171__eyJzY29wZSI6IlJhd0Jsb2I6Ym90YW5pY3VzL3BheS1wZXItdGFzay9tYXN0ZXIvZG9jcy9kb2NzLnBwdC5wbmciLCJleHBpcmVzIjoxNDAyMzAwMDIzfQ%3D%3D--35c56dd0bfc6b6f890252497d652ca499761ebcb">
+  <img height="120" src="https://raw.githubusercontent.com/botanicus/pay-per-task/master/docs/docs.ppt.png?token=6171__eyJzY29wZSI6IlJhd0Jsb2I6Ym90YW5pY3VzL3BheS1wZXItdGFzay9tYXN0ZXIvZG9jcy9kb2NzLnBwdC5wbmciLCJleHBpcmVzIjoxNDAyMzAwMDIzfQ%3D%3D--35c56dd0bfc6b6f890252497d652ca499761ebcb" style="padding-right: 10px; float: left" />
 </a>
 
 Every piece of **development-related documentation** is available through this app. Basically it's an extremely simple AngularJS app which **renders READMEs** and other documentation written **in Markdown**. Those files are **linked together**, so you can click through any documentation in an instant.
