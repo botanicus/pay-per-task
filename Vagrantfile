@@ -123,6 +123,10 @@ Vagrant.configure('2') do |config|
   services.unshift('nginx', 'redis-server', 'rabbitmq-server')
 
   config.vm.provision :shell, privileged: false, inline: <<-EOF
+    # TODO: Remove upon next base box update.
+    sudo /etc/init.d/nginx stop
+    sudo update-rc.d nginx disable
+
     source /etc/profile.d/ruby.sh
     echo "~ Using Ruby $(ruby -v)"
 
