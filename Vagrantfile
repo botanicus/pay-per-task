@@ -127,6 +127,13 @@ Vagrant.configure('2') do |config|
     sudo /etc/init.d/nginx stop
     sudo update-rc.d nginx disable
 
+    # Restart Nginx.
+    # The damn vagrant-mounted event is emitted every time an NFS
+    # folder is mounted. So far it's been a problem only (once)
+    # after vagrant up. It was fine when I run vagrant reload.
+    # TODO: Investigate.
+    sudo restart nginx
+
     source /etc/profile.d/ruby.sh
     echo "~ Using Ruby $(ruby -v)"
 
@@ -162,12 +169,6 @@ Vagrant.configure('2') do |config|
     cd /webs/ppt/webs/api.pay-per-task.com
     bundle install
     sudo start ppt.webs.api
-
-    cd /webs/ppt/webs/pay-per-task.com
-    bundle install
-
-    cd /webs/ppt/webs/pay-per-task.com/subscribe
-    bundle install
 
     echo "\n\n== Environment =="
     echo "PATH=$PATH"

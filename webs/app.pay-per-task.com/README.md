@@ -1,14 +1,26 @@
-# Cross-Domain Authentication
+# About
 
-## From the App
+The app runs on [app.pay-per-task.dev](http://app.pay-per-task.dev). It requires the API server to run.
 
-## From the Landing Page
+# Development
 
-# http://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain
-# Set-Cookie: session_id=123; domain=pay-per-task.com
+To install JS/CSS frameworks and their plugins, use [Bower.io](http://bower.io)
 
+First, install bower:
 
-One local session manager
-login.pay-per-task.com
+```
+homebrew install node
+npm install -g bower
+```
 
-success(function (data) cookies.set(session_id = data.session_id) ) ... NOT enough, then when I just log in on the app, it won't "update" as a global cookie would
+Then **in content/**, run:
+
+```
+bower install angular#1.3
+```
+
+# How The App Is Structured?
+
+Regardless of where you go, `app.html` is always served. Yo go to `/`, you get `app.html`. You go to `/pricing` and again, you get `app.html`.
+
+Basically `app.html` works as a layout. In it there's: `<div ng-view>Loading ...</div>` This code triggers angular routing and replaces what is in the div by one of the templates in `templates/`.
