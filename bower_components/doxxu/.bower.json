@@ -24,14 +24,13 @@
     "showdown": "*",
     "highlightjs": "8.0.0"
   },
-  "_release": "3eae8ffc0d",
+  "_release": "8b325de9c7",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "3eae8ffc0deaabe58b2c8f99e6bd6a81ec308bab"
+    "commit": "8b325de9c778e958cccceb5fa0733778720213fb"
   },
   "_source": "/Users/botanicus/Projects/OSS/doxxu",
   "_target": "*",
-  "_originalSource": "/Users/botanicus/Projects/OSS/doxxu",
-  "_direct": true
+  "_originalSource": "/Users/botanicus/Projects/OSS/doxxu"
 }
