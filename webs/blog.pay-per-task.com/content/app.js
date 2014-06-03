@@ -23,7 +23,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $sce
       templateUrl: '/templates/post.html',
       resolve: {
         post: function ($stateParams, Post) {
-          return Post.find($stateParams.slug);
+          return Post.get({slug: $stateParams.slug});
         }
       },
       controller: function ($rootScope, $scope, post) {
@@ -43,7 +43,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $sce
       templateUrl: '/templates/tag.html',
       resolve: {
         tag: function ($stateParams, Tag) {
-          return Tag.find($stateParams.name);
+          return Tag.get({name: $stateParams.name});
         }
       },
       controller: function ($rootScope, $scope, tag) {
@@ -54,35 +54,19 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $sce
 
   $locationProvider.html5Mode(true);
 
-  $sceDelegateProvider.resourceUrlWhitelist([
-     // Allow same origin resource loads.
-     'self'
-   ]);
+  $sceDelegateProvider.resourceUrlWhitelist(['self']);
 });
 
 /* Set up the title. */
 app.run(function($location, $rootScope) {
   $rootScope.$on('$stateChangeSuccess', function (event, state, params) {
-    console.log("Route", state, params)
     $rootScope.title = state.title ? state.title : null;
   });
 });
 
 /* Main controller. */
 app.controller('MainController', function ($scope, Post) {
-  console.log('~ m')
-});
-
-app.controller('IndexController', function ($scope, posts) {
-  $scope.posts = Post.query();
-});
-
-app.controller('TagController', function ($scope, Post, $routeParams) {
-  $scope.posts = Post.query({tag: $routeParams.tag});
-});
-
-app.controller('PostController', function ($scope, $routeParams, Post) {
-  $scope.post = Post.get({slug: $routeParams.slug});
+  //
 });
 
 /* Directives. */

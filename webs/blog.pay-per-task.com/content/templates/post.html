@@ -2,9 +2,9 @@
 
 <h1>{{post.title}}</h1>
 <div class="publishedDate">{{post.publishedAt | date}}</div>
-<div class="excerpt" ng-bind-html="post.excerpt | markdown"></div>
+<div class="excerpt" ng-bind-html="post.excerpt"></div>
 
-<div class="body" ng-bind-html="post.body | markdown"></div>
+<div class="body" ng-bind-html="post.body"></div>
 
 <p class="follow-me">
   If you enjoyed reading this post, maybe you'd like to <a href="https://twitter.com/botanicus">follow me</a> on Twitter.
