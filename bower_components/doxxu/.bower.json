@@ -1,0 +1,37 @@
+{
+  "name": "doxxu",
+  "homepage": "https://github.com/botanicus/doxxu",
+  "authors": [
+    "James C Russell <james@101ideas.cz>"
+  ],
+  "description": "Documentation server for projects. Supports Markdown and syntax highlighting.",
+  "keywords": [
+    "documentation",
+    "markdown"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.1",
+    "angular": "1.3",
+    "angular-sanitize": "1.3",
+    "showdown": "*",
+    "highlightjs": "8.0.0"
+  },
+  "_release": "3eae8ffc0d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "3eae8ffc0deaabe58b2c8f99e6bd6a81ec308bab"
+  },
+  "_source": "/Users/botanicus/Projects/OSS/doxxu",
+  "_target": "*",
+  "_originalSource": "/Users/botanicus/Projects/OSS/doxxu",
+  "_direct": true
+}

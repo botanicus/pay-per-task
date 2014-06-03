@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngSanitize', 'btford.markdown']);
+var app = angular.module('app', ['ngSanitize']);
 
 /* Main controller. */
 app.controller('MainController', function ($scope, $location, $http) {
