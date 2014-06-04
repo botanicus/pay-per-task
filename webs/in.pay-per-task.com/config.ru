@@ -3,7 +3,7 @@
 # WebHooks API POSTs to:
 # https://in.ppt.com/jira/botanicus/5c32e90nsf10
 
-# ESSENTIAL SERVICE, don't screw with me!
+# ESSENTIAL SERVICE, don't screw with me motherfucker!
 
 require 'ppt'
 require 'ppt/client'
