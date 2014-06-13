@@ -152,6 +152,7 @@ Vagrant.configure('2') do |config|
     sudo git add --all .
     sudo git commit -m "After running provisioners." &> /dev/null
 
+    sudo rm /etc/init/ppt.*.conf
     for file in /webs/ppt/upstart/*.conf; do
       echo "~ Copying $file"
       sudo cp -f $file /etc/init/
