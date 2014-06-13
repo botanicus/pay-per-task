@@ -1,7 +1,5 @@
 #!/usr/bin/env bundle exec ruby -Ilib
 
-# ESSENTIAL SERVICE, don't screw with me!
-
 require 'ppt'
 require 'ppt/client'
 
