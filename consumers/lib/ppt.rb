@@ -8,7 +8,7 @@ class PPT
   USERS ||= {'botanicus' => '5c32e90nsf10'}
 
   def self.root
-    File.expand_path('../..', __FILE__)
+    File.expand_path('/webs/ppt')
   end
 
   def self.ensure_at_root
