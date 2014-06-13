@@ -12,6 +12,7 @@ class PPT::Client
     EM.next_tick do
       opts = PPT.config('amqp')
 
+      puts "~ Establishing AMQP connection #{opts.inspect}"
       client.connect(adapter: 'eventmachine', user: opts['user'], password: opts['password'], vhost: opts['vhost'])
 
       # Set up signals.

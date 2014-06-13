@@ -5,9 +5,6 @@ gem 'nokogiri'
 gem 'amq-client'
 gem 'redis'
 
-gem 'mustache'
-gem 'mail'
-
 group(:development) do
   gem 'pry'
 end

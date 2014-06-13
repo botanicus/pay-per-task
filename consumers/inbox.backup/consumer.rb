@@ -18,7 +18,7 @@ EM.run do
     client.on_open do
       puts "~ Listening for data ..."
 
-      client.consumer('inbox', 'inbox.#') do |payload, header, frame|
+      client.consumer('inbox.#') do |payload, header, frame|
         _, service, username = frame.routing_key.split('.')
         path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}.json")
         FileUtils.mkdir_p(File.dirname(path))

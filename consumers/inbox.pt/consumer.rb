@@ -14,7 +14,7 @@ PPT.async_loop do |client|
     processor = PPT::PT::Processor.new(client)
 
     client.subscribe('inbox.pt') do |payload, header, frame|
-      processor.process(payload, frame.routing_key))
+      processor.process(payload, frame.routing_key)
     end
   end
 end
