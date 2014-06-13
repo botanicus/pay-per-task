@@ -1,5 +1,6 @@
 require 'http'
 
+# TODO: Extract this to a gem.
 module HttpApi
   module Extensions
     def self.extended(base)
@@ -42,10 +43,11 @@ module HttpApi
         # Rest client docs: https://github.com/rest-client/rest-client
         let(:response) do
           if ['GET', 'DELETE'].include?(request_method)
+            # puts "~ #{request_method} #{request_path}"
             HTTP.send(request_method.downcase, url)
           else
-            # puts "~ #{request_method} data: #{request_data.inspect}"
-            HTTP.send(request_method.downcase, url)
+            # puts "~ #{request_method} #{request_path} data: #{self.class.metadata[:data].inspect}"
+            HTTP.send(request_method.downcase, url, body: self.class.metadata[:data])
           end
         end
 
@@ -64,8 +66,6 @@ module HttpApi
   end
 end
 
-require 'redis'
-require 'json'
 
 RSpec.configure do |config|
   config.extend(HttpApi::Extensions)
@@ -73,10 +73,29 @@ RSpec.configure do |config|
   config.add_setting(:base_url)
   config.base_url = 'http://in.pay-per-task.dev'
 
+  # TODO: ?
+  require 'json'
+  config_path = File.expand_path('../../../../config/amqp.json', __FILE__)
+  config.add_setting(:amqp_config)
+  config.amqp_config = JSON.parse(File.read(config_path))
+
+  require 'redis'
+
   config.before(:all) do
     redis = Redis.new(driver: :hiredis)
 
     redis.flushdb
     redis.hmset('users:botanicus', :auth_key, 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM')
+  end
+
+  config.before(:all) do
+    @amqp_connection = Bunny.new(RSpec.configuration.amqp_config)
+    @amqp_connection.start
+    channel = @amqp_connection.create_channel
+    @queue = channel.queue('').bind('amq.topic', routing_key: '#')
+  end
+
+  config.after(:all) do
+    @amqp_connection.close
   end
 end

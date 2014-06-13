@@ -19,9 +19,8 @@ amqp_config = JSON.parse(File.read(config_path))
 puts "~ Establishing AMQP connection #{amqp_config.inspect}."
 amqp_connection = Bunny.new(amqp_config)
 amqp_connection.start
-puts "~ OK"
 
-channel  = amqp_connection.create_channel(rand(999))
+channel  = amqp_connection.create_channel
 exchange = channel.topic('amq.topic')
 
 run lambda { |env|

@@ -1,3 +1,4 @@
+require 'bunny'
 require 'spec_helper'
 
 describe 'GET /' do
@@ -12,8 +13,22 @@ describe 'POST /pt/botanicus/:auth_key', auth_key: 'invalid' do
   end
 end
 
-describe 'POST /pt/botanicus/:auth_key', auth_key: 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM' do
+describe 'POST /pt/botanicus/:auth_key',
+            auth_key: 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM',
+            data: 'blob of data from PT' do
+
   it 'registers the request' do
+    message_received = false
+
+    @queue.subscribe do |delivery_info, metadata, payload|
+      message_received = true
+      expect(payload).to eq('blob of data from PT')
+      expect(delivery_info.routing_key).to eq('inbox.pt.botanicus')
+    end
+
     expect(response.code).to eql(201)
+
+    sleep 0.1
+    expect(message_received).to eq(true)
   end
 end
