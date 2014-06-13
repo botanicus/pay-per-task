@@ -15,7 +15,7 @@ bundle install
 
 # Static repositories.
 for repo in pay-per-task.com blog.pay-per-task.com app.pay-per-task.com; do
-  bundle exec assets-squasher webs/$repo/content/app.html app.html
+  $(bundle show assets-squasher)/bin/assets-squasher webs/$repo/content/app.html app.html
 done
 
 # Backend.
