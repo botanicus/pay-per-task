@@ -13,6 +13,7 @@ git push --set-upstream server master
 # Set up alias to git deploy.
 
 #git config alias.deploy 'push server'
+# TODO: This should support -f for forced deployments.
 git config alias.deploy "\!sh -c 'test -z \"\$1\" && git push server \$(git rev-parse --abbrev-ref HEAD) || git push server master' -"
 
 # Make sure to push to master before deploying.
