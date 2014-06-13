@@ -9,5 +9,6 @@ gem 'hiredis'
 gem 'bunny'
 
 group(:spec) do
+  gem 'http' # TODO: Extract spec_helper & remove this!
   gem 'rspec'
 end
