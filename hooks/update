@@ -15,12 +15,6 @@ cd consumers
 bundle install
 cd ..
 
-# Generate prerender files.
-cd webs/pay-per-task.com
-bundle install
-bundle exec ruby tasks.rb
-cd ../..
-
 # API.
 cd webs/api.pay-per-task.com
 bundle install
