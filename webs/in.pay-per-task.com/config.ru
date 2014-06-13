@@ -36,7 +36,7 @@ run lambda { |env|
         [401, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
       end
     else
-      message = "Invalid reqest: #{service.inspect} isn't supported.\n"
+      message = "Invalid reqest: service #{service.inspect} isn't supported. Supported services are #{SUPPORTED_SERVICES.join(', ')}\n"
       [400, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
     end
   elsif env['REQUEST_METHOD'] == 'GET' && env['PATH_INFO'] == '/'

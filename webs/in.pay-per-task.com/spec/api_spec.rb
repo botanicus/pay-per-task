@@ -32,3 +32,26 @@ describe 'POST /pt/botanicus/:auth_key',
     expect(message_received).to eq(true)
   end
 end
+
+# This is tested mainly to make sure it doesn't crash.
+context '404' do
+  shared_examples_for :unknown_resource do
+    it 'returns 404' do
+      expect(response.code).to eq(404)
+    end
+  end
+
+  describe('GET /x') { it_behaves_like :unknown_resource }
+  describe('GET /x/y') { it_behaves_like :unknown_resource }
+  describe('GET /x/y/z') { it_behaves_like :unknown_resource }
+  describe('PUT /x/y/z', data: '') { it_behaves_like :unknown_resource }
+end
+
+context '400' do
+  describe 'POST /x/y/z', data: '' do
+    it 'says the service is not supported' do
+      expect(response.code).to eq(400)
+      expect(response.body.readpartial).to match('Invalid reqest: service "x" isn\'t supported')
+    end
+  end
+end

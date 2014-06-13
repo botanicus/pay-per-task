@@ -5,12 +5,24 @@ module HttpApi
   module Extensions
     def self.extended(base)
       base.class_eval do
+        def description
+          block = Proc.new do |metadata|
+            if metadata[:description].match(/^(GET|POST|PUT|DELETE|OPTIONS|PATCH) (.+)$/)
+              metadata[:description]
+            else
+              block.call(metadata[:parent_example_group])
+            end
+          end
+
+          block.call(self.class.metadata)
+        end
+
         def request_method
-          self.class.description.split(' ').first
+          self.description.split(' ').first
         end
 
         def request_path
-          self.class.description.split(' ').last.split('/').
+          self.description.split(' ').last.split('/').
             map { |fragment| fragment.sub(/^:(.+)$/) { |match|
               # instance.send(match[1..-1])
               self.class.metadata[match[1..-1].to_sym]
