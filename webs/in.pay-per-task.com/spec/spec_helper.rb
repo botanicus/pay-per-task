@@ -6,6 +6,7 @@ module HttpApi
     def self.extended(base)
       base.class_eval do
         def description
+        p self.methods.grep(/conf/)
           block = Proc.new do |metadata|
             if metadata[:description].match(/^(GET|POST|PUT|DELETE|OPTIONS|PATCH) (.+)$/)
               metadata[:description]
@@ -109,5 +110,19 @@ RSpec.configure do |config|
 
   config.after(:all) do
     @amqp_connection.close
+  end
+
+  config.around do |example|
+    if example.metadata[:amqp]
+
+      @amqp_connection = Bunny.new(RSpec.configuration.amqp_config)
+      @amqp_connection.start
+      channel = @amqp_connection.create_channel
+      @queue = channel.queue('').bind('amq.topic', routing_key: '#')
+
+      example.run
+
+      @amqp_connection.close
+    end
   end
 end

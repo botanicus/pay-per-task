@@ -17,7 +17,7 @@ describe 'POST /pt/botanicus/:auth_key',
             auth_key: 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM',
             data: 'blob of data from PT' do
 
-  it 'registers the request' do
+  it 'registers the request', amqp: true do
     message_received = false
 
     @queue.subscribe do |delivery_info, metadata, payload|
