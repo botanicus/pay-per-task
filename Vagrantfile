@@ -64,7 +64,7 @@ Vagrant.configure('2') do |config|
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
   # config.ssh.forward_agent = true
-  config.ssh.insert_key = true
+  # config.ssh.insert_key = true
   config.ssh.shell = 'zsh'
 
   # Share an additional folder to the guest VM. The first argument is
@@ -92,6 +92,6 @@ Vagrant.configure('2') do |config|
       'deployment/provisioners/hosts.sh',
       'deployment/provisioners/vhost.sh',
       'deployment/provisioners/ssh-key.sh',
-      'deployment/provisioners/dotfiles.sh'
+      # 'deployment/provisioners/dotfiles.sh'
     ]
 end

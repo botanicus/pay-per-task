@@ -5,7 +5,7 @@
 # folder is mounted. So far it's been a problem only (once)
 # after vagrant up. It was fine when I run vagrant reload.
 # TODO: Investigate.
-# sudo restart nginx
+sudo restart nginx
 
 source /etc/profile.d/ruby.sh
 echo "~ Using $(ruby -v)"
@@ -18,8 +18,6 @@ sudo git commit -m "Before vagrant up." &> /dev/null
 sudo restart rabbitmq-server
 sleep 2.5
 
-echo $argv
-echo $argv[0]
 cd /webs/ppt
 ./bin/provision.rb $argv
 
