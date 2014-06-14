@@ -83,20 +83,7 @@ Vagrant.configure('2') do |config|
   #   vb.customize ['modifyvm', :id, '--memory', '1024']
   # end
 
-  provisioners = [
-    'deployment/provisioners/setup-rabbitmq.sh',
-    'deployment/provisioners/hosts.sh',
-    'deployment/provisioners/vhost.sh',
-    'deployment/provisioners/ssh-key.sh',
-    'deployment/provisioners/dotfiles.sh'
-  ]
-
-  # services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
-  # services.unshift('nginx', 'redis-server', 'rabbitmq-server')
-
   config.vm.provision :shell, privileged: false, inline: <<-SHELL
-    # Array variables cannot be exported (yet) in Bash.
-    export PROVISIONERS=(#{provisioners.join(' ')})
     zsh /webs/ppt/deployment/provisioner.zsh
   SHELL
 end

@@ -5,10 +5,10 @@
 # folder is mounted. So far it's been a problem only (once)
 # after vagrant up. It was fine when I run vagrant reload.
 # TODO: Investigate.
-sudo restart nginx
+# sudo restart nginx
 
 source /etc/profile.d/ruby.sh
-echo "~ Using Ruby $(ruby -v)"
+echo "~ Using $(ruby -v)"
 
 cd /etc
 sudo git add --all .
@@ -19,9 +19,12 @@ sudo restart rabbitmq-server
 sleep 2.5
 
 cd /webs/ppt
-echo $PROVISIONERS
-echo $PROVISIONERS[1]
-./bin/provision.rb $PROVISIONERS
+./bin/provision.rb deployment/provisioners/setup-rabbitmq.sh \
+  deployment/provisioners/hosts.sh \
+  deployment/provisioners/vhost.sh \
+  deployment/provisioners/ssh-key.sh \
+  deployment/provisioners/dotfiles.sh
+
 echo ""
 
 sudo git add --all .
@@ -44,7 +47,7 @@ sudo git add --all .
 sudo git commit -m "After vagrant up." &> /dev/null
 
 use_rubinius
-echo "~ Using Rubinius $(ruby -v)"
+echo "~ Using $(ruby -v)"
 
 cd /webs/ppt/webs/api.pay-per-task.com
 bundle install
