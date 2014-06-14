@@ -82,7 +82,7 @@ $LOAD_PATH.unshift(File.expand_path('../../../../consumers/lib', __FILE__))
 
 require 'ppt/spec_helper'
 
-PPT::SpecHelper.configure('in:rspec')
+PPT::SpecHelper.configure('s:webs.in')
 
 RSpec.configure do |config|
   config.extend(HttpApi::Extensions)

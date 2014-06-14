@@ -22,6 +22,7 @@ class PPT
             amqp_connection.start
 
             channel = amqp_connection.create_channel
+            @channel = channel
             @queue = channel.queue('').bind('amq.topic', routing_key: '#')
 
             example.run
