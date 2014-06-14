@@ -64,6 +64,8 @@ Vagrant.configure('2') do |config|
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
   # config.ssh.forward_agent = true
+  config.ssh.insert_key = true
+  config.ssh.shell = 'zsh'
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -83,7 +85,5 @@ Vagrant.configure('2') do |config|
   #   vb.customize ['modifyvm', :id, '--memory', '1024']
   # end
 
-  config.vm.provision :shell, privileged: false, inline: <<-SHELL
-    zsh /webs/ppt/deployment/provisioner.zsh
-  SHELL
+  config.vm.provision :shell, privileged: false, path: /webs/ppt/deployment/provisioner.zsh
 end
