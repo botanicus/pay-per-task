@@ -92,6 +92,6 @@ Vagrant.configure('2') do |config|
       'deployment/provisioners/hosts.sh',
       'deployment/provisioners/vhost.sh',
       'deployment/provisioners/ssh-key.sh',
-      # 'deployment/provisioners/dotfiles.sh'
+      'deployment/provisioners/dotfiles.sh'
     ]
 end
