@@ -14,8 +14,14 @@ require 'bunny'
 
 redis = Redis.new(driver: :hiredis)
 
-config_path = File.expand_path('../../../config/amqp.json', __FILE__)
-amqp_config = JSON.parse(File.read(config_path))
+def read_amqp_config(relative_path)
+  config_path = File.expand_path(relative_path, __FILE__)
+  JSON.parse(File.read(config_path)).reduce(Hash.new) do |buffer, (key, value)|
+    buffer.merge(key.to_sym => value)
+  end
+end
+
+amqp_config = read_amqp_config('../../../config/amqp.json')
 puts "~ Establishing AMQP connection #{amqp_config.inspect}."
 amqp_connection = Bunny.new(amqp_config)
 amqp_connection.start

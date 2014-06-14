@@ -79,6 +79,15 @@ module HttpApi
 end
 
 
+require 'json'
+
+def read_amqp_config(relative_path)
+  config_path = File.expand_path(relative_path, __FILE__)
+  JSON.parse(File.read(config_path)).reduce(Hash.new) do |buffer, (key, value)|
+    buffer.merge(key.to_sym => value)
+  end
+end
+
 RSpec.configure do |config|
   config.extend(HttpApi::Extensions)
 
@@ -86,10 +95,8 @@ RSpec.configure do |config|
   config.base_url = 'http://in.pay-per-task.dev'
 
   # TODO: ?
-  require 'json'
-  config_path = File.expand_path('../../../../config/amqp.json', __FILE__)
   config.add_setting(:amqp_config)
-  config.amqp_config = JSON.parse(File.read(config_path))
+  config.amqp_config = read_amqp_config('../../../../config/amqp.json')
 
   require 'redis'
 
