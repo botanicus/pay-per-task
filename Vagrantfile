@@ -61,11 +61,6 @@ Vagrant.configure('2') do |config|
   # http://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
   config.vm.network 'private_network', ip: '192.168.33.10'
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network 'public_network'
-
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
   # config.ssh.forward_agent = true
@@ -85,30 +80,7 @@ Vagrant.configure('2') do |config|
   # Example for VirtualBox:
   #
   # config.vm.provider 'virtualbox' do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
   #   vb.customize ['modifyvm', :id, '--memory', '1024']
-  # end
-  #
-  # View the documentation for the provider you're using for more
-  # information on available options.
-
-  # Enable provisioning with CFEngine. CFEngine Community packages are
-  # automatically installed. For example, configure the host as a
-  # policy server and optionally a policy file to run:
-  #
-  # config.vm.provision 'cfengine' do |cf|
-  #   cf.am_policy_hub = true
-  #   # cf.run_file = 'motd.cf'
-  # end
-  #
-  # You can also configure and bootstrap a client to an existing
-  # policy server:
-  #
-  # config.vm.provision 'cfengine' do |cf|
-  #   cf.policy_server_address = '10.0.2.15'
   # end
 
   provisioners = [
@@ -122,7 +94,7 @@ Vagrant.configure('2') do |config|
   services = Dir.glob('upstart/*.conf').map { |path| path.sub(/^.+\/(.+)\.conf$/, '\1') }
   services.unshift('nginx', 'redis-server', 'rabbitmq-server')
 
-  config.vm.provision :shell, privileged: false, inline: <<-EOF
+  config.vm.provision :shell, privileged: false, inline: <<-SHELL
     # TODO: Remove upon next base box update.
     sudo /etc/init.d/nginx stop
     sudo update-rc.d nginx disable
@@ -152,19 +124,23 @@ Vagrant.configure('2') do |config|
     sudo git add --all .
     sudo git commit -m "After running provisioners." &> /dev/null
 
-    sudo rm /etc/init/ppt.*.conf
-    for file in /webs/ppt/upstart/*.conf; do
-      echo "~ Copying $file"
-      sudo cp -f $file /etc/init/
-      sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
-    done
+    # Provisioners run, let's switch to ZSH.
+    zsh
+
+    # TODO: There is an alias for it now, see dotfiles.sh
+    reinstall_upstart_services
+    # sudo rm /etc/init/ppt.*.conf
+    # for file in /webs/ppt/upstart/*.conf; do
+    #   echo "~ Copying $file"
+    #   sudo cp -f $file /etc/init/
+    #   sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
+    # done
 
     cd /etc
     sudo git add --all .
     sudo git commit -m "After vagrant up." &> /dev/null
 
-    source /etc/environment
-    source /etc/profile.d/rubinius.sh
+    use_rubinius
     echo "~ Using Rubinius $(ruby -v)"
 
     cd /webs/ppt/webs/api.pay-per-task.com
@@ -176,12 +152,13 @@ Vagrant.configure('2') do |config|
     echo "Ruby: $(ruby -v)"
 
     echo "\n== Services =="
-    for service in #{services.join(" ")}; do
-      echo "* $(status $service)"
-    done
+    services_status
+    # for service in #{services.join(" ")}; do
+    #   echo "* $(status $service)"
+    # done
 
     echo "\nUse [status|stop|start|restart] [service]."
 
     echo "\nAll you need to know can be found on http://docs.pay-per-task.dev"
-  EOF
+  SHELL
 end

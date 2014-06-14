@@ -1,15 +1,10 @@
 #!/bin/sh
 
 # sudo chsh -s /bin/zsh vagrant # Otherwise it asks for password.
-curl https://raw.githubusercontent.com/botanicus/dotfiles/master/install.rb 2> /dev/null | ruby
 
-tee -a ~/.zshrc <<EOF
-alias restart="sudo restart"
-alias start="sudo start"
-alias stop="sudo stop"
+cd
 
-source /etc/environment
-source /etc/profile.d/rubinius.sh
+git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
 
-cd /webs/$1
-EOF
+tarball="https://github.com/botanicus/dotfiles/tarball/master"
+curl -#L $tarball | tar -xzv --strip-components 1 --exclude={README.md,.editorconfig,.gitignore}

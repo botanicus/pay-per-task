@@ -8,6 +8,12 @@ class PPT
       client_properties[:product] = name
     end
 
+    def self.enforce_vagrant
+      unless File.exist?('/etc/vagrant_box_build_time')
+        abort 'Integration tests are meant to run within Vagrant.'
+      end
+    end
+
     def self.configure(name)
       RSpec.configure do |config|
         config.add_setting(:amqp_config)
@@ -16,6 +22,7 @@ class PPT
         config.around do |example|
           if example.metadata[:amqp]
 
+            # http://rubybunny.info/articles/connecting.html
             amqp_connection = Bunny.new(RSpec.configuration.amqp_config)
             PPT::SpecHelper.set_better_client_name(amqp_connection, name)
 
