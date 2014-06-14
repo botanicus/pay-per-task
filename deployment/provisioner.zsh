@@ -18,12 +18,10 @@ sudo git commit -m "Before vagrant up." &> /dev/null
 sudo restart rabbitmq-server
 sleep 2.5
 
+echo $ARGV
+echo $ARGV[0]
 cd /webs/ppt
-./bin/provision.rb deployment/provisioners/setup-rabbitmq.sh \
-  deployment/provisioners/hosts.sh \
-  deployment/provisioners/vhost.sh \
-  deployment/provisioners/ssh-key.sh \
-  deployment/provisioners/dotfiles.sh
+./bin/provision.rb $ARGV
 
 echo ""
 

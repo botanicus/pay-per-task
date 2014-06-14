@@ -85,5 +85,13 @@ Vagrant.configure('2') do |config|
   #   vb.customize ['modifyvm', :id, '--memory', '1024']
   # end
 
-  config.vm.provision :shell, privileged: false, path: /webs/ppt/deployment/provisioner.zsh
+  config.vm.provision :shell, privileged: false,
+    path: 'deployment/provisioner.zsh',
+    args: [
+      'deployment/provisioners/setup-rabbitmq.sh',
+      'deployment/provisioners/hosts.sh',
+      'deployment/provisioners/vhost.sh',
+      'deployment/provisioners/ssh-key.sh',
+      'deployment/provisioners/dotfiles.sh'
+    ]
 end
