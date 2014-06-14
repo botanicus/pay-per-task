@@ -96,7 +96,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :shell, privileged: false, inline: <<-SHELL
     # Array variables cannot be exported (yet) in Bash.
-    export PROVISIONERS="#{provisioners.join(' ')}"
+    export PROVISIONERS=(#{provisioners.join(' ')})
     zsh /webs/ppt/deployment/provisioner.zsh
   SHELL
 end

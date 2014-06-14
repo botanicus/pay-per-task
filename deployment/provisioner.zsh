@@ -1,11 +1,5 @@
 #!/usr/bin/env zsh
 
-echo $SHELL
-
-# TODO: Remove upon next base box update.
-sudo /etc/init.d/nginx stop
-sudo update-rc.d nginx disable
-
 # Restart Nginx.
 # The damn vagrant-mounted event is emitted every time an NFS
 # folder is mounted. So far it's been a problem only (once)
@@ -25,6 +19,8 @@ sudo restart rabbitmq-server
 sleep 2.5
 
 cd /webs/ppt
+echo $PROVISIONERS
+echo $PROVISIONERS[1]
 ./bin/provision.rb $PROVISIONERS
 echo ""
 
