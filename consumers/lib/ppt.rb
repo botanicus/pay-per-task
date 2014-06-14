@@ -1,3 +1,5 @@
+require 'json'
+
 class PPT
   class NoPriceDetectedError < StandardError
     def initialize(title)
@@ -31,7 +33,10 @@ class PPT
   end
 
   def self.config(key)
-    JSON.parse(File.read(File.join(self.root, 'config', "#{key}.json")))
+    path = File.join(self.root, 'config', "#{key}.json")
+    JSON.parse(File.read(path)).reduce(Hash.new) do |buffer, (key, value)|
+      buffer.merge(key.to_sym => value)
+    end
   end
 
   def self.authenticate(username, auth_key)

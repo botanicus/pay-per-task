@@ -78,25 +78,17 @@ module HttpApi
   end
 end
 
+$LOAD_PATH.unshift(File.expand_path('../../../../consumers/lib', __FILE__))
 
-require 'json'
+require 'ppt/spec_helper'
 
-def read_amqp_config(relative_path)
-  config_path = File.expand_path(relative_path, __FILE__)
-  JSON.parse(File.read(config_path)).reduce(Hash.new) do |buffer, (key, value)|
-    buffer.merge(key.to_sym => value)
-  end
-end
+PPT::SpecHelper.configure('in:rspec')
 
 RSpec.configure do |config|
   config.extend(HttpApi::Extensions)
 
   config.add_setting(:base_url)
   config.base_url = 'http://in.pay-per-task.dev'
-
-  # TODO: ?
-  config.add_setting(:amqp_config)
-  config.amqp_config = read_amqp_config('../../../../config/amqp.json')
 
   require 'redis'
 
@@ -105,19 +97,5 @@ RSpec.configure do |config|
 
     redis.flushdb
     redis.hmset('users:botanicus', :auth_key, 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM')
-  end
-
-  config.around do |example|
-    if example.metadata[:amqp]
-
-      amqp_connection = Bunny.new(RSpec.configuration.amqp_config)
-      amqp_connection.start
-      channel = amqp_connection.create_channel
-      @queue = channel.queue('').bind('amq.topic', routing_key: '#')
-
-      example.run
-
-      amqp_connection.close
-    end
   end
 end

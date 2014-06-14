@@ -21,9 +21,18 @@ def read_amqp_config(relative_path)
   end
 end
 
+# Change the name so we can make sense of RabbitMQ Management Plugin connections.
+# TODO: This deserves PR.
+def set_better_client_name(amqp_connection, name)
+  client_properties = amqp_connection.instance_variable_get(:@client_properties)
+  client_properties[:product] = name
+end
+
 amqp_config = read_amqp_config('../../../config/amqp.json')
 puts "~ Establishing AMQP connection #{amqp_config.inspect}."
 amqp_connection = Bunny.new(amqp_config)
+set_better_client_name(amqp_connection, 'in:rack')
+
 amqp_connection.start
 
 channel  = amqp_connection.create_channel
