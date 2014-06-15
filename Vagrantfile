@@ -75,9 +75,9 @@ Vagrant.configure('2') do |config|
   config.vm.synced_folder 'v-root', '/vagrant', disabled: true
   config.vm.synced_folder '.', '/webs/ppt', nfs: true
 
-  config.vm.synced_folder File.join(ENV['HOME'], '.ssh'), '/host/ssh', nfs: true
+  config.vm.synced_folder File.expand_path('~/.ssh'), '/host/ssh', nfs: true
 
-  dotfiles_path = File.join(ENV['HOME'], 'Dropbox/Projects/OSS/dotfiles')
+  dotfiles_path = File.expand_path('~/Dropbox/Projects/OSS/dotfiles')
   if File.directory?(dotfiles_path)
     config.vm.synced_folder dotfiles_path, '/home/vagrant/dotfiles', nfs: true
   end
