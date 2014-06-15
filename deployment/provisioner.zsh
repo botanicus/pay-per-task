@@ -29,14 +29,7 @@ sudo git commit -m "After running provisioners." &> /dev/null
 # Provisioners run, let's switch to ZSH.
 source ~/.zshrc
 
-# TODO: There is an alias for it now, see dotfiles.sh
 reinstall_upstart_services
-# sudo rm /etc/init/ppt.*.conf
-# for file in /webs/ppt/upstart/*.conf; do
-#   echo "~ Copying $file"
-#   sudo cp -f $file /etc/init/
-#   sudo ruby -pi -e 'sub(/^start on .+$/, "start on vagrant-mounted")' /etc/init/$(basename $file)
-# done
 
 cd /etc
 sudo git add --all .
@@ -45,9 +38,19 @@ sudo git commit -m "After vagrant up." &> /dev/null
 use_rubinius
 echo "~ Using $(ruby -v)"
 
-cd /webs/ppt/webs/api.pay-per-task.com
-bundle install
-sudo start ppt.webs.api
+services=(app in)
+for service in $services; do
+  cd /webs/ppt/webs/$service.pay-per-task.com
+  bundle install
+  sudo start ppt.webs.$service
+done
+
+consumers=(inbox.backup inbox.pt inbox.jira)
+for consumer in $consumers; do
+  cd /webs/ppt/consumers/$consumer
+  bundle install
+  sudo start ppt.consumers.$consumer
+done
 
 echo "\n\n== Environment =="
 echo "PATH=$PATH"
@@ -55,9 +58,6 @@ echo "Ruby: $(ruby -v)"
 
 echo "\n== Services =="
 services_status
-# for service in #{services.join(" ")}; do
-#   echo "* $(status $service)"
-# done
 
 echo "\nUse [status|stop|start|restart] [service]."
 
