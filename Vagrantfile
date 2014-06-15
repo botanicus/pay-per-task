@@ -77,6 +77,11 @@ Vagrant.configure('2') do |config|
 
   config.vm.synced_folder File.join(ENV['HOME'], '.ssh'), '/host/ssh', nfs: true
 
+  dotfiles_path = File.join(ENV['HOME'], 'Dropbox/Projects/OSS/dotfiles')
+  if File.directory?(dotfiles_path)
+    config.vm.synced_folder dotfiles_path, '/home/vagrant/dotfiles', nfs: true
+  end
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -92,6 +97,6 @@ Vagrant.configure('2') do |config|
       'deployment/provisioners/hosts.sh',
       'deployment/provisioners/vhost.sh',
       'deployment/provisioners/ssh-key.sh',
-      # 'deployment/provisioners/dotfiles.sh' # DOES IT WORK NOW?
+      'deployment/provisioners/dotfiles.sh' # DOES IT WORK NOW?
     ]
 end
