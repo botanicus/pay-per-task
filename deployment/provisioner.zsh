@@ -38,7 +38,7 @@ sudo git commit -m "After vagrant up." &> /dev/null
 use_rubinius
 echo "~ Using $(ruby -v)"
 
-services=(app in)
+services=(api in)
 for service in $services; do
   cd /webs/ppt/webs/$service.pay-per-task.com
   bundle install
