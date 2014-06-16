@@ -77,9 +77,8 @@ Vagrant.configure('2') do |config|
 
   config.vm.synced_folder File.expand_path('~/.ssh'), '/host/ssh', nfs: true
 
-  dotfiles_path = File.expand_path('~/Dropbox/Projects/OSS/dotfiles')
-  if File.directory?(dotfiles_path)
-    config.vm.synced_folder dotfiles_path, '/home/vagrant/dotfiles', nfs: true
+  if ENV['DOTFILES_DIR'] && Dir.exist?(ENV['DOTFILES_DIR'])
+    config.vm.synced_folder ENV['DOTFILES_DIR'], '/home/vagrant/dotfiles', nfs: true
   end
 
   # Provider-specific configuration so you can fine-tune various
