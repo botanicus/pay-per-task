@@ -1,5 +1,7 @@
 # Run with bundle exec puma -C puma.config.rb
 
+# http://rubybunny.info/articles/error_handling.html
+
 threads 8,32
 workers 3
 port 7000
