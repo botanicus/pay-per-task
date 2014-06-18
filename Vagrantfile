@@ -77,8 +77,6 @@ Vagrant.configure('2') do |config|
 
   config.vm.synced_folder File.expand_path('~/.ssh'), '/host/ssh', nfs: true
 
-  p [:env, ENV['DOTFILES_DIR']]
-  p [:exist, Dir.exist?(ENV['DOTFILES_DIR'])]
   if ENV['DOTFILES_DIR'] && Dir.exist?(ENV['DOTFILES_DIR'])
     puts "~ Mounting #{ENV['DOTFILES_DIR']} to ~/dotfiles."
     config.vm.synced_folder ENV['DOTFILES_DIR'], '/home/vagrant/dotfiles', nfs: true
