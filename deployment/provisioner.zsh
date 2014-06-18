@@ -49,7 +49,7 @@ consumers=(inbox.backup inbox.pt inbox.jira)
 for consumer in $consumers; do
   cd /webs/ppt/consumers/$consumer
   bundle install
-  sudo start ppt.consumers.$consumer
+  #sudo start ppt.consumers.$consumer
 done
 
 echo "\n\n== Environment =="
