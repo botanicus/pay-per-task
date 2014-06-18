@@ -11,6 +11,6 @@ if test -d dotfiles; then
 else
   tarball="https://github.com/botanicus/dotfiles/tarball/master"
   curl -L $tarball 2> /dev/null | tar -xzv --strip-components 1 --exclude={README.md,.editorconfig,.gitignore,install.sh,.ssh/config}
-  curl https://raw.githubusercontent.com/botanicus/dotfiles/master/.ssh/config >> ~/.ssh/config
+  #curl https://raw.githubusercontent.com/botanicus/dotfiles/master/.ssh/config >> ~/.ssh/config
 fi
 
