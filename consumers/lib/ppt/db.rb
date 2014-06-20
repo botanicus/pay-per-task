@@ -1,5 +1,4 @@
 require 'redis'
-
 require 'ppt/presenters'
 
 # TODO: created_at & updated_at.
@@ -9,9 +8,9 @@ class PPT
       @redis ||= Redis.new(driver: :hiredis)
     end
 
-    def self.get_klass(name)
-      {'stories' => self::Story, 'users' => self::User, 'devs' => self::Developer}[name]
-    end
+    #def self.get_klass(name)
+      #{'stories' => self::Story, 'users' => self::User, 'devs' => self::Developer}[name]
+    #end
 
     class Entity
       def self.presenter(klass = nil)
@@ -29,6 +28,7 @@ class PPT
 
       def save
         self.values.each do |key, value|
+          p [key, value]
           PPT::DB.redis.hset(self.key, key, value)
         end
       end
@@ -42,19 +42,19 @@ class PPT
       end
     end
 
-    class Story < Entity
-      presenter PPT::Presenters::Story
-
-      def key
-        "stories.#{@presenter.service}.#{@presenter.username}.#{@presenter.id}"
-      end
-    end
-
     class Developer < Entity
       presenter PPT::Presenters::Developer
 
       def key
-        "devs.#{@presenter.service}.#{@presenter.username}.#{@presenter.nickname}"
+        "devs.#{@presenter.company}.#{@presenter.username}"
+      end
+    end
+
+    class Story < Entity
+      presenter PPT::Presenters::Story
+
+      def key
+        "stories.#{@presenter.company}.#{@presenter.id}"
       end
     end
   end

@@ -41,5 +41,4 @@ class PPT
   end
 end
 
-require 'ppt/presenters'
 require 'ppt/db'

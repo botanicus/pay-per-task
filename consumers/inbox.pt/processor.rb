@@ -5,11 +5,11 @@ class PPT
     class Processor < PPT::Processor
       def build_developer(service, username, payload)
         email = payload['...']
-        PPT::DB::Developer.new(service: service, username: username, email: email)
+        PPT::DB::Developer.new(company: company, username: username, name: name, email: email)
       end
 
       def build_story(service, username, payload)
-        PPT::DB::Story.new
+        PPT::DB::Story.new(company: company, id: id, price: price, currency: currency, link: link)
       end
     end
   end
