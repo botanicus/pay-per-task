@@ -10,6 +10,10 @@ class PPT
       return match[2].to_i, match[1]
     end
 
+    def parse_title(title)
+      title.match(/[£€$]\d+ (.+)/)[1]
+    end
+
     def emit(event, data)
       routing_key = "events.#{event}"
       puts "~ PUB #{routing_key}: #{data}"
@@ -23,17 +27,10 @@ class PPT
     def process(payload, routing_key)
       payload = JSON.parse(payload)
 
-      _, service, username = routing_key.split('.')
+      _, service, company = routing_key.split('.')
 
-      # TODO: do this only if the state is new.
-      # new -> WIP
-      # WIP -> done
-      # done -> [accepted | rejected]
-      story = self.build_story(service, username, payload)
-      self.emit('stories.new', story.to_json)
-
-      developer = self.build_developer(service, username, payload)
-      self.emit('devs.new', developer.to_json)
+      self.ensure_story_exists(company, payload)
+      self.ensure_developer_exists(company, payload)
     rescue JSON::ParserError => error
       # Log it and ignore, there's not much we can do.
       STDERR.puts("~ ERROR #{error.class} #{error.message}")
