@@ -1,3 +1,6 @@
+require 'bundler'
+Bundler.setup(:default, :test)
+
 require 'ppt'
 require 'bunny'
 

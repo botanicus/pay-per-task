@@ -1,6 +1,10 @@
+require 'bundler'
+Bundler.setup(:default)
+
 require 'eventmachine'
 require 'amq/client'
 require 'json'
+require 'timeout'
 
 # We aren't handling TCP connection lost, since this is running on the same machine.
 # It means, however, that if we restart the broker, we have to restart all the services manually.
@@ -18,8 +22,10 @@ class PPT::Client
       # Set up signals.
       ['INT', 'TERM'].each do |signal|
         Signal.trap(signal) do
-          puts "~ Received #{signal} signal, terminating."
-          client.disconnect { EM.stop }
+          Timeout.timeout(2.5) do
+            puts "~ Received #{signal} signal, terminating AMQP connection."
+            client.disconnect { EM.stop }
+          end
         end
       end
     end
