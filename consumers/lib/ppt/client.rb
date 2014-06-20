@@ -22,9 +22,14 @@ class PPT::Client
       # Set up signals.
       ['INT', 'TERM'].each do |signal|
         Signal.trap(signal) do
-          Timeout.timeout(2.5) do
-            puts "~ Received #{signal} signal, terminating AMQP connection."
-            client.disconnect { EM.stop }
+          begin
+            Timeout.timeout(2.5) do
+              puts "~ Received #{signal} signal, terminating AMQP connection."
+              client.disconnect { EM.stop }
+            end
+          rescue Timeout::Error
+            puts "~ Time out, exiting now."
+            exit
           end
         end
       end
