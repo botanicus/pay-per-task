@@ -6,7 +6,7 @@ require 'spec_helper'
 require 'yaml'
 
 describe 'inbox.backup consumer' do
-  let(:username) {  "rand-user-#{rand(100_000)}" }
+  let(:username) { "rand-user-#{rand(100_000)}" }
 
   it 'writes the payload to the data directory', amqp: true do
     pt_data = File.read('spec/data/pt.json')
