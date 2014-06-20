@@ -5,7 +5,7 @@
 require 'spec_helper'
 
 describe 'inbox.pt consumer' do
-  it 'writes the payload to the data directory', amqp: true do
+  it 'parses the payload and stores the data to Redis', amqp: true do
     # TODO
   end
 end

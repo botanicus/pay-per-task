@@ -97,6 +97,6 @@ RSpec.configure do |config|
     redis = Redis.new(driver: :hiredis)
 
     redis.flushdb
-    redis.hmset('users:botanicus', :auth_key, 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM')
+    redis.hmset('users:ppt', :auth_key, 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM')
   end
 end

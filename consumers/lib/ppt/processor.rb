@@ -34,6 +34,9 @@ class PPT
 
       developer = self.build_developer(service, username, payload)
       self.emit('devs.new', developer.to_json)
+    rescue JSON::ParserError => error
+      # Log it and ignore, there's not much we can do.
+      STDERR.puts("~ ERROR #{error.class} #{error.message}")
     end
   end
 end

@@ -36,16 +36,17 @@ class PPT
       end
     end
 
+    # User is the company.
     class User < Entity
       EXPECTED_KEYS = [:service, :username, :email, :accounting_email]
     end
 
-    class Story < Entity
-      EXPECTED_KEYS = [:service, :username, :id, :price, :currency, :link]
+    class Developer < Entity
+      EXPECTED_KEYS = [:service, :company, :email, :nickname, :name]
     end
 
-    class Developer < Entity
-      EXPECTED_KEYS = [:service, :username, :email, :nickname, :name]
+    class Story < Entity
+      EXPECTED_KEYS = [:service, :company, :id, :price, :currency, :link]
     end
   end
 end

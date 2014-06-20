@@ -38,6 +38,8 @@ class PPT
             example.run
 
             amqp_connection.close
+          else
+            example.run
           end
         end
       end
