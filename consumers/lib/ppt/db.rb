@@ -5,7 +5,7 @@ require 'ppt/presenters'
 class PPT
   module DB
     def self.redis
-      @redis ||= Redis.new
+      @redis ||= Redis.new(driver: :hiredis)
     end
 
     def self.get_klass(name)
