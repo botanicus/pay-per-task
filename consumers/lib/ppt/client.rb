@@ -13,7 +13,7 @@ class PPT::Client
       opts = PPT.config('amqp')
 
       puts "~ Establishing AMQP connection #{opts.inspect}"
-      client.connect(adapter: 'eventmachine', user: opts['user'], password: opts['password'], vhost: opts['vhost'])
+      client.connect(opts.merge(adapter: 'eventmachine'))
 
       # Set up signals.
       ['INT', 'TERM'].each do |signal|
