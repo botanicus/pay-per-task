@@ -2,6 +2,7 @@ require 'redis'
 
 require 'ppt/presenters'
 
+# TODO: created_at & updated_at.
 class PPT
   module DB
     def self.redis

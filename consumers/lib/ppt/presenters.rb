@@ -36,17 +36,20 @@ class PPT
       end
     end
 
-    # User is the company.
+    # User is either a person or most likely a company.
+    #
+    # Each user can have only one service, just to make it simple.
+    # Besides, not many people use both Jira and Pivotal Tracker.
     class User < Entity
-      EXPECTED_KEYS = [:service, :username, :email, :accounting_email]
+      EXPECTED_KEYS = [:service, :username, :name, :email, :accounting_email]
     end
 
     class Developer < Entity
-      EXPECTED_KEYS = [:service, :company, :email, :nickname, :name]
+      EXPECTED_KEYS = [:company, :username, :name, :email]
     end
 
     class Story < Entity
-      EXPECTED_KEYS = [:service, :company, :id, :price, :currency, :link]
+      EXPECTED_KEYS = [:company, :id, :price, :currency, :link]
     end
   end
 end
