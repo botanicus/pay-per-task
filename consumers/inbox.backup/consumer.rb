@@ -24,8 +24,17 @@ EM.run do
         path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}-#{SecureRandom.hex}.json")
         FileUtils.mkdir_p(File.dirname(path))
         puts "~ Writing payload from #{frame.routing_key} to #{path}"
-        File.open(path, 'w') do |file|
-          file.puts(payload)
+
+        begin
+          json = JSON.parse(payload).to_json
+
+          File.open(path, 'w') do |file|
+            file.puts(json)
+          end
+        rescue Exception => error
+          # No error should really happen, but we cannot
+          # pressume that the JSON is valid for instance.
+          puts "~ ERROR #{error.class} #{error.message}"
         end
       end
     end
