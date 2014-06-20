@@ -2,6 +2,7 @@
 
 require 'ppt'
 require 'ppt/client'
+require 'securerandom'
 
 require 'json'
 
@@ -20,7 +21,7 @@ EM.run do
 
       client.consumer('inbox.#') do |payload, header, frame|
         _, service, username = frame.routing_key.split('.')
-        path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}.json")
+        path = File.join('data', 'inbox', service, username, "#{Time.now.to_i}-#{SecureRandom.hex}.json")
         FileUtils.mkdir_p(File.dirname(path))
         puts "~ Writing payload from #{frame.routing_key} to #{path}"
         File.open(path, 'w') do |file|
