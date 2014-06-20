@@ -1,4 +1,4 @@
-#!/usr/bin/env bundle exec ruby -Ilib
+#!/usr/bin/env ruby -I../lib -rbundler/setup ./consumer.rb
 
 require 'ppt'
 require 'ppt/client'

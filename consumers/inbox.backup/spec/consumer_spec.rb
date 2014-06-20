@@ -1,5 +1,5 @@
 #
-# This is an integration test, I assume that the consumer is up and running!
+# This is an integration test, it assumes that the consumer is up and running!
 #
 
 require 'spec_helper'

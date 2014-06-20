@@ -57,7 +57,7 @@ class PPT::Client
   def declare_queue(name, routing_key)
     queue = AMQ::Client::Queue.new(@connection, @channel, name)
 
-    queue.declare(false, true, false, true) do
+    queue.declare(false, true, false, false) do
       # puts "~ Queue #{queue.name.inspect} is ready"
     end
 
