@@ -94,5 +94,5 @@ class PPT
 end
 
 
-require 'ppt/presenters'
-require 'ppt/db'
+#require 'ppt/presenters'
+#require 'ppt/db'

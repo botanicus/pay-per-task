@@ -8,6 +8,5 @@ end
 
 group(:test) do
   gem 'bunny'
-  gem 'rspec-core'
-  gem 'rspec-expectations'
+  gem 'rspec'
 end
