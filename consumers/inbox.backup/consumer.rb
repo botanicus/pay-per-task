@@ -20,9 +20,6 @@ PPT.async_loop do |client|
 
       begin
         # Leave out whitespace.
-        #
-        # It's also good to parse it at this stage to make sure
-        # we are not propagating invalid data to other consumers.
         blob = JSON.parse(payload).to_json
 
         # By saving a lot of small files, 5k requests consumed 20MB
