@@ -5,7 +5,7 @@ class PPT
     class Processor < PPT::Processor
       def ensure_developer_exists(company, payload)
         # There is nothing to update. The user either exists, or he doesn't.
-        return if PPT::DB::Developer.get(company, username)
+        return if PPT::DB::Developer.get("devs:#{company}:#{username}")
 
         developer = PPT::DB::Developer.create(
           company: company, username: username, name: name, email: email

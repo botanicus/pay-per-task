@@ -12,4 +12,10 @@ end
 group(:test) do
   gem 'bunny'
   gem 'rspec'
+
+  # If Rubinius cannot find Psych it fallbacks to Syck,
+  # an old, unmaintained YAML parser written by _why.
+  # Syck is giving me a syntax error when I chuck the
+  # Jira JSON into the document.
+  gem 'psych'
 end

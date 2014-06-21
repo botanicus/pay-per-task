@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/botanicus/simple-orm.git
+  revision: 95ebf9b13737a2ee922ead4d7e32311bad14c7fc
+  specs:
+    simple-orm (0.0.1)
+      hiredis (~> 0.5)
+      redis (~> 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -37,7 +45,6 @@ PLATFORMS
 DEPENDENCIES
   amq-client
   bunny
-  hiredis
   pry
-  redis
   rspec
+  simple-orm!

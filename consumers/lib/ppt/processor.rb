@@ -38,4 +38,4 @@ class PPT
   end
 end
 
-require 'ppt/db'
+require 'ppt/models'
