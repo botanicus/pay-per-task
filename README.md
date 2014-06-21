@@ -1,7 +1,7 @@
 ## Installation <small>in 3 easy steps</small>
 
-* Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](http://www.vagrantup.com).
-* Then **go** to the **project root** in terminal and run `./setup-mac-os-x.sh`.
+* Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](http://www.vagrantup.com/downloads.html).
+* Then **go** to the **project root** in terminal and run `./deployment/setup-mac-os-x.sh`.
 * And finally **set up** and **boot** the **virtual machine** using `vagrant up`.
 
 *That's it! You're done!*
