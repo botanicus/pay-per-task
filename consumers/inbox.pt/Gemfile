@@ -1,9 +1,28 @@
 source 'https://rubygems.org'
 
-gem 'amq-client'
+# ALWAYS do bundle config local.ppt /webs/ppt/gems/ppt.
+# The ppt gem depends on other gems from that directory,
+# however those, as OSS, are on GitHub, whereas ppt itself
+# isn't.
+#
+# Fair question is why the fuck do we have to specify
+# git and branch when for crying out loud it's in the
+# same motherfucking repository! Well, that's because
+# smart chaps from bundler simply didn't thought of
+# the scenario where you have a local repository
+# which you don't want to install through git
+# (since it already is in the motherfucking repo).
+#
+# It has been reported: https://github.com/bundler/bundler/issues/3074
+gem 'ppt', git: 'boll.ocks', branch: 'master'
+
+# This is a dependency of ppt. We can leave it up to RubyGems
+# to handle it, but then we'd have to create a new release
+# and run bundle update every time we'd want to update the
+# code.
 gem 'simple-orm', github: 'botanicus/simple-orm', branch: 'master'
 
-group(:development) do
+group(:development, :test) do
   gem 'pry'
 end
 

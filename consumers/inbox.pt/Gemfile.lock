@@ -1,4 +1,13 @@
 GIT
+  remote: boll.ocks
+  revision: f2f3632d022692342560f79a58c13a4000b4b060
+  branch: master
+  specs:
+    ppt (0.0.1)
+      amq-client
+      simple-orm
+
+GIT
   remote: git://github.com/botanicus/simple-orm.git
   revision: b311d66b10423ef70993288aa50d0da00c727dfe
   branch: master
@@ -37,15 +46,15 @@ GEM
       rspec-support (~> 3.0.0)
     rspec-mocks (3.0.2)
       rspec-support (~> 3.0.0)
-    rspec-support (3.0.1)
+    rspec-support (3.0.2)
     slop (3.5.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  amq-client
   bunny
+  ppt!
   pry
   rspec
   simple-orm!
