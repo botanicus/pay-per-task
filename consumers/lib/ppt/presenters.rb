@@ -6,6 +6,18 @@ class PPT
     class ValidationError < ::StandardError
     end
 
+    class Validator
+      def initialize(message, &block)
+        @message, @block = message, block
+      end
+
+      def validate!(name, value)
+        unless @block.call(value)
+          raise ValidationError.new("Value of #{name} is invalid (value is #{value.inspect}).")
+        end
+      end
+    end
+
     class Attribute
       attr_accessor :instance
       attr_reader :name
@@ -21,12 +33,20 @@ class PPT
       end
 
       def required
-        @validators << Proc.new { |value| value != nil }
+        @validators << Validator.new('is required') do |value|
+          value != nil && ! value.empty?
+        end
+
         self
       end
 
-      def validate(&block)
-        self.validators << block
+      def validate(message, &block)
+        self.validators << Validator.new(message, &block)
+        self
+      end
+
+      def type(type)
+        @type = type
         self
       end
 
@@ -76,9 +96,7 @@ class PPT
 
       def validate!(stage = nil)
         @validators.each do |validator|
-          unless validator.call(self.get(stage))
-            raise ValidationError.new("Value of #{self.name} is invalid (value is #{self.get(stage).inspect}).")
-          end
+          validator.validate!(self.name, self.get(stage))
         end
       end
     end
@@ -130,7 +148,8 @@ class PPT
 
       def values(stage = nil)
         self.attributes.reduce(Hash.new) do |buffer, (name, attribute)|
-          buffer[name] ||= attribute.get(stage)
+          value = attribute.get(stage)
+          buffer[name] = value if value && value != ''
           buffer
         end
       end
@@ -160,8 +179,8 @@ class PPT
       attribute(:accounting_email).default { self.email }
       attribute(:auth_key).private.default { SecureRandom.hex }
 
-      attribute(:created_at).on_create { Time.now.utc.to_i }
-      attribute(:updated_at).on_update { Time.now.utc.to_i }
+      attribute(:created_at).type(Time).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).type(Time).on_update { Time.now.utc.to_i }
     end
 
     class Developer < Entity
@@ -170,8 +189,8 @@ class PPT
       attribute(:name).required
       attribute(:email).required
 
-      attribute(:created_at).on_create { Time.now.utc.to_i }
-      attribute(:updated_at).on_update { Time.now.utc.to_i }
+      attribute(:created_at).type(Time).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).type(Time).on_update { Time.now.utc.to_i }
     end
 
     class Story < Entity
@@ -182,8 +201,8 @@ class PPT
       attribute(:currency).required
       attribute(:link).required
 
-      attribute(:created_at).on_create { Time.now.utc.to_i }
-      attribute(:updated_at).on_update { Time.now.utc.to_i }
+      attribute(:created_at).type(Time).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).type(Time).on_update { Time.now.utc.to_i }
     end
   end
 end

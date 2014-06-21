@@ -15,6 +15,11 @@ class PPT
       attr_reader :presenter
       def initialize(values)
         @presenter = self.class.presenter.new(values)
+        @is_new_record = true
+      end
+
+      def new_record?
+        @is_new_record
       end
 
       def values(stage = nil)
@@ -22,7 +27,8 @@ class PPT
       end
 
       def save
-        self.values(:save).each do |key, value|
+        stage = self.new_record? ? :create : :update
+        self.values(stage).each do |key, value|
           PPT::DB.redis.hset(self.key, key, value)
         end
       end
