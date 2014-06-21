@@ -2,6 +2,7 @@
 /tasks.todo
 /config/*.json
 /data
+/.bundle
 
 /gems/*
 

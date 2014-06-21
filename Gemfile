@@ -5,9 +5,9 @@ gem 'assets-squasher', github: 'botanicus/assets-squasher', branch: 'master'
 
 # Services.
 gem 'pipeline-mail_queue', github: 'botanicus/pipeline-mail_queue', branch: 'master'
-gem 'ppt.inbox.backup', github: 'boll.ocks', branch: 'master'
-gem 'ppt.inbox.pt', github: 'boll.ocks', branch: 'master'
-gem 'ppt.inbox.jira', github: 'boll.ocks', branch: 'master'
+gem 'ppt.inbox.backup', git: 'boll.ocks', branch: 'master'
+gem 'ppt.inbox.pt', git: 'boll.ocks', branch: 'master'
+gem 'ppt.inbox.jira', git: 'boll.ocks', branch: 'master'
 
 # Dependencies.
 #

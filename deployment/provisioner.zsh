@@ -39,9 +39,9 @@ use_rubinius
 echo "~ Using $(ruby -v)"
 
 # Set up local paths to libraries in development.
-for path in /webs/ppt/gems/*(/); do
-  gem=$(basename $path)
-  bundle config local.$gem $path
+for gempath in /webs/ppt/gems/*(/); do
+  gem=$(basename $gempath)
+  bundle config local.$gem $gempath
 done
 
 services=(api in)
