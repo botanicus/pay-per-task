@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'amq-client'
-
-gem 'redis'
-gem 'hiredis'
+gem 'simple-orm', github: 'botanicus/simple-orm'
 
 group(:development) do
   gem 'pry'
