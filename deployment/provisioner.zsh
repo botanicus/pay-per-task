@@ -41,6 +41,7 @@ echo "~ Using $(ruby -v)"
 services=(api in)
 for service in $services; do
   cd /webs/ppt/webs/$service.pay-per-task.com
+  bundle config local.simple-orm /webs/ppt/simple-orm
   bundle install
   sudo start ppt.webs.$service
 done
