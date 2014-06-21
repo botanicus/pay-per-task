@@ -28,12 +28,12 @@ class PPT
 
       def save
         self.values.each do |key, value|
-          p [key, value]
           PPT::DB.redis.hset(self.key, key, value)
         end
       end
     end
 
+    # TODO: auth_key
     class User < Entity
       presenter PPT::Presenters::User
 
