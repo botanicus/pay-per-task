@@ -1,6 +1,6 @@
 GIT
   remote: boll.ocks
-  revision: f2f3632d022692342560f79a58c13a4000b4b060
+  revision: 558fcbff135f4b74a8700593f595dfb8c37a7fcd
   branch: master
   specs:
     ppt (0.0.1)

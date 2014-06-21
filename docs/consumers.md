@@ -6,7 +6,7 @@
 
 TODO: The image doesn't work, rewrite to Markdown.
 
-<a href="how-it-works.png"><img width="450" src="how-it-works.png" /></a>
+<a href="../docs/how-it-works.png"><img width="450" src="how-it-works.png" /></a>
 
 # Initial Setup
 

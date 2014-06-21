@@ -38,16 +38,15 @@ sudo git commit -m "After vagrant up." &> /dev/null
 use_rubinius
 echo "~ Using $(ruby -v)"
 
+# Set up local paths to libraries in development.
+for path in /webs/ppt/gems/*(/); do
+  gem=$(basename $path)
+  bundle config local.$gem $path
+done
+
 services=(api in)
 for service in $services; do
   cd /webs/ppt/webs/$service.pay-per-task.com
-
-  # Set up local paths to libraries in development.
-  for path in /webs/ppt/gems/*(/); do
-    gem=$(basename $path)
-    bundle config local.$gem $path
-  done
-
   bundle install
   sudo start ppt.webs.$service
 done

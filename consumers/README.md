@@ -1,3 +1,0 @@
-**TODO:** Write some documentation.
-
-[inbox/README.md](inbox/README.md)

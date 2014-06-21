@@ -1,5 +1,9 @@
-.vagrant
+/.vagrant
+/tasks.todo
 /config/*.json
 /data
+
 /gems/*
+
 !/gems/ppt
+!/gems/ppt.*
