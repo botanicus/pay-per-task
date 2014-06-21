@@ -108,8 +108,7 @@ class PPT
 
       def attributes
         @attributes ||= self.class.attributes.reduce(Hash.new) do |buffer, (name, attribute)|
-          attribute.instance = self
-          buffer.merge(name => attribute)
+          buffer.merge(name => attribute.dup.tap { |attribute| attribute.instance = self })
         end
       end
 

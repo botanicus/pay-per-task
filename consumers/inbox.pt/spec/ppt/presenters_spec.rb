@@ -62,28 +62,23 @@ describe PPT::Presenters do
     }}
 
     it 'raises an exception if service is missing' do
-      attrs.delete(:service)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :service })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if username is missing' do
-      attrs.delete(:username)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :username })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if name is missing' do
-      attrs.delete(:name)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :name })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if email is missing' do
-      attrs.delete(:email)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
-    end
-
-    it 'raises an exception if accounting_email is missing' do
-      attrs.delete(:accounting_email)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :email })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
@@ -100,23 +95,23 @@ describe PPT::Presenters do
     }}
 
     it 'raises an exception if company is missing' do
-      attrs.delete(:company)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :company })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if username is missing' do
-      attrs.delete(:username)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :username })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if name is missing' do
-      attrs.delete(:name)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :name })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if email is missing' do
-      attrs.delete(:email)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :email })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
@@ -135,33 +130,33 @@ describe PPT::Presenters do
     }}
 
     it 'raises an exception if company is missing' do
-      attrs.delete(:company)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :company })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if id is missing' do
-      attrs.delete(:id)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :id })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if title is missing' do
-      attrs.delete(:title)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :title })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if price is missing' do
-      attrs.delete(:price)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :price })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if currency is missing' do
-      attrs.delete(:currency)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :currency })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if link is missing' do
-      attrs.delete(:link)
-      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+      instance = described_class.new(attrs.reject { |key, value| key == :link })
+      expect { instance.validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
