@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/botanicus/simple-orm.git
-  revision: 95ebf9b13737a2ee922ead4d7e32311bad14c7fc
+  revision: b311d66b10423ef70993288aa50d0da00c727dfe
+  branch: master
   specs:
     simple-orm (0.0.1)
       hiredis (~> 0.5)

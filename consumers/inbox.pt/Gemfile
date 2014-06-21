@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'amq-client'
-gem 'simple-orm', github: 'botanicus/simple-orm'
+gem 'simple-orm', github: 'botanicus/simple-orm', branch: 'master'
 
 group(:development) do
   gem 'pry'
