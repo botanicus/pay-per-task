@@ -1,16 +1,11 @@
 require 'redis'
 require 'ppt/presenters'
 
-# TODO: created_at & updated_at.
 class PPT
   module DB
     def self.redis
       @redis ||= Redis.new(driver: :hiredis)
     end
-
-    #def self.get_klass(name)
-      #{'stories' => self::Story, 'users' => self::User, 'devs' => self::Developer}[name]
-    #end
 
     class Entity
       def self.presenter(klass = nil)
@@ -22,18 +17,17 @@ class PPT
         @presenter = self.class.presenter.new(values)
       end
 
-      def values
-        @presenter.values
+      def values(stage = nil)
+        @presenter.values(stage)
       end
 
       def save
-        self.values.each do |key, value|
+        self.values(:save).each do |key, value|
           PPT::DB.redis.hset(self.key, key, value)
         end
       end
     end
 
-    # TODO: auth_key
     class User < Entity
       presenter PPT::Presenters::User
 

@@ -1,55 +1,149 @@
+require 'json'
 require 'ppt/extensions'
 
 class PPT
   module Presenters
+    class ValidationError < ::StandardError
+    end
+
+    class Attribute
+      attr_accessor :instance
+      attr_reader :name
+      def initialize(name)
+        @name = name
+        @validators, @hooks = Array.new, Hash.new
+      end
+
+      # DSL
+      def private
+        @private = true
+        self
+      end
+
+      def required
+        @validators << Proc.new { |value| value != nil }
+        self
+      end
+
+      def validate(&block)
+        self.validators << block
+        self
+      end
+
+      def default(value = nil, &block)
+        @hooks[:default] = value ? Proc.new { value } : block
+        self
+      end
+
+      def on_create(value = nil, &block)
+        @hooks[:on_create] = value ? Proc.new { value } : block
+        self
+      end
+
+      def on_update(value = nil, &block)
+        @hooks[:on_update] = value ? Proc.new { value } : block
+        self
+      end
+
+      # API
+      def private?
+        @private
+      end
+
+      def run_hook(name)
+        @hooks[name] && @instance.instance_eval(&@hooks[name])
+      end
+
+      def set(value)
+        if self.private?
+          raise "Attribute #{@name} is private!"
+        end
+
+        @value = value
+      end
+
+      def get(stage = nil)
+        if stage.nil?
+          @value ||= self.run_hook(:default)
+        elsif stage == :create
+          @value ||= self.run_hook(:on_create)
+        elsif stage == :update
+          @value ||= self.run_hook(:on_update)
+        else
+          raise ArgumentError.new("Attribute#get takes an optional argument which can be either :create or :update.")
+        end
+      end
+
+      def validate!(stage = nil)
+        @validators.each do |validator|
+          unless validator.call(self.get(stage))
+            raise ValidationError.new("Value of #{self.name} is invalid (value is #{self.get(stage).inspect}).")
+          end
+        end
+      end
+    end
+
     class Entity
       def self.attributes
         @attributes ||= Hash.new
       end
 
       def self.attribute(name, options = Hash.new)
-        self.attributes[name] = options
+        self.attributes[name] = Attribute.new(name)
       end
 
-      attr_reader :values
-
-      def initialize(values)
+      def initialize(values = Hash.new)
         # Let's consider it safe since this is not user input.
         # It might not be the best idea, but for now, who cares.
         values = PPT.symbolise_keys(values)
-        expected_keys = self.class.attributes.select { |name, options| options[:required] }.map { |name, _| name }.sort
 
-        unless values.keys.sort == expected_keys
-          raise ArgumentError.new("Expected keys: #{expected_keys.inspect}, got #{values.keys.sort.inspect}")
+        values.each do |key, value|
+          unless attribute = self.attributes[key]
+            raise ArgumentError.new("No such attribute: #{key}")
+          end
+
+          attribute.set(value)
         end
+      end
 
-        private_keys = self.class.attributes.select { |name, options| options[:private] }.map { |name, _| name }
-        if union = values.keys & private_keys
-          raise ArgumentError.new("The following keys are private: #{union.inspect}")
+      def attributes
+        @attributes ||= self.class.attributes.reduce(Hash.new) do |buffer, (name, attribute)|
+          attribute.instance = self
+          buffer.merge(name => attribute)
         end
-
-        # Set the defaults.
-        self.class.attributes.select { |name, options| options[:default] }.each do |name, block|
-          values[name] = self.instance_eval(&block)
-        end
-
-        @values = values
       end
 
       def method_missing(name, *args, &block)
-        if @values.has_key?(name)
-          @values[name]
+        if self.attributes.has_key?(name)
+          self.attributes[name].get
+        elsif name[-1] == '=' && self.attributes.has_key?(name.to_s[0..-2].to_sym)
+          self.attributes[name.to_s[0..-2].to_sym].set(args.first)
         else
           super(name, *args, &block)
         end
       end
 
       def respond_to_missing?(name, include_private = false)
-        @values.has_key?(name) || super(name, include_private)
+        self.attributes.has_key?(name) ||
+          name[-1] == '=' && self.attributes.has_key?(name.to_s[0..-2].to_sym) ||
+          super(name, include_private)
+      end
+
+      def values(stage = nil)
+        self.attributes.reduce(Hash.new) do |buffer, (name, attribute)|
+          buffer[name] ||= attribute.get(stage)
+          buffer
+        end
       end
 
       def to_json
-        @values.to_json
+        self.values.to_json
+      end
+
+      def validate
+        self.attributes.each do |_, attribute|
+          attribute.validate!
+        end
       end
     end
 
@@ -60,28 +154,37 @@ class PPT
     require 'securerandom'
 
     class User < Entity
-      attribute :service, required: true
-      attribute :username, required: true
-      attribute :name, required: true
-      attribute :email, required: true
-      attribute :accounting_email, default: Proc.new { self.email }
-      attribute :auth_key, private: true, default: Proc.new { Securerandom.hex }
+      attribute(:service).required
+      attribute(:username).required
+      attribute(:name).required
+      attribute(:email).required
+      attribute(:accounting_email).default { self.email }
+      attribute(:auth_key).private.default { SecureRandom.hex }
+
+      attribute(:created_at).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).on_update { Time.now.utc.to_i }
     end
 
     class Developer < Entity
-      attribute :company, required: true
-      attribute :username, required: true
-      attribute :name, required: true
-      attribute :email, required: true
+      attribute(:company).required
+      attribute(:username).required
+      attribute(:name).required
+      attribute(:email).required
+
+      attribute(:created_at).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).on_update { Time.now.utc.to_i }
     end
 
     class Story < Entity
-      attribute :company, required: true
-      attribute :id, required: true
-      attribute :title, required: true
-      attribute :price, required: true
-      attribute :currency, required: true
-      attribute :link, required: true
+      attribute(:company).required
+      attribute(:id).required
+      attribute(:title).required
+      attribute(:price).required
+      attribute(:currency).required
+      attribute(:link).required
+
+      attribute(:created_at).on_create { Time.now.utc.to_i }
+      attribute(:updated_at).on_update { Time.now.utc.to_i }
     end
   end
 end

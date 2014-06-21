@@ -5,15 +5,16 @@ describe PPT::Presenters do
   describe PPT::Presenters::Entity do
     let(:subclass) do
       Class.new(described_class) do |klass|
-        klass::EXPECTED_KEYS = [:id, :username]
+        attribute(:id).required
+        attribute(:username).required
       end
     end
 
-    describe '#initialize' do
-      it 'throws an error if whatever has been specified in EXPECTED_KEYS is missing' do
-        expect { subclass.new }.to raise_error(ArgumentError)
-        expect { subclass.new(Hash.new) }.to raise_error(ArgumentError)
-        expect { subclass.new(username: 'botanicus') }.to raise_error(ArgumentError)
+    describe '#validate' do
+      it 'throws an error if whatever has been specified as required is missing' do
+        expect { subclass.new.validate }.to raise_error(PPT::Presenters::ValidationError)
+        expect { subclass.new(Hash.new).validate }.to raise_error(PPT::Presenters::ValidationError)
+        expect { subclass.new(username: 'botanicus').validate }.to raise_error(PPT::Presenters::ValidationError)
       end
 
       it 'throws an error if there are any extra arguments' do
@@ -34,7 +35,7 @@ describe PPT::Presenters do
     end
 
     describe 'accessors' do
-      it 'provides accessors for all the EXPECTED_KEYS' do
+      it 'provides accessors for all the the attributes' do
         instance = subclass.new(id: 1, username: 'botanicus')
         expect(instance.id).to eq(1)
         expect(instance.username).to eq('botanicus')
@@ -62,31 +63,31 @@ describe PPT::Presenters do
 
     it 'raises an exception if service is missing' do
       attrs.delete(:service)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if username is missing' do
       attrs.delete(:username)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if name is missing' do
       attrs.delete(:name)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if email is missing' do
       attrs.delete(:email)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if accounting_email is missing' do
       attrs.delete(:accounting_email)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
-      expect { described_class.new(attrs) }.to_not raise_error
+      expect { described_class.new(attrs).validate }.to_not raise_error
     end
   end
 
@@ -100,26 +101,26 @@ describe PPT::Presenters do
 
     it 'raises an exception if company is missing' do
       attrs.delete(:company)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if username is missing' do
       attrs.delete(:username)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if name is missing' do
       attrs.delete(:name)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if email is missing' do
       attrs.delete(:email)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
-      expect { described_class.new(attrs) }.to_not raise_error
+      expect { described_class.new(attrs).validate }.to_not raise_error
     end
   end
 
@@ -127,6 +128,7 @@ describe PPT::Presenters do
     let(:attrs) {{
       company: 'ppt',
       id: 957456,
+      title: 'Implement login',
       price: 120,
       currency: 'GBP',
       link: 'http://www.pivotaltracker.com/story/show/60839620'
@@ -134,31 +136,36 @@ describe PPT::Presenters do
 
     it 'raises an exception if company is missing' do
       attrs.delete(:company)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if id is missing' do
       attrs.delete(:id)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
+    end
+
+    it 'raises an exception if title is missing' do
+      attrs.delete(:title)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if price is missing' do
       attrs.delete(:price)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if currency is missing' do
       attrs.delete(:currency)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'raises an exception if link is missing' do
       attrs.delete(:link)
-      expect { described_class.new(attrs) }.to raise_error(ArgumentError)
+      expect { described_class.new(attrs).validate }.to raise_error(PPT::Presenters::ValidationError)
     end
 
     it 'returns a valid presenter if all the required arguments have been provided' do
-      expect { described_class.new(attrs) }.to_not raise_error
+      expect { described_class.new(attrs).validate }.to_not raise_error
     end
   end
 end
