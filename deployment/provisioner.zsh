@@ -38,6 +38,8 @@ sudo git commit -m "After vagrant up." &> /dev/null
 use_rubinius
 echo "~ Using $(ruby -v)"
 
+bundle install
+
 # Set up local paths to libraries in development.
 for gempath in /webs/ppt/gems/*(/); do
   gem=$(basename $gempath)
@@ -51,12 +53,9 @@ for service in $services; do
   sudo start ppt.webs.$service
 done
 
-consumers=(inbox.backup inbox.pt inbox.jira)
-for consumer in $consumers; do
-  cd /webs/ppt/consumers/$consumer
-  bundle install
-  sudo start ppt.consumers.$consumer
-done
+sudo start ppt.consumers.backup
+sudo start ppt.consumers.pt
+sudo start ppt.consumers.jira
 
 echo "\n\n== Environment =="
 echo "PATH=$PATH"
