@@ -3,6 +3,11 @@
 #
 # This is a ZSH script. OS X comes with ZSH by default.
 #
+# While this works like a charm, some more powerful tool
+# would come really handy. Even something like provision.rb
+# we use for setting up the server. Or maybe can Ansible
+# be used for this kind of stuff as well?
+#
 
 # The repo was cloned from GitHub, so GitHub is the origin.
 echo "~ Renaming remote 'origin' to 'github'."
