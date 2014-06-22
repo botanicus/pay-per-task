@@ -8,7 +8,7 @@ sudo git add --all .
 sudo git commit -m "Before vagrant up." &> /dev/null
 
 cd /webs/ppt
-./development/bin/provision.rb $argv
+./deployment/bin/provision.rb $argv
 
 echo ""
 
