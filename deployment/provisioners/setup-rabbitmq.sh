@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# TODO: Fix this, what the hell?
+sudo restart rabbitmq-server
+sleep 2.5
+
 # NOTE: On Vagrant we can keep guest (I think it was somehow
 # useful for the management plugin, but I might be mistaken).
 #sudo rabbitmqctl delete_user guest

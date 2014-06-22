@@ -1,22 +1,11 @@
 #!/usr/bin/env zsh
 
-# Restart Nginx.
-# The damn vagrant-mounted event is emitted every time an NFS
-# folder is mounted. So far it's been a problem only (once)
-# after vagrant up. It was fine when I run vagrant reload.
-# TODO: Investigate.
-sudo restart nginx
-
 source /etc/profile.d/ruby.sh
 echo "~ Using $(ruby -v)"
 
 cd /etc
 sudo git add --all .
 sudo git commit -m "Before vagrant up." &> /dev/null
-
-# TODO: Fix this, what the hell?
-sudo restart rabbitmq-server
-sleep 2.5
 
 cd /webs/ppt
 ./bin/provision.rb $argv
@@ -41,10 +30,7 @@ echo "~ Using $(ruby -v)"
 bundle install
 
 # Set up local paths to libraries in development.
-for gempath in /webs/ppt/gems/*(/); do
-  gem=$(basename $gempath)
-  bundle config local.$gem $gempath
-done
+link_gems
 
 services=(api in)
 for service in $services; do
