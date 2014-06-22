@@ -1,5 +1,10 @@
 # About
 
+./gems/oss.pipeline-mail_queue/README.md
+./gems/oss.simple-orm/README.md
+./gems/ppt/README.md
+
+
 * When a story on **PT** is changed, PT `POST` to `in.ppt.com/pt/user/auth_key`.
 * If authentication was successful, the data are published to `inbox-exchange` fanout.
 * There's queue called `inbox` which is bound to the `inbox-exchange`.

@@ -7,3 +7,10 @@
 # Run <code>./bin/deploy-init.sh</code> ... currently it hangs, but it actually finishes.
 I had to run start nginx manually
 http://wiki.matcherapp.com/workflows/ clne hook missing
+
+**TODO:** Write a backup script, deploy it and document how it works.
+
+REDIS http://redis.io/topics/persistence
+
+
+* [Hooks](hooks/README.md)

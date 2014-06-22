@@ -80,27 +80,6 @@ if ! egrep 'ADDED BY PPT SETUP SCRIPT' /etc/sudoers > /dev/null; then
 EOF
 fi
 
-domains=(
-  in.pay-per-task.dev
-  api.pay-per-task.dev
-
-  in.pay-per-task.test
-  api.pay-per-task.test
-
-  pay-per-task.dev
-  app.pay-per-task.dev
-  blog.pay-per-task.dev
-  cdn.pay-per-task.dev
-  docs.pay-per-task.dev
-)
-
-for domain in $domains; do
-  if ! egrep $domain /etc/hosts > /dev/null; then
-    echo "~ Adding 127.0.0.1 $domain to /etc/hosts so it can be accessed via $domain instead using some crazy port number."
-    echo "127.0.0.1 $domain" | sudo tee -a /etc/hosts > /dev/null
-  fi
-done
-
 if ! egrep 'Host server' ~/.ssh/config > /dev/null; then
   echo "~ Adding SSH configuration for the production server."
   tee -a ~/.ssh/config > /dev/null <<EOF
@@ -110,4 +89,56 @@ Host server
   User root
   compression yes
 EOF
+fi
+
+if ! brew list | egrep dnsmasq > /dev/null; then
+  echo "~ Setting up dot dev domain so you can access the app through pay-per-task.dev."
+  brew update
+  brew install dnsmasq
+
+  sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+fi
+
+if ! test -f /usr/local/etc/dnsmasq.conf; then
+  echo "~ Setting up DNS rules for the dot dev domain."
+  sudo tee /usr/local/etc/dnsmasq.conf <<EOF
+address=/.dev/127.0.0.1
+listen-address=127.0.0.1
+EOF
+fi
+
+sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist 2> /dev/null
+
+if ! test -f /etc/resolver/dev; then
+  echo "~ Setting up the resolver."
+sudo mkdir /etc/resolver
+sudo tee /etc/resolver/dev <<EOF
+nameserver 127.0.0.1
+EOF
+fi
+
+if ! ping -c 1 xvoidx.dev > /dev/null; then
+  echo "~ ERROR: Setting up dot dev domain failed!"
+  echo "~ This shouldn't happen, but worry not, trying a fallback solution."
+
+  domains=(
+    in.pay-per-task.dev
+    api.pay-per-task.dev
+
+    in.pay-per-task.test
+    api.pay-per-task.test
+
+    pay-per-task.dev
+    app.pay-per-task.dev
+    blog.pay-per-task.dev
+    cdn.pay-per-task.dev
+    docs.pay-per-task.dev
+  )
+
+  for domain in $domains; do
+    if ! egrep $domain /etc/hosts > /dev/null; then
+      echo "~ Adding 127.0.0.1 $domain to /etc/hosts."
+      echo "127.0.0.1 $domain" | sudo tee -a /etc/hosts > /dev/null
+    fi
+  done
 fi
