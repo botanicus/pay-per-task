@@ -39,9 +39,9 @@ tee .git/hooks/pre-push <<EOF
 
 IFS=' '
 while read local_ref local_sha remote_ref remote_sha; do
-  branch=$(basename $remote_ref)
-  echo "~ Updating '$branch' branch first."
-  git push origin $branch &> /dev/null
+  branch=\$(basename \$remote_ref)
+  echo "~ Updating '\$branch' branch first."
+  git push origin \$branch &> /dev/null
 done
 EOF
 
