@@ -31,7 +31,7 @@ git_deploy_script=$(cat <<EOF
   system "git push server #{branch} #{force}"
 EOF)
 
-git config alias.deploy "\!ruby -e '$git_deploy_script' --"
+git config alias.deploy "!ruby -e '$git_deploy_script' --"
 
 # Make sure to push to master before deploying.
 tee .git/hooks/pre-push <<EOF
