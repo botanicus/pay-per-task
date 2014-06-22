@@ -27,7 +27,7 @@ git_deploy_script=$(cat <<EOF
 
   abort "Usage: git deploy [branch] [-f]" unless ARGV.empty?
 
-  puts "git push server #{branch} #{force}"
+  puts "~ git push server #{branch} #{force}\\n\\n"
   system "git push server #{branch} #{force}"
 EOF)
 
