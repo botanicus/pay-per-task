@@ -6,10 +6,6 @@ git remote rename origin github 2> /dev/null
 # Add server.
 git remote add server server:/repos/ppt 2> /dev/null
 
-# Set up Git remote tracking.
-git push --set-upstream github master
-git push --set-upstream server master
-
 # Set up an alias to git deploy.
 
 # Version 1:
@@ -25,7 +21,14 @@ git_deploy_script=$(cat <<EOF
   force  = ARGV.delete("-f") || ARGV.delete("--force") || ""
   branch = ARGV.shift || %x(git rev-parse --abbrev-ref HEAD).chomp
 
-  abort "Usage: git deploy [branch] [-f]" unless ARGV.empty?
+  if ! ARGV.empty? || branch == "-h" || branch == "--help"
+    abort <<-HELP
+Usage: git deploy [branch] [-f]
+
+Branch is optional, current branch is used by default.
+Option -f or --force is for forced update.
+    HELP
+  end
 
   puts "~ git push server #{branch} #{force}\\n\\n"
   system "git push server #{branch} #{force}"
