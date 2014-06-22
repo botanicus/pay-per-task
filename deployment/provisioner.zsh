@@ -39,9 +39,9 @@ for service in $services; do
   sudo start ppt.webs.$service
 done
 
-sudo start ppt.consumers.backup
-sudo start ppt.consumers.pt
-sudo start ppt.consumers.jira
+sudo start ppt.consumers.inbox.backup
+sudo start ppt.consumers.inbox.pt
+sudo start ppt.consumers.inbox.jira
 
 echo "\n\n== Environment =="
 echo "PATH=$PATH"
