@@ -9,9 +9,6 @@ EOF
 # Patch Nginx Upstart script to start when the main Vagrant
 # directory is mounted. This is already in the base box,
 # but we changed the location from /vagrant to a custom path.
-sudo ruby -pi -e <<RUBY
-  path = "/webs/ppt"
-  sub(/MOUNTPOINT=.+/, %Q{MOUNTPOINT="#{path}"})
-RUBY
+sudo ruby -pi -e 'sub(/MOUNTPOINT=.+/, %Q{MOUNTPOINT="/webs/ppt"})' /etc/init/nginx.conf
 
-sudo restart nginx
+sudo start nginx

@@ -9,4 +9,6 @@ That consists of:
 
 # Current Limitations
 
-Consumer **ppt.inbox.backup** saves everything to the file system.
+Consumer **ppt.inbox.backup** saves everything to the file system. It doesn't matter too much since this is only just-in-case and also I still might decide to use the API to crawl the apps regularly, since now **ppt.webs.in** is the single point of failure.
+
+# Used Software & Its Scalling Options
