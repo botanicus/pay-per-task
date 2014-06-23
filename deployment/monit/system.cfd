@@ -1,0 +1,13 @@
+#
+# Base system monitoring.
+#
+# http://mmonit.com/wiki
+# http://slides.com/tildeslash/monit
+# http://mmonit.com/monit/documentation/monit.html
+#
+
+# Enough disk space? Enough RAM/swap?
+
+# SSHD CROND
+check filesystem disk2 with path /dev/xvda
+      if space usage > 95% then alert

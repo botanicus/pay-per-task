@@ -58,3 +58,4 @@ include /webs/ppt/deployment/monit/*
 EOF
 
 sudo start monit
+sudo monit start all

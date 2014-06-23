@@ -1,0 +1,30 @@
+#
+# Core dependencies of PPT.
+#
+# http://mmonit.com/wiki
+# http://slides.com/tildeslash/monit
+# http://mmonit.com/monit/documentation/monit.html
+#
+
+# Redis.
+
+# RabbitMQ.
+
+# Nginx.
+
+
+check host smtp.example.com with address smtp.example.com
+      if failed port 25 with protocol smtp then alert
+
+check host localhost with address 127.0.0.1
+      if failed port 3306 protocol mysql then alert
+
+check process apache with pidfile /var/run/httpd.pid
+
+check process apache with pidfile /var/run/httpd.pid
+      start program = "/etc/init.d/apache2 start"
+      stop  program = "/etc/init.d/apache2 stop"
+
+check process apache with pidfile /var/run/httpd.pid
+      restart program  = "/etc/init.d/apache2 restart"
+      if failed port 80 protocol http then restart

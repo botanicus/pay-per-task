@@ -1,0 +1,27 @@
+#
+# PPT webs & services.
+#
+# http://mmonit.com/wiki
+# http://slides.com/tildeslash/monit
+# http://mmonit.com/monit/documentation/monit.html
+#
+
+check host mmonit.com with address mmonit.com
+      if failed
+         port 80 protocol http
+         and status = 200
+         and request /monit/ with content = "Monit [0-9.]+"
+      then alert
+
+# cpu, memory, total cpu (this, plus child processes cpu usage) and total memory
+check process apache with pidfile /var/run/httpd.pid
+      <...>
+      if cpu > 95% for 2 cycles then alert
+      if total cpu > 99% for 5 cycles then restart
+      if memory > 50 MB then alert
+      if total memory > 500 MB then restart
+
+# Normally you will run the logrotate program once per day from crond, but if the log file suddenly should grow very large, Monit can perform an “emergency” rotate.
+check file access.log with path /var/log/apache2/access_log
+      if size > 250 MB then exec "/usr/sbin/logrotate -f apache"
+
