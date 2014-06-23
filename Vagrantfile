@@ -11,17 +11,6 @@ Vagrant.configure('2') do |config|
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :forwarded_port, guest: 443, host: 8081
 
-  # 7000: in.pay-per-task.dev; 7001: api.pay-per-task.dev.
-  config.vm.network :forwarded_port, guest: 7000, host: 7000
-  config.vm.network :forwarded_port, guest: 7001, host: 7001
-
-  # Redis.
-  config.vm.network :forwarded_port, guest: 6380, host: 6380
-
-  # RabbitMQ & RabbitMQ management plugin.
-  config.vm.network :forwarded_port, guest: 5672, host: 5672
-  config.vm.network :forwarded_port, guest: 15672, host: 15672
-
   # Port forwarding from 8080 back to 80 using vagrant-triggers.
   #
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac

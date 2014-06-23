@@ -12,5 +12,8 @@ http://wiki.matcherapp.com/workflows/ clne hook missing
 
 REDIS http://redis.io/topics/persistence
 
+[rabbit.pay-per-task.dev](http://rabbit.pay-per-task.dev)
+[monit.pay-per-task.dev](http://monit.pay-per-task.dev)
+
 * [Hooks](hooks/README.md)
 * [Scalling](../docs/scalling.md)
