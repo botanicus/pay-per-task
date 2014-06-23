@@ -1,18 +1,15 @@
 Vagrant.configure('2') do |config|
   config.vm.box = 'ubuntu-14.04-amd64'
-  config.vm.box_url = 'http://static.101ideas.cz/ubuntu-14.04-amd64.box'
+  config.vm.box_url = 'https://www.dropbox.com/s/p21r1rl484bt9o0/ubuntu-14.04-amd64.box?dl=1'
 
   # We want this for Oh my ZSH profiles.
   config.vm.hostname = 'ppt'
 
   # Port forwarding.
-
-  # Nginx.
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :forwarded_port, guest: 443, host: 8081
 
   # Port forwarding from 8080 back to 80 using vagrant-triggers.
-  #
   # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac
   File.open('/tmp/pf.conf', 'w') do |file|
     file.puts <<-EOF
