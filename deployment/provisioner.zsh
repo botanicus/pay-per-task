@@ -27,10 +27,11 @@ sudo git commit -m "After vagrant up." &> /dev/null
 use_rubinius
 echo "~ Using $(ruby -v)"
 
-bundle install
-
 # Set up local paths to libraries in development.
-link_gems
+bundle config local.pipeline-mail_queue /webs/ppt/gems/oss.pipeline-mail_queue
+bundle config local.simple-orm /webs/ppt/gems/oss.simple-orm
+
+bundle install
 
 services=(api in)
 for service in $services; do

@@ -1,14 +1,86 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: git://github.com/botanicus/assets-squasher.git
+  revision: 08cbad803ded739d273ce4aa25dbf41888f8351e
+  branch: master
   specs:
     assets-squasher (0.0.3)
       nokogiri (~> 1.6)
+
+GIT
+  remote: git://github.com/botanicus/pipeline-mail_queue.git
+  revision: 5f860a6a01de0a85f181e918f1432c05a20b5b37
+  branch: master
+  specs:
+    pipeline-mail_queue (0.0.1)
+      mail
+      pipeline.rb
+
+GIT
+  remote: git://github.com/botanicus/simple-orm.git
+  revision: b311d66b10423ef70993288aa50d0da00c727dfe
+  branch: master
+  specs:
+    simple-orm (0.0.1)
+      hiredis (~> 0.5)
+      redis (~> 3.1)
+
+PATH
+  remote: gems/ppt
+  specs:
+    ppt (0.0.1)
+      amq-client
+      simple-orm
+
+PATH
+  remote: gems/ppt.inbox.backup
+  specs:
+    ppt.inbox.backup (0.0.1)
+
+PATH
+  remote: gems/ppt.inbox.jira
+  specs:
+    ppt.inbox.jira (0.0.1)
+
+PATH
+  remote: gems/ppt.inbox.pt
+  specs:
+    ppt.inbox.pt (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    amq-client (1.0.4)
+      amq-protocol (>= 1.9.0)
+      eventmachine
+    amq-protocol (1.9.2)
+    coderay (1.1.0)
+    eventmachine (1.0.3)
+    hiredis (0.5.2)
+    mail (2.6.1)
+      mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
+    mime-types (2.3)
     mini_portile (0.6.0)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
+    pipeline.rb (0.0.1)
+      amq-client
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    redis (3.1.0)
+    slop (3.5.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  assets-squasher
+  assets-squasher!
+  pipeline-mail_queue!
+  ppt!
+  ppt.inbox.backup!
+  ppt.inbox.jira!
+  ppt.inbox.pt!
+  pry
+  simple-orm!
