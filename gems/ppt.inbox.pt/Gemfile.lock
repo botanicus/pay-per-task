@@ -1,20 +1,18 @@
 GIT
-  remote: boll.ocks
-  revision: 558fcbff135f4b74a8700593f595dfb8c37a7fcd
-  branch: master
-  specs:
-    ppt (0.0.1)
-      amq-client
-      simple-orm
-
-GIT
   remote: git://github.com/botanicus/simple-orm.git
   revision: b311d66b10423ef70993288aa50d0da00c727dfe
   branch: master
   specs:
     simple-orm (0.0.1)
-      hiredis (~> 0.5)
-      redis (~> 3.1)
+      hiredis (~> 0)
+      redis (~> 3)
+
+PATH
+  remote: /webs/ppt/gems/ppt
+  specs:
+    ppt (0.0.1)
+      amq-client
+      simple-orm
 
 GEM
   remote: https://rubygems.org/
