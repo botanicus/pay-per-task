@@ -40,7 +40,7 @@ script
 end script
 EOF
 
-start load_iptables_rules
+sudo start load_iptables_rules
 
 # NOTES:
 #
