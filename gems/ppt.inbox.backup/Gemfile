@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'amq-client'
-
-gem 'redis'
-gem 'hiredis'
+# I could use the gemspec method to load the gemspec
+# but hell, I gotta rewrite it anyway, so why bother.
+gem 'ppt', path: '/webs/ppt/gems/ppt'
 
 group(:development, :test) do
   gem 'pry'
