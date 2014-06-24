@@ -11,7 +11,13 @@ That consists of:
 
 # Current Limitations
 
+## File System
+
 Consumer **ppt.inbox.backup** saves everything to the file system. It doesn't matter too much since this is only just-in-case and also I still might decide to use the API to crawl the apps regularly, since now **ppt.webs.in** is the single point of failure.
+
+## Redis (Rather Theoretical)
+
+Redis can be distributed, but since it's in-memory, the price of that is significantly higher.
 
 # Concerns
 
