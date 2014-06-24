@@ -22,6 +22,7 @@
 # Connection limit and rate limit. You want your firewall to be able to slow things down in the event of a DDoS attack or repeated attempts at port-knocking or things like that.
 # Block all unnecessary out-going traffic. This can help in case your machine is compromised as most bots need to connect to a remote command-and-control server.
 # Block all other incoming ports. You should really still block everything else, just in case an attacker manages to install some app and opens up a back-door port.
+# Deny SSH connection after 4 unsuccessful tries http://blog.bigdinosaur.org/securing-ssh-with-iptables/
 
 sudo tee /etc/init/load_iptables_rules.conf <<EOF
 start on runlevel 2
