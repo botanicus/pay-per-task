@@ -23,18 +23,24 @@
 # Block all unnecessary out-going traffic. This can help in case your machine is compromised as most bots need to connect to a remote command-and-control server.
 # Block all other incoming ports. You should really still block everything else, just in case an attacker manages to install some app and opens up a back-door port.
 
-# Flush all rules in the default table (filter).
-sudo iptables -F
+sudo tee /etc/init/load_iptables_rules.conf <<EOF
+start on runlevel 2
 
-sudo iptables -P INPUT DROP
-sudo iptables -A INPUT -i lo -p all -j ACCEPT
-sudo iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-sudo iptables -A INPUT -j DROP
+script
+  # Flush all rules in the default table (filter).
+  sudo iptables -F
 
-sudo apt-get install -y iptables-persistent
+  sudo iptables -P INPUT DROP
+  sudo iptables -A INPUT -i lo -p all -j ACCEPT
+  sudo iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+  sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+  sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+  sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+  sudo iptables -A INPUT -j DROP
+end script
+EOF
+
+start load_iptables_rules
 
 # NOTES:
 #
