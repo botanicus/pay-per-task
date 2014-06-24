@@ -15,4 +15,7 @@ Gem::Specification.new do |s|
   s.license           = 'closed source'
 
   s.files             = ['README.md', *Dir.glob('**/*.rb')]
+  s.executables       = ['ppt.inbox.jira.rb']
+
+  s.add_runtime_dependency('ppt', '~> 0')
 end
