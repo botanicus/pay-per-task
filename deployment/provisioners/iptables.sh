@@ -26,6 +26,16 @@
 # Block all other incoming ports. You should really still block everything else, just in case an attacker manages to install some app and opens up a back-door port.
 
 sudo iptables -F
+sudo iptables -P INPUT DROP
+sudo iptables -A INPUT -i lo -p all -j ACCEPT
+sudo iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -j DROP
+
+
+exit
+sudo iptables -F
 sudo iptables -X
 
 sudo iptables -t filter --list
