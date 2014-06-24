@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.date              = Date.today.to_s
   s.authors           = ['https://github.com/botanicus']
   s.summary           = 'Library for http://pay-per-task.com.'
-  s.description       = 'Containts models, AMQP helpers and shit.'
+  s.description       = 'Contains models, AMQP helpers and shit.'
   s.email             = 'james@101ideas.cz'
   s.homepage          = 'http://pay-per-task.com'
   s.rubyforge_project = s.name
