@@ -7,13 +7,13 @@ describe 'GET /' do
   end
 end
 
-describe 'POST /pt/botanicus/:auth_key', auth_key: 'invalid' do
+describe 'POST /pt/ppt/:auth_key', auth_key: 'invalid' do
   it 'says that the user is unauthorised' do
     expect(response.code).to eql(401)
   end
 end
 
-describe 'POST /pt/botanicus/:auth_key',
+describe 'POST /pt/ppt/:auth_key',
             auth_key: 'Wb9CdGTqEr7msEcPBrHPinsxRxJdM',
             data: 'blob of data from PT' do
 
@@ -23,7 +23,7 @@ describe 'POST /pt/botanicus/:auth_key',
     @queue.subscribe do |delivery_info, metadata, payload|
       message_received = true
       expect(payload).to eq('blob of data from PT')
-      expect(delivery_info.routing_key).to eq('inbox.pt.botanicus')
+      expect(delivery_info.routing_key).to eq('inbox.pt.ppt')
     end
 
     expect(response.code).to eql(201)
