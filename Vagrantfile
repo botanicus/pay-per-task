@@ -66,6 +66,7 @@ Vagrant.configure('2') do |config|
   config.vm.provision :shell, privileged: false,
     path: 'deployment/provisioner.zsh',
     args: [
+      'deployment/provisioners/iptables.sh',
       'deployment/provisioners/setup-nginx.sh',
       'deployment/provisioners/setup-rabbitmq.sh',
       'deployment/provisioners/hosts.sh',
