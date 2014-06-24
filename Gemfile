@@ -5,9 +5,6 @@ gem 'assets-squasher', github: 'botanicus/assets-squasher', branch: 'master'
 
 # Services.
 gem 'pipeline-mail_queue', github: 'botanicus/pipeline-mail_queue', branch: 'master'
-gem 'ppt.inbox.backup', path: 'gems/ppt.inbox.backup'
-gem 'ppt.inbox.pt', path: 'gems/ppt.inbox.pt'
-gem 'ppt.inbox.jira', path: 'gems/ppt.inbox.jira'
 
 # Dependencies.
 #

@@ -1,5 +1,11 @@
 #!/opt/rubies/rbx-2.2.6/bin/gem build
 
+# What is this shit good for, you might ask?
+# Well, I tell you: it's fucking useless.
+# However Bundler requires it and we're using
+# it from ppt.webs.in and ppt.webs.api services
+# (for testing).
+
 Gem::Specification.new do |s|
   s.name              = 'ppt'
   s.version           = '0.0.1'

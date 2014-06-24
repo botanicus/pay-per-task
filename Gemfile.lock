@@ -31,21 +31,6 @@ PATH
       amq-client
       simple-orm
 
-PATH
-  remote: gems/ppt.inbox.backup
-  specs:
-    ppt.inbox.backup (0.0.1)
-
-PATH
-  remote: gems/ppt.inbox.jira
-  specs:
-    ppt.inbox.jira (0.0.1)
-
-PATH
-  remote: gems/ppt.inbox.pt
-  specs:
-    ppt.inbox.pt (0.0.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -79,8 +64,5 @@ DEPENDENCIES
   assets-squasher!
   pipeline-mail_queue!
   ppt!
-  ppt.inbox.backup!
-  ppt.inbox.jira!
-  ppt.inbox.pt!
   pry
   simple-orm!
