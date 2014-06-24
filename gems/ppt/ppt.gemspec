@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email             = 'james@101ideas.cz'
   s.homepage          = 'http://pay-per-task.com'
   s.rubyforge_project = s.name
-  s.license           = 'MIT'
+  s.license           = 'closed source'
 
   s.files             = ['README.md', *Dir.glob('**/*.rb')]
 
