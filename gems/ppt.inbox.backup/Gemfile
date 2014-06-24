@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-# I could use the gemspec method to load the gemspec
-# but hell, I gotta rewrite it anyway, so why bother.
 gem 'ppt', path: '/webs/ppt/gems/ppt'
 
 group(:development, :test) do

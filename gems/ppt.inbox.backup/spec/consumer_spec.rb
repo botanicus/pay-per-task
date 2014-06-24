@@ -5,7 +5,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'inbox.backup consumer' do
+describe 'ppt.inbox.backup consumer' do
   let(:username) { "rand-user-#{rand(100_000)}" }
 
   it 'writes the payload to the data directory', amqp: true do

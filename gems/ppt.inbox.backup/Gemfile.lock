@@ -1,10 +1,4 @@
 PATH
-  remote: .
-  specs:
-    ppt.inbox.backup (0.0.1)
-      ppt
-
-PATH
   remote: /webs/ppt/gems/ppt
   specs:
     ppt (0.0.1)
@@ -54,7 +48,6 @@ PLATFORMS
 DEPENDENCIES
   bunny
   ppt!
-  ppt.inbox.backup!
   pry
   psych
   rspec
