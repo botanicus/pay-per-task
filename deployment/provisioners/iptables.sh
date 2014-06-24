@@ -19,6 +19,12 @@
 # Alright, ready?
 
 # Flush all rules in the default table (filter).
+
+
+# Connection limit and rate limit. You want your firewall to be able to slow things down in the event of a DDoS attack or repeated attempts at port-knocking or things like that.
+# Block all unnecessary out-going traffic. This can help in case your machine is compromised as most bots need to connect to a remote command-and-control server.
+# Block all other incoming ports. You should really still block everything else, just in case an attacker manages to install some app and opens up a back-door port.
+
 sudo iptables -F
 sudo iptables -X
 
@@ -36,3 +42,7 @@ sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 # Allow unlimited traffic on loopback
 sudo iptables -A INPUT -i lo -j ACCEPT
 sudo iptables -A OUTPUT -o lo -j ACCEPT
+
+# NOTES:
+# Port forwarding:
+# iptables -t nat -A PREROUTING -i $EXT_IF -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8443
