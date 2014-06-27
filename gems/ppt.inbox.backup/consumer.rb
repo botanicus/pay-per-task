@@ -10,7 +10,7 @@ require 'ppt'
 require 'json'
 require 'pipeline/plugin'
 
-module PPT::PT
+module PPT::Backup
   class Consumer < Pipeline::Plugin
     QUEUES = {'inbox.backup' => 'inbox.#'}
 
@@ -54,4 +54,4 @@ module PPT::PT
   end
 end
 
-PPT::PT::Consumer.run(PPT.root)
+PPT::Backup::Consumer.run(PPT.root)
