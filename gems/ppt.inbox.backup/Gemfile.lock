@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/botanicus/pipeline.rb.git
+  revision: e6a0187bb34584658a625ad7f084ae3f1c7e00f7
+  branch: master
+  specs:
+    pipeline.rb (0.0.1)
+      amq-client
+
 PATH
   remote: /webs/ppt/gems/ppt
   specs:
@@ -7,11 +15,15 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    amq-client (1.0.4)
+      amq-protocol (>= 1.9.0)
+      eventmachine
     amq-protocol (1.9.2)
     bunny (1.3.1)
       amq-protocol (>= 1.9.2)
     coderay (1.1.0)
     diff-lcs (1.2.5)
+    eventmachine (1.0.3)
     hiredis (0.5.2)
     method_source (0.8.2)
     pry (0.10.0)
@@ -42,6 +54,7 @@ PLATFORMS
 
 DEPENDENCIES
   bunny
+  pipeline.rb!
   ppt!
   pry
   psych
