@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/botanicus/pipeline.rb.git
+  revision: 2d9acf638c80fb52a84e0ddb8474890ba3153f5e
+  branch: master
+  specs:
+    pipeline.rb (0.0.1)
+      amq-client
+
+GIT
   remote: git://github.com/botanicus/simple-orm.git
   revision: b311d66b10423ef70993288aa50d0da00c727dfe
   branch: master
@@ -11,7 +19,7 @@ PATH
   remote: /webs/ppt/gems/ppt
   specs:
     ppt (0.0.1)
-      amq-client
+      pipeline.rb
       simple-orm
 
 GEM
@@ -52,6 +60,7 @@ PLATFORMS
 
 DEPENDENCIES
   bunny
+  pipeline.rb!
   ppt!
   pry
   rspec
