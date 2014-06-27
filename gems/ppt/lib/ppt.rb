@@ -18,33 +18,10 @@ class PPT
     end
   end
 
-  def self.async_loop(&block)
-    PPT.ensure_at_root
-
-    client = PPT::Client.register_hook
-
-    EM.run do
-      EM.next_tick do
-        block.call(client)
-      end
-    end
-  end
-
   def self.config(key)
     path = File.join(self.root, 'config', "#{key}.json")
     JSON.parse(File.read(path)).reduce(Hash.new) do |buffer, (key, value)|
       buffer.merge(key.to_sym => value)
     end
-  end
-
-  def self.supports_service?(service)
-    self.consumers.include?("inbox.#{service}")
-  end
-
-  def self.consumers
-    consumers_dir = File.join(self.root, 'consumers')
-    Dir.glob("#{consumers_dir}/*").
-      select { |path| File.directory?(path) }.
-      map { |path| File.basename(path) }
   end
 end

@@ -20,6 +20,5 @@ Gem::Specification.new do |s|
 
   s.files             = ['README.md', *Dir.glob('**/*.rb')]
 
-  s.add_runtime_dependency('pipeline.rb')
   s.add_runtime_dependency('simple-orm')
 end
