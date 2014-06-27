@@ -24,7 +24,8 @@ module PPT::PT
         puts "~ Writing payload from #{frame.routing_key} to #{path}"
 
         begin
-          # Converting to JSON in order to leave out the whitespace.
+          # Converting to JSON and back in order to leave out the
+          # whitespace.
           minified_payload = JSON.parse(payload).to_json
 
           # By saving a lot of small files, 5k requests consumed 20MB
