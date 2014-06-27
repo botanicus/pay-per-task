@@ -20,8 +20,8 @@ module PPT::PT
         puts "~ Writing payload from #{frame.routing_key} to #{path}"
 
         begin
-          # Leave out whitespace.
-          blob = JSON.parse(payload).to_json
+          # Converting to JSON in order to leave out the whitespace.
+          minified_blob = JSON.parse(payload).to_json
 
           # By saving a lot of small files, 5k requests consumed 20MB
           # of disk space (5k * 4kB). With one big file we only need
@@ -32,10 +32,12 @@ module PPT::PT
           # no need to escape the JSON as a string, it gets properly
           # parsed as YAML.
           #
-          # At least on MRI. YAML.load_documents on Rubinius raise
-          # an exception.
+          # At least on Psych. Syck, the older YAML implementation
+          # written by _why raises an exception. That's why we're
+          # including psych gem in our Gemfile for tests when we
+          # read the YAML. Psych is however the default on MRI.
           File.open(path, 'a') do |file|
-            file.puts("---\n#{blob}")
+            file.puts("---\n#{minified_blob}")
           end
         rescue Exception => error
           # No error should really happen, but we cannot
