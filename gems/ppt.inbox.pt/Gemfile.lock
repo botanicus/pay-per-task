@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/botanicus/pipeline.rb.git
-  revision: 2d9acf638c80fb52a84e0ddb8474890ba3153f5e
+  revision: ddf3c8058b4f22d6ee42e658f26cb7057e6a4e38
   branch: master
   specs:
     pipeline.rb (0.0.1)
@@ -19,7 +19,6 @@ PATH
   remote: /webs/ppt/gems/ppt
   specs:
     ppt (0.0.1)
-      pipeline.rb
       simple-orm
 
 GEM
