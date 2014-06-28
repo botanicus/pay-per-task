@@ -4,8 +4,8 @@
 
 This consumer appends any JSON into a YAML file. YAML is used due to its support for multiple documents and because [JSON is subset of YAML](http://en.wikipedia.org/wiki/YAML#JSON), however surprising might it be.
 
-- **Queue:** `ppt.inbox.backup`
-- **Queue bound to:** `inbox.#` of `amq.topic`.
+- **Queue:** `inbox.backup`
+- **Queue binds to:** `inbox.#` of `amq.topic`.
 - **Format:** (any) JSON is expected.
 - **Output:** Appends to `data/inbox/[service]/[username].yml`.
 - **Error handling:** Malformatted JSON results in a log message.

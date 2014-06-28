@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/botanicus/pipeline.rb.git
-  revision: ddf3c8058b4f22d6ee42e658f26cb7057e6a4e38
+  revision: c8aa0fef33148f0128b12c37f0e47f27aa03c35b
   branch: master
   specs:
     pipeline.rb (0.0.1)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/botanicus/simple-orm.git
-  revision: b311d66b10423ef70993288aa50d0da00c727dfe
+  revision: ddf9071cf40b3088216f7731ae984db649bd3318
   branch: master
   specs:
     simple-orm (0.0.1)
