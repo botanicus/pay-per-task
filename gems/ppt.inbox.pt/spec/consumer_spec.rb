@@ -3,19 +3,33 @@
 #
 
 require 'spec_helper'
+require 'redis'
 
 describe 'ppt.inbox.pt consumer' do
-  let(:username) { "rand-user-#{rand(100_000)}" }
+  let(:redis) { Redis.new(driver: :hiredis) }
 
   it 'parses the payload and stores the data to Redis', amqp: true do
     data = File.read('spec/data/sample_data.json')
-    @channel.topic('amq.topic').publish(data, routing_key: "inbox.pt.#{username}")
+    @channel.topic('amq.topic').publish(data, routing_key: 'inbox.pt.ppt')
 
     sleep 0.1
+
+    # Now we can either use the API models provide
+    # or we can go directly to Redis. Either approach
+    # is valid. I decided to go for using Redis directly,
+    # because this way it's really self-explanatory,
+    # so the spec fullfils its purpose as being both
+    # the test and (part of) the documentation.
+    dev = redis.hgetall('devs.ppt.botanicus')
+    expect(dev).to eq('')
+
+    story = redis.hgetall('stories.ppt.60839620')
+    expect(story).to eq('')
+
+    # check if the dev was published to devs.new
+    # check if the story was published to stories.new
   end
 
-  after(:each) do
-    # This happens only if ppt.inbox.backup is running.
-    system "rm -rf #{PPT.root}/data/inbox/pt/#{username}.yml"
-  end
+  # TODO: Copy this to ppt.inbox.backup.
+  it 'ignores malformatted JSON'
 end

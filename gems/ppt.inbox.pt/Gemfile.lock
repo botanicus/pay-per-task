@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/botanicus/pipeline.rb.git
-  revision: c8aa0fef33148f0128b12c37f0e47f27aa03c35b
+  revision: f04541789990344cd25bbe1d2718861f1429c361
   branch: master
   specs:
     pipeline.rb (0.0.1)
