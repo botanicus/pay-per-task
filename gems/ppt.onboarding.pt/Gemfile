@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+
+# sudo apt-get -y install libxml2-dev
+gem 'pivotal-tracker', github: 'jsmestad/pivotal-tracker', branch: 'master'

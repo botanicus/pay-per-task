@@ -7,6 +7,12 @@ class PPT
         # There is nothing to update. The user either exists, or he doesn't.
         return if PPT::DB::Developer.get("devs:#{company}:#{username}")
 
+        # Email is the username and unfortunately
+        # we don't get the email POSTed to us.
+        username = payload['performed_by']['id']
+        name = payload['performed_by']['name']
+        email = Z
+
         developer = PPT::DB::Developer.create(
           company: company, username: username, name: name, email: email
         )
