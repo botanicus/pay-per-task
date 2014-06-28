@@ -1,5 +1,7 @@
-require 'simple-orm'
+require 'datetime'
 require 'securerandom'
+
+require 'simple-orm'
 
 class PPT
   module Presenters
@@ -17,12 +19,12 @@ class PPT
       attribute(:auth_key).private.default { SecureRandom.hex }
 
       attribute(:created_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_create { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
 
       attribute(:updated_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_update { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
     end
 
     class Developer < SimpleORM::Presenter
@@ -32,12 +34,12 @@ class PPT
       attribute(:email).required
 
       attribute(:created_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_create { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
 
       attribute(:updated_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_update { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
     end
 
     class Story < SimpleORM::Presenter
@@ -49,12 +51,12 @@ class PPT
       attribute(:link).required
 
       attribute(:created_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_create { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
 
       attribute(:updated_at).
-        deserialise { |data| Time.at(data.to_i) }.
-        on_update { Time.now.utc.to_i }
+        deserialise { |data| DateTime.parse(data) }.
+        on_create { DateTime.now.iso8601 }
     end
   end
 
