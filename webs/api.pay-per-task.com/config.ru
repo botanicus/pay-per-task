@@ -1,7 +1,5 @@
 #!/usr/bin/env rackup
 
-require 'bundler/setup'
-
 require 'ppt'
 
 require 'json'
