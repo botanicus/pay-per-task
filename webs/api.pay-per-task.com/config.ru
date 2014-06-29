@@ -78,7 +78,10 @@ end
 #
 # It should go like:
 #
-# 1. Create a new user with a unique auth_key.
+# 1. Create a new user. We only need to know which service the user
+#    wants to use. We'll get his details from the API as soon as we
+#    get our dirty hands on his API key. This might not work for
+#    everything, but I just like to make the onboarding seamless.
 #
 # 2. Give us your API token (here are instructions how to do it).
 #
@@ -98,19 +101,40 @@ end
 # [x] https://www.pivotaltracker.com/help/api/rest/v5#projects_project_id_webhooks
 #
 
-get '/onboarding/pt/:token/projects' do
-  required_fields = ['id', 'name']
+helpers do
+  def pivotal_tracker(method, api_path, token, extra_opts = Hash.new)
+    path = "https://www.pivotaltracker.com/services/v5#{api_path}"
+    HTTP.with('X-TrackerToken' => token).send(method, path, extra_opts)
+  end
+end
 
-  response = HTTP.with('X-TrackerToken' => params[:token]).
-    get('https://www.pivotaltracker.com/services/v5/projects')
+get '/onboarding/pt/:token/me' do
+  require 'ppt/models'
 
+  response = pivotal_tracker(:get, '/me', params[:token])
   data = JSON.parse(response.body.readpartial)
+  me = data.select { |key, _| ['email', 'name', 'username'].include?(key) }
 
-  projects = data.map do |project|
-    project.select { |key, _| required_fields.include?(key) }
+  p user_data = me.merge(service: 'pt')
+  PPT::DB::User.create(user_data)
+
+  me['projects'] = data['projects'].map do |item|
+    item.reduce(Hash.new) do |buffer, (key, value)|
+      buffer[:id]   = value if key == 'project_id'
+      buffer[:name] = value if key == 'project_name'
+      buffer
+    end
   end
 
-  projects.to_json
+  me.to_json
+end
+
+post '/onboarding/pt/:token/hooks/:project' do
+  body = {webhook_url: XXX, webhook_version: 'v5'}
+  api_path = "/projects/#{params[:project]}/webhooks"
+  response = pivotal_tracker(:post, api_path, params[:token], json: body)
+
+  status response.status
 end
 
 # API.
