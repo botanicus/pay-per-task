@@ -115,8 +115,11 @@ get '/onboarding/pt/:token/me' do
   data = JSON.parse(response.body.readpartial)
   me = data.select { |key, _| ['email', 'name', 'username'].include?(key) }
 
-  p user_data = me.merge(service: 'pt')
-  PPT::DB::User.create(user_data)
+  user = PPT::DB::User.new(me) # TODO: would be better with a block
+  user.service = 'pt'
+  user.pt.api_key = params[:token]
+  user.save
+  p user
 
   me['projects'] = data['projects'].map do |item|
     item.reduce(Hash.new) do |buffer, (key, value)|

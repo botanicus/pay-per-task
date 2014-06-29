@@ -18,6 +18,12 @@ class PPT
       attribute(:accounting_email).default { self.email }
       attribute(:auth_key).private.default { SecureRandom.hex }
 
+      [:pt, :jira].each do |issue_tracker|
+        namespace(issue_tracker) do
+          attribute(:api_key)
+        end
+      end
+
       attribute(:created_at).
         deserialise { |data| DateTime.parse(data) }.
         on_create { DateTime.now.iso8601 }
