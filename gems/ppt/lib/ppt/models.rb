@@ -63,27 +63,18 @@ class PPT
 
   module DB
     class User < SimpleORM::DB
-      presenter PPT::Presenters::User, omit: [:username]
-
-      def key
-        "users.#{self.presenter.username}"
-      end
+      presenter PPT::Presenters::User
+      key 'users.{username}'
     end
 
     class Developer < SimpleORM::DB
       presenter PPT::Presenters::Developer, omit: [:company, :username]
-
-      def key
-        "devs.#{self.presenter.company}.#{self.presenter.username}"
-      end
+      key 'devs.{company}.{username}'
     end
 
     class Story < SimpleORM::DB
       presenter PPT::Presenters::Story, omit: [:company, :id]
-
-      def key
-        "stories.#{self.presenter.company}.#{self.presenter.id}"
-      end
+      key 'stories.{company}.{id}'
     end
   end
 end
