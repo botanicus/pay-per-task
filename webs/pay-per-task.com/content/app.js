@@ -69,7 +69,7 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
 });
 
 /* Per-page controllers */
-app.controller('SignUpController', function ($scope, $http, Notifications) {
+app.controller('NewsletterController', function ($scope, $http, Notifications) {
   Notifications.register($scope);
 
   $scope.subscribe = function () {
