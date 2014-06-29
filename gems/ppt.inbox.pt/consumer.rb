@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
-# By this we add everything into $LOAD_PATH,
-# but that doesn't matter, since we don't actually
-# require gems from any other group than default,
-# we only do it ad-hoc: require 'pry'; binding.pry
-require 'bundler/setup'
-
 require 'ppt'
 require 'pipeline/plugin'
 
