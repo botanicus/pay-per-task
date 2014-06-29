@@ -5,5 +5,18 @@ gem 'puma'
 gem 'sinatra'
 
 gem 'gibbon'
+gem 'http'
 
 gem 'ppt', path: '/webs/ppt/gems/ppt'
+
+# Those are dependencies of ppt. We can leave it up to RubyGems
+# to handle them, but then we'd have to create a new release
+# and run bundle update every time we'd want to update the code.
+#
+# Local overrides through bundle config local.GEMNAME don't work
+# either if the gem is specified in ppt.gemspec rather than in here.
+gem 'simple-orm', github: 'botanicus/simple-orm', branch: 'master'
+
+group(:test) do
+  gem 'rspec'
+end
