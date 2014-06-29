@@ -68,12 +68,12 @@ class PPT
     end
 
     class Developer < SimpleORM::DB
-      presenter PPT::Presenters::Developer, omit: [:company, :username]
+      presenter PPT::Presenters::Developer
       key 'devs.{company}.{username}'
     end
 
     class Story < SimpleORM::DB
-      presenter PPT::Presenters::Story, omit: [:company, :id]
+      presenter PPT::Presenters::Story
       key 'stories.{company}.{id}'
     end
   end
