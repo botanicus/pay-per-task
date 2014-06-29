@@ -28,8 +28,10 @@ use_rubinius
 echo "~ Using $(ruby -v)"
 
 # Set up local paths to libraries in development.
-bundle config local.pipeline-mail_queue /webs/ppt/gems/oss.pipeline-mail_queue
-bundle config local.simple-orm /webs/ppt/gems/oss.simple-orm
+for library_path in gems/oss.*; do
+  gem=$(echo $library_path | awk -F. '{ print $2 }')
+  bundle config local.$gem $library_path
+done
 
 bundle install
 
