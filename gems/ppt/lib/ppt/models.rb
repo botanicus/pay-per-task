@@ -1,4 +1,4 @@
-require 'datetime'
+require 'date'
 require 'securerandom'
 
 require 'simple-orm'
@@ -63,26 +63,26 @@ class PPT
 
   module DB
     class User < SimpleORM::DB
-      presenter PPT::Presenters::User
+      presenter PPT::Presenters::User, omit: [:username]
 
       def key
-        "users.#{self.username}"
+        "users.#{self.presenter.username}"
       end
     end
 
     class Developer < SimpleORM::DB
-      presenter PPT::Presenters::Developer
+      presenter PPT::Presenters::Developer, omit: [:company, :username]
 
       def key
-        "devs.#{self.company}.#{self.username}"
+        "devs.#{self.presenter.company}.#{self.presenter.username}"
       end
     end
 
     class Story < SimpleORM::DB
-      presenter PPT::Presenters::Story
+      presenter PPT::Presenters::Story, omit: [:company, :id]
 
       def key
-        "stories.#{self.company}.#{self.id}"
+        "stories.#{self.presenter.company}.#{self.presenter.id}"
       end
     end
   end
