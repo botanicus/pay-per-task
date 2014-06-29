@@ -3,3 +3,7 @@ source 'https://rubygems.org/'
 gem 'rack'
 gem 'puma'
 gem 'sinatra'
+
+gem 'gibbon'
+
+gem 'ppt', path: '/webs/ppt/gems/ppt'

@@ -1,7 +1,12 @@
-#!/usr/bin/env bundle exec rackup -s Puma -p 7001
+#!/usr/bin/env rackup
+
+require 'bundler/setup'
+
+require 'ppt'
 
 require 'json'
 require 'sinatra'
+require 'gibbon'
 
 DEVELOPMENT = true
 
@@ -47,6 +52,25 @@ helpers do
         gravatarLink: gravatar_link('james@101ideas.cz')
       }
     end
+  end
+end
+
+
+post '/subscribe' do
+  # TODO: Make it a separate class.
+  config    = PPT.config('mailchimp')
+  mailchimp = Gibbon::API.new(config[:api_key])
+
+  begin
+    p data = JSON.parse(env['rack.input'].read)
+    config[:lists].each do |list_id| # mailchimp.lists.list
+      mailchimp.lists.subscribe(id: list_id, email: {email: data['email']})
+    end
+
+    status 201
+  rescue => error
+    status 500
+    body error.message
   end
 end
 
