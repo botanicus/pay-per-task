@@ -19,4 +19,5 @@ gem 'simple-orm', github: 'botanicus/simple-orm', branch: 'master'
 
 group(:test) do
   gem 'rspec'
+  gem 'rspec-sane-http', github: 'botanicus/rspec-sane-http', branch: 'master'
 end

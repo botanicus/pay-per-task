@@ -7,6 +7,7 @@ require 'ppt'
 require 'json'
 require 'sinatra'
 require 'gibbon'
+require 'http'
 
 DEVELOPMENT = true
 
@@ -98,6 +99,21 @@ end
 # [2] curl -X POST -H "X-TrackerToken: 78525a130a030829876309975267aa6a" -H "Content-Type: application/json" -d '{"webhook_url": "http://in.pay-per-task.com/pt/ppt/Wb9CdGTqEr7msEcPBrHPinsxRxJdM", "webhook_version": "v5"}' https://www.pivotaltracker.com/services/v5/projects/957456/webhooks
 # [x] https://www.pivotaltracker.com/help/api/rest/v5#projects_project_id_webhooks
 #
+
+get '/onboarding/pt/:token/projects' do
+  required_fields = ['id', 'name']
+
+  response = HTTP.with('X-TrackerToken' => params[:token]).
+    get('https://www.pivotaltracker.com/services/v5/projects')
+
+  data = JSON.parse(response.body.readpartial)
+
+  projects = data.map do |project|
+    project.select { |key, _| required_fields.include?(key) }
+  end
+
+  projects.to_json
+end
 
 # API.
 get '/me' do

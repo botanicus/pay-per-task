@@ -10,6 +10,6 @@ gem 'bunny'
 
 group(:test) do
   gem 'ppt', path: '/webs/ppt/gems/ppt'
-  gem 'http' # TODO: Extract spec_helper & remove this!
   gem 'rspec'
+  gem 'rspec-sane-http', github: 'botanicus/rspec-sane-http', branch: 'master'
 end

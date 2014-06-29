@@ -2,13 +2,12 @@ require 'ppt/spec_helper'
 require 'rspec-sane-http'
 
 PPT::SpecHelper.enforce_vagrant
-PPT::SpecHelper.configure('s:webs.in')
 
 RSpec.configure do |config|
   config.extend(HttpApi::Extensions)
 
   config.add_setting(:base_url)
-  config.base_url = 'http://in.pay-per-task.dev'
+  config.base_url = 'http://api.pay-per-task.dev'
 
   require 'redis'
 

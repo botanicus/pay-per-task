@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/botanicus/rspec-sane-http.git
+  revision: f18de0aca0f9f6964923be8b205b4c4a8644c612
+  branch: master
+  specs:
+    rspec-sane-http (0.0.1)
+      http (~> 0)
+
+GIT
   remote: git://github.com/botanicus/simple-orm.git
   revision: d66b0fa767d74489865ff5ac3461437cd4182d3e
   branch: master
@@ -64,5 +72,6 @@ DEPENDENCIES
   puma
   rack
   rspec
+  rspec-sane-http!
   simple-orm!
   sinatra
