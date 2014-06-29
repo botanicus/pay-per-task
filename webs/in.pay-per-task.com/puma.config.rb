@@ -2,7 +2,7 @@
 
 # http://rubybunny.info/articles/error_handling.html
 
-threads 8,32
+threads 8, 32
 workers 3
 port 7000
 preload_app!
