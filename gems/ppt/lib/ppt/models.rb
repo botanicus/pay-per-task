@@ -17,6 +17,11 @@ class PPT
       attribute(:email).required
       attribute(:accounting_email).default { self.email }
       attribute(:auth_key).private.default { SecureRandom.hex }
+      attribute(:plan).required#.enum(:free, :small, :large)
+
+      # list(:payments) do
+      #   # plan (can change) | paid how much | paid when
+      # end
 
       [:pt, :jira].each do |issue_tracker|
         namespace(issue_tracker) do

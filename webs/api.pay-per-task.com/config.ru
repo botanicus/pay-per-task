@@ -91,15 +91,16 @@ end
 #
 # 4. Clicking install will:
 #   a) Set up the webhook URL[x].
-#   b) Import all devs using GET /projects/{project_id}/memberships
+#   b) Import all devs using GET /projects/{project_id}/memberships[y]
 #   c) Send those devs an onboarding email.
 #
 # 5. Charge his card & set up periodic payments.
 #
 # [1] curl -H "X-TrackerToken: 78525a130a030829876309975267aa6a" https://www.pivotaltracker.com/services/v5/projects
 # [2] curl -X POST -H "X-TrackerToken: 78525a130a030829876309975267aa6a" -H "Content-Type: application/json" -d '{"webhook_url": "http://in.pay-per-task.com/pt/ppt/Wb9CdGTqEr7msEcPBrHPinsxRxJdM", "webhook_version": "v5"}' https://www.pivotaltracker.com/services/v5/projects/957456/webhooks
-# [x] https://www.pivotaltracker.com/help/api/rest/v5#projects_project_id_webhooks
 #
+# [x] https://www.pivotaltracker.com/help/api/rest/v5#projects_project_id_webhooks
+# [y] https://www.pivotaltracker.com/help/api/rest/v5#projects_project_id_memberships_get
 
 helpers do
   def pivotal_tracker(method, api_path, token, extra_opts = Hash.new)
@@ -108,28 +109,41 @@ helpers do
   end
 end
 
-get '/onboarding/pt/:token/me' do
+post '/users' do
   require 'ppt/models'
 
-  response = pivotal_tracker(:get, '/me', params[:token])
-  data = JSON.parse(response.body.readpartial)
-  me = data.select { |key, _| ['email', 'name', 'username'].include?(key) }
+  # service token plan
+  p user_data = JSON.parse(env['rack.input'].read)
 
-  user = PPT::DB::User.new(me) # TODO: would be better with a block
-  user.service = 'pt'
-  user.pt.api_key = params[:token]
-  user.save
-  p user
+  if user_data['service'] == 'pt'
+    response = pivotal_tracker(:get, '/me', user_data['token'])
+    data = JSON.parse(response.body.readpartial)
+    me = data.select { |key, _| ['email', 'name', 'username'].include?(key) }
 
-  me['projects'] = data['projects'].map do |item|
-    item.reduce(Hash.new) do |buffer, (key, value)|
-      buffer[:id]   = value if key == 'project_id'
-      buffer[:name] = value if key == 'project_name'
-      buffer
+    user = PPT::DB::User.new(me) # TODO: would be better with a block
+    user.service = user_data['service']
+    user.pt.api_key = user_data['token']
+    user.plan = user_data['plan']
+    user.save
+    p user
+
+    me['projects'] = data['projects'].map do |item|
+      item.reduce(Hash.new) do |buffer, (key, value)|
+        buffer[:id]   = value if key == 'project_id'
+        buffer[:name] = value if key == 'project_name'
+        buffer
+      end
     end
-  end
 
-  me.to_json
+    me.to_json
+  else
+    raise 'Not implemented error.'
+  end
+end
+
+# AngularJS requires that.
+options '/users' do
+  status 200
 end
 
 post '/onboarding/pt/:token/hooks/:project' do
