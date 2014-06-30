@@ -1,12 +1,27 @@
 <form ng-submit="register()">
   <input ng-model="token" required />
-  <button>Fetch my info!</button>
+  <button type="submit">Fetch my info!</button>
 </form>
 
 <div ng-show="user">
-  <ul>
-    <li ng-repeat="project in user.projects">{{project.name}} I want to use PPT with this project - <a ng-click="installToProject(project.id)">install</a>.</li>
+  <h3>Your Projects</h3>
+  <ul style="list-style: none; padding: 0;">
+    <div ng-hide="user.projects">
+      <em>You have no projects yet. Add some first.</em>
+      <!-- TODO: At this point user usually leaves. -->
+    </div>
+
+    <li ng-repeat="project in user.projects">{{project.name}} <a ng-click="installToProject(project.id)">Use PPT with this project</a>.</li>
   </ul>
-  Name: <input ng-model="user.name" />
-  E-mail: <input ng-model="user.email" />
+
+  <h3>Your Details</h3>
+  <div>
+    Name <input ng-model="user.name" />
+  </div>
+
+  <div>
+    E-mail <input ng-model="user.email" />
+  </div>
+
+  <button class="btn btn-primary" type="submit">Continue</button>
 </div>

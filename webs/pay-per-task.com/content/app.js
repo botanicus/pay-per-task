@@ -108,7 +108,7 @@ app.controller('OnboardingController', function ($scope, $http, $routeParams) {
       });
   };
 
-  $scope.installToProject = function (project.id) {
+  $scope.installToProject = function (projectId) {
   };
 });
 
