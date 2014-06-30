@@ -1,0 +1,12 @@
+<form ng-submit="register()">
+  <input ng-model="token" required />
+  <button>Fetch my info!</button>
+</form>
+
+<div ng-show="user">
+  <ul>
+    <li ng-repeat="project in user.projects">{{project.name}} I want to use PPT with this project - <a ng-click="installToProject(project.id)">install</a>.</li>
+  </ul>
+  Name: <input ng-model="user.name" />
+  E-mail: <input ng-model="user.email" />
+</div>

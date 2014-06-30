@@ -94,6 +94,24 @@ app.controller('NewsletterController', function ($scope, $http, Notifications) {
   };
 });
 
+app.controller('OnboardingController', function ($scope, $http, $routeParams) {
+  $scope.register = function () {
+    var data = {plan: $routeParams.plan, token: $scope.token, service: 'pt'};
+    $http.post('http://api.pay-per-task.dev/users', data).
+      success(function (data, status, headers) {
+        $scope.user = data;
+        console.log(data)
+        // This should log the user in.
+      }).
+      error(function (error) {
+        console.log(data)
+      });
+  };
+
+  $scope.installToProject = function (project.id) {
+  };
+});
+
 app.controller('ModalController', function ($scope, $modalInstance, Links, $window, $http) {
   $scope.close = function () {
     $modalInstance.close();
