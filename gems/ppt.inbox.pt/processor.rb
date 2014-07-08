@@ -7,15 +7,10 @@ class PPT
         # There is nothing to update. The user either exists, or he doesn't.
         return if PPT::DB::Developer.get("devs:#{company}:#{username}")
 
-        # Email is the username and unfortunately
-        # we don't get the email POSTed to us.
-        username = payload['performed_by']['id']
-        name = payload['performed_by']['name']
-        email = Z
-
-        developer = PPT::DB::Developer.create(
-          company: company, username: username, name: name, email: email
-        )
+        # We don't get the email posted to us, so we
+        # need to use the API in order to retrieve it.
+        developer = fetch_developer(payload['performed_by']['id'])
+        developer.save
 
         self.emit('devs.new', developer.to_json)
       end
@@ -38,6 +33,16 @@ class PPT
         if story.accepted? && company.allowed_to_do_qa.include?(payload['performed_by']['id']) && ! story.invoiced
           self.emit('stories.accepted', story.to_json)
         end
+      end
+
+      protected
+      def fetch_developer(company_id)
+        company = PPT::DB::User.get(company: company_id)
+        company.auth_key
+        # curl ...
+        developer = PPT::DB::Developer.new(
+          company: company, username: username, name: name, email: email
+        )
       end
     end
   end

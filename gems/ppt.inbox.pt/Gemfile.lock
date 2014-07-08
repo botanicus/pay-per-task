@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/botanicus/simple-orm.git
-  revision: ddf9071cf40b3088216f7731ae984db649bd3318
+  revision: 19ead40b5b79348c408bd02103359f3f85a2d563
   branch: master
   specs:
     simple-orm (0.0.1)
