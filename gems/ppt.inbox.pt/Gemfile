@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'http'
+
 gem 'ppt', path: '/webs/ppt/gems/ppt'
 
 # Those are dependencies of ppt. We can leave it up to RubyGems
