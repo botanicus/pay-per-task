@@ -2,6 +2,7 @@
 
 require 'ppt'
 require 'json'
+require 'fileutils'
 require 'pipeline/plugin'
 
 module PPT::Backup
