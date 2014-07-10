@@ -15,7 +15,7 @@ class PPT
       attribute(:username).required
       attribute(:name).required
       attribute(:email).required
-      attribute(:accounting_email).default { self.email }
+      attribute(:accounting_email) # TODO: Make it return self.email WITHOUT saving it.
       attribute(:auth_key).private.default { SecureRandom.hex }
       attribute(:plan).required#.enum(:free, :small, :large)
 
