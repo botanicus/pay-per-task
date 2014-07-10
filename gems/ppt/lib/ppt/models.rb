@@ -11,8 +11,6 @@ class PPT
     # Besides, not many people use both Jira and Pivotal Tracker.
 
     class User < SimpleORM::Presenter
-      attribute(:service).required
-      attribute(:username).required
       attribute(:name).required
       attribute(:email).required
       attribute(:accounting_email) # TODO: Make it return self.email WITHOUT saving it.
@@ -23,10 +21,10 @@ class PPT
       #   # plan (can change) | paid how much | paid when
       # end
 
-      [:pt, :jira].each do |issue_tracker|
-        namespace(issue_tracker) do
-          attribute(:api_key)
-        end
+      namespace(:service) do
+        attribute(:type).required#.enum(:pt, :jira)
+        attribute(:id).required
+        attribute(:api_key).required
       end
 
       attribute(:created_at).
@@ -60,7 +58,7 @@ class PPT
       attribute(:price).required
       attribute(:currency).required
       attribute(:link).required
-      attribute(:status).required
+      attribute(:status).required#.enum(nil, :wip, :finished, :QAd, :rejected)
 
       attribute(:created_at).
         deserialise { |data| DateTime.parse(data) }.
@@ -76,7 +74,10 @@ class PPT
   module DB
     class User < SimpleORM::DB
       presenter PPT::Presenters::User
-      key 'users.{username}'
+      key 'users.{service.type}.{service.id}'
+
+      def allowed_to_do_qa?(dev) # Dev is actually inaccurate, it's issue tracker user.
+      end
     end
 
     class Developer < SimpleORM::DB
@@ -87,6 +88,10 @@ class PPT
     class Story < SimpleORM::DB
       presenter PPT::Presenters::Story
       key 'stories.{company}.{id}'
+
+      def accepted?
+        self.status == :QAd
+      end
     end
   end
 end
