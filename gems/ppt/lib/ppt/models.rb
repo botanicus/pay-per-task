@@ -35,7 +35,7 @@ class PPT
 
       attribute(:updated_at).
         deserialise { |data| DateTime.parse(data) }.
-        on_create { DateTime.now.iso8601 }
+        on_create { DateTime.now.iso8601 } # TODO: Make this on_update only, again, mind the RAM.
     end
 
     class Developer < SimpleORM::Presenter
