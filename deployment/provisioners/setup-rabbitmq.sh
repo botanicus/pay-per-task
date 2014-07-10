@@ -19,4 +19,7 @@ sudo rabbitmqctl set_permissions -p ppt ppt '.*' '.*' '.*'
 
 sudo rabbitmq-plugins enable rabbitmq_management
 
+# DEV ONLY!
+sudo rabbitmqctl set_permissions -p ppt guest '.*' '.*' '.*'
+
 sudo restart rabbitmq-server
