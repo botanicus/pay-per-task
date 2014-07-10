@@ -44,8 +44,8 @@ class PPT
 
       company = PPT::DB::User.get("users.#{company_id}")
 
-      self.ensure_story_exists(company, payload)
-      self.ensure_developer_exists(company, payload)
+      developer = self.ensure_developer_exists(company, payload)
+      self.ensure_story_exists(company, developer, payload)
     rescue JSON::ParserError => error
       # Log it and ignore, there's not much we can do.
       STDERR.puts("~ ERROR #{error.class} #{error.message}")
