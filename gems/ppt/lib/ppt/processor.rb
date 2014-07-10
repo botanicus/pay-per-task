@@ -40,7 +40,9 @@ class PPT
     def process(payload, routing_key)
       payload = JSON.parse(payload)
 
-      _, service, company = routing_key.split('.')
+      _, service, company_id = routing_key.split('.')
+
+      company = PPT::DB::User.get("users.#{company_id}")
 
       self.ensure_story_exists(company, payload)
       self.ensure_developer_exists(company, payload)
