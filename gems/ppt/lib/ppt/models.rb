@@ -60,6 +60,7 @@ class PPT
       attribute(:price).required
       attribute(:currency).required
       attribute(:link).required
+      attribute(:status).required
 
       attribute(:created_at).
         deserialise { |data| DateTime.parse(data) }.
