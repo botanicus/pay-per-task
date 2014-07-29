@@ -4,11 +4,11 @@ require 'http'
 class PPT
   module PT
     class Processor < PPT::Processor
-      def ensure_developer_exists(company_id, payload)
-        # There is nothing to update. The user either exists, or he doesn't.
-        return if PPT::DB::Developer.get("devs.#{company}:#{username}")
-
-        company = PPT::DB::User.get("users.#{company_id}")
+      def ensure_developer_exists(company, payload)
+        # TODO: At the moment we don't update the developer details.
+        p [:x, PPT::DB::Developer.get("devs.#{company}:#{username}")]
+        return developer if developer = PPT::DB::Developer.get("devs.#{company}:#{username}")
+        p [:c, company]
 
         # We don't get the email posted to us, so we
         # need to use the API in order to retrieve it.
@@ -16,9 +16,12 @@ class PPT
         pt_user_id = payload['performed_by']['id']
 
         developer = fetch_developer(company, project_id, pt_user_id)
+        p [:d, developer]
         developer.save
 
         self.emit('devs.new', developer.to_json)
+
+        developer
       end
 
       # new -> WIP
@@ -26,23 +29,25 @@ class PPT
       # done -> [accepted | rejected]
       #
       # ACCEPTED -> PERMISSIONS!
-      def ensure_story_exists(company, payload)
-        id = payload['primary_resources']['id']
-        title = self.parse_title(payload['primary_resources']['name'])
-        price, currency = self.parse_price(payload['primary_resources']['name'])
-        link = payload['primary_resources']['url']
+      def ensure_story_exists(company, developer, payload)
+        primary_resources = payload['primary_resources'][0]
+        id = primary_resources['id']
+        title, price, currency = self.parse_title(primary_resources['name'])
+        link = primary_resources['url']
         status = payload['changes'][0]['new_values']['current_state']
         story = PPT::DB::Story.update(
-          company: company, id: id, title: title, status: status, price: price, currency: currency, link: link
+          # TODO: Map PT statuses to PPT statuses.
+          company: company.name, id: id, title: title, status: status, price: price, currency: currency, link: link
         )
 
-        if story.accepted? && company.allowed_to_do_qa.include?(payload['performed_by']['id']) && ! story.invoiced
+        dev = payload['performed_by']['id']
+        if story.accepted? && company.allowed_to_do_qa?(dev) && ! story.invoiced
           self.emit('stories.accepted', story.to_json)
         end
       end
 
       protected
-      def fetch_developer(company_id, project_id, pt_user_id)
+      def fetch_developer(company, project_id, pt_user_id)
         users = JSON.parse(
           HTTP.with('X-TrackerToken' => company.pt.api_key).
             get("/projects/#{project_id}/memberships").
@@ -52,7 +57,7 @@ class PPT
         user = users.find { |user| user['id'] == pt_user_id }['person']
 
         developer = PPT::DB::Developer.new(
-          company: company.id, username: user['username'], name: user['name'], email: user['email']
+          company: company.name, username: user['username'], name: user['name'], email: user['email']
         )
       end
     end
