@@ -20,8 +20,15 @@ class PPT
         config.amqp_config = PPT.config('amqp')
 
         config.around do |example|
-          if example.metadata[:amqp]
+          clear_redis = Proc.new { |&block|
+            puts '~ Redis FLUSHDB.'
+            redis.flushdb
+            block.call
+            redis.flushdb
+          }
 
+          amqp = Proc.new { |&block|
+            puts '~ Connecting to AMQP.'
             # http://rubybunny.info/articles/connecting.html
             amqp_connection = Bunny.new(RSpec.configuration.amqp_config)
             PPT::SpecHelper.set_better_client_name(amqp_connection, name)
@@ -32,9 +39,17 @@ class PPT
             @channel = channel
             @queue = channel.queue('').bind('amq.topic', routing_key: '#')
 
-            example.run
+            block.call
 
             amqp_connection.close
+          }
+
+          if example.metadata[:amqp] && ! example.metadata[:redis]
+            amqp.call { example.run }
+          elsif example.metadata[:amqp] && example.metadata[:redis]
+            amqp.call { clear_redis.call { example.run } }
+          elsif ! example.metadata[:amqp] && example.metadata[:redis]
+            clear_redis.call { example.run }
           else
             example.run
           end
