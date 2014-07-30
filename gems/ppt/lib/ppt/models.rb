@@ -3,6 +3,7 @@ require 'securerandom'
 
 require 'simple-orm'
 
+# TODO: Use timestamp:timezone format, since it's more RAM-efficient.
 class PPT
   module Presenters
     # User is either a person or most likely a company.
