@@ -8,7 +8,12 @@ require 'redis'
 describe 'ppt.inbox.pt consumer' do
   let(:redis) { Redis.new(driver: :hiredis) }
 
-  it 'parses the payload and stores the data to Redis', amqp: true do
+  # This is a prerequisite for the test, but in case we forget.
+  it 'is up and running' do
+    expect(%x(status ppt.inbox.pt)).to match(/start\/running/)
+  end
+
+  it 'parses the payload and stores the data to Redis', redis: true, amqp: true do
     data = File.read('spec/data/sample_data.json')
     @channel.topic('amq.topic').publish(data, routing_key: 'inbox.pt.ppt')
 
@@ -21,7 +26,7 @@ describe 'ppt.inbox.pt consumer' do
     # so the spec fullfils its purpose as being both
     # the test and (part of) the documentation.
     dev = redis.hgetall('devs.ppt.botanicus')
-    expect(dev).to eq('')
+    expect(dev).to eq('a')
 
     story = redis.hgetall('stories.ppt.60839620')
     expect(story).to eq('')
