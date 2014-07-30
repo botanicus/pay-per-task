@@ -20,6 +20,7 @@ class PPT
         config.amqp_config = PPT.config('amqp')
 
         config.around do |example|
+          # This requires let(:redis) { Redis.new(driver: :hiredis) }.
           clear_redis = Proc.new { |&block|
             puts '~ Redis FLUSHDB.'
             redis.flushdb
