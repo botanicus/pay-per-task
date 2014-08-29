@@ -42,7 +42,7 @@ class PPT
 
       _, service, company_id = routing_key.split('.')
 
-      company = PPT::DB::User.get("users.#{company_id}")
+      company = PPT::DB::User.get!(username: company_id)
 
       developer = self.ensure_developer_exists(company, payload)
       self.ensure_story_exists(company, developer, payload)
