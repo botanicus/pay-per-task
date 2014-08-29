@@ -23,7 +23,7 @@ describe 'ppt.inbox.pt consumer' do
     # or we can go directly to Redis. Either approach
     # is valid. I decided to go for using Redis directly,
     # because this way it's really self-explanatory,
-    # so the spec fullfils its purpose as being both
+    # so the spec fulfils its purpose as being both
     # the test and (part of) the documentation.
     dev = redis.hgetall('devs.ppt.botanicus')
     expect(dev).to eq('a')
