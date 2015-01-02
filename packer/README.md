@@ -2,6 +2,12 @@
 
 Shamelessly stolen from [CodeShip](http://blog.codeship.com/packer-vagrant-tutorial/).
 
+# Initial Setup
+
+```
+brew install homebrew/binary/packer
+```
+
 # Usage
 
 ```
@@ -11,3 +17,7 @@ Shamelessly stolen from [CodeShip](http://blog.codeship.com/packer-vagrant-tutor
 # Upgrade
 
 Upgrade Ubuntu version AND it's [checksum](https://help.ubuntu.com/community/UbuntuHashes) in `packer.json`.
+
+# TODO
+
+- Check chruby.
