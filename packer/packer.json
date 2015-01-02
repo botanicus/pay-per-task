@@ -52,13 +52,11 @@
         }
       },
       "scripts": [
-        "scripts/base/build_time.sh",
         "scripts/base/apt.sh",
         "scripts/base/sudo.sh",
         "scripts/base/vagrant.sh",
         "scripts/base/git-n-curl.sh",
         "scripts/base/ruby.sh",
-        "scripts/base/vbox.sh",
         "scripts/base/nfs.sh",
         "scripts/base/iptables.sh",
 
