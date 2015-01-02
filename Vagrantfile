@@ -1,6 +1,6 @@
 Vagrant.configure('2') do |config|
-  config.vm.box = 'ubuntu-14.04-amd64'
-  config.vm.box_url = 'https://www.dropbox.com/s/p21r1rl484bt9o0/ubuntu-14.04-amd64.box?dl=1'
+  config.vm.box = 'ubuntu-14.10-amd64'
+  config.vm.box_url = 'https://www.dropbox.com/s/a88zfgi67s394mh/ubuntu-14.10-amd64.box?dl=1'
 
   # We want this for Oh my ZSH profiles.
   config.vm.hostname = 'ppt'
