@@ -20,4 +20,3 @@ Upgrade Ubuntu version AND it's [checksum](https://help.ubuntu.com/community/Ubu
 
 # TODO
 
-- Check chruby.
