@@ -24,6 +24,7 @@ cd /etc
 sudo git add --all .
 sudo git commit -m "After vagrant up." &> /dev/null
 
+cd /webs/ppt
 use_rubinius
 echo "~ Using $(ruby -v)"
 
