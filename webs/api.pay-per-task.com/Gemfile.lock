@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/botanicus/rspec-sane-http.git
-  revision: f18de0aca0f9f6964923be8b205b4c4a8644c612
+  revision: b394852dfe459dfd694e790f2b0dedaa6912da1f
   branch: master
   specs:
     rspec-sane-http (0.0.1)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/botanicus/simple-orm.git
-  revision: c459363291159bd078463804fb4d0649e2e26872
+  revision: 5206836b3519fd1ae3d9f6a147348223dd4007f5
   branch: master
   specs:
     simple-orm (0.0.1)
