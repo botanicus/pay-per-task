@@ -1,6 +1,6 @@
 ## About
 
-**Development status:** stable and reasonably tested, only [the upstart script isn't working](https://gist.github.com/botanicus/da85c8c93732f549b6f1#file-readme-md).
+**Development status:** stable and tested.
 
 This consumer appends any JSON into a YAML file. YAML is used due to its support for multiple documents and because [JSON is a subset of YAML](http://en.wikipedia.org/wiki/YAML#JSON).
 
@@ -9,6 +9,10 @@ This consumer appends any JSON into a YAML file. YAML is used due to its support
 - **Format:** (any) JSON is expected.
 - **Output:** Appends to `data/inbox/[service]/[username].yml`.
 - **Error handling:** Malformatted JSON results in a log message.
+
+## Making Sure It Works
+
+Run `bundle exec rspec`. It is an integration tests, it will fail if the consumer is not running.
 
 ## Alternative Design
 
