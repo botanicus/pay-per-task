@@ -43,6 +43,11 @@ for service in $services; do
   sudo start ppt.webs.$service
 done
 
+for service in /webs/ppt/gems/ppt.*(/); do
+  cd $service
+  bundle install
+done
+
 sudo start ppt.inbox.backup
 sudo start ppt.inbox.pt
 sudo start ppt.inbox.jira
