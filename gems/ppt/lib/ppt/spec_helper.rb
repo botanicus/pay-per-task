@@ -9,7 +9,7 @@ class PPT
     end
 
     def self.enforce_vagrant
-      unless File.exist?('/etc/vagrant_box_build_time')
+      unless Dir.exist?('/home/vagrant')
         abort 'Integration tests are meant to run within Vagrant.'
       end
     end
