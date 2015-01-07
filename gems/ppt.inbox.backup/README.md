@@ -2,7 +2,7 @@
 
 **Development status:** stable and reasonably tested, only [the upstart script isn't working](https://gist.github.com/botanicus/da85c8c93732f549b6f1#file-readme-md).
 
-This consumer appends any JSON into a YAML file. YAML is used due to its support for multiple documents and because [JSON is subset of YAML](http://en.wikipedia.org/wiki/YAML#JSON), however surprising might it be.
+This consumer appends any JSON into a YAML file. YAML is used due to its support for multiple documents and because [JSON is a subset of YAML](http://en.wikipedia.org/wiki/YAML#JSON).
 
 - **Queue:** `inbox.backup`
 - **Queue binds to:** `inbox.#` of `amq.topic`.

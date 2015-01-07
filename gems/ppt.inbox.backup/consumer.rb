@@ -27,7 +27,7 @@ module PPT::Backup
           # of disk space (5k * 4kB). With one big file we only need
           # 4.2MB (when using the sample data from Pivotal Tracker).
           #
-          # Insterestingly enough this actually IS valid YAML and we
+          # Interestingly enough this actually IS valid YAML and we
           # can use YAML.load_documents(io) on it. So far there was
           # no need to escape the JSON as a string, it gets properly
           # parsed as YAML.
