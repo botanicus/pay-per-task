@@ -1,5 +1,7 @@
 .DS_Store
 
+deployment/provisioners/dotfiles.local.sh
+
 /.vagrant
 /tasks.todo
 /config/*.json
