@@ -16,11 +16,12 @@ brew install homebrew/binary/packer
 
 # Upgrade
 
-Upgrade Ubuntu version AND it's [checksum](https://help.ubuntu.com/community/UbuntuHashes) in `packer.json`. Re-run `build.sh`.
+Upgrade Ubuntu version AND its [checksum](https://help.ubuntu.com/community/UbuntuHashes) in `packer.json`. Re-run `build.sh`.
 
 # Spec
 
 ## Software
+
 - Rubinius (+ Bundler)
 - MRI Ruby (+ Bundler)
 - Git
