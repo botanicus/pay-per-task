@@ -54,6 +54,7 @@ Run `ssh server`. If if fails, you probably don't have **permissions** to access
 
 ### Advanced Topics
 
+* [Building base VM with Packer](packer/README.md)
 * [How it all works?](docs/server.md)
 * [Backups](docs/backups.md)
 * [Server Deployment](deployment/README.md)
