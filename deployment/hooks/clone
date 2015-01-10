@@ -1,4 +1,4 @@
-# This hook has to be commited and pushed in order to have effect!
+# This hook has to be committed and pushed in order to have effect!
 # This is supposed to run under ppt user, not under root!
 
 # Chruby autoswitching.
