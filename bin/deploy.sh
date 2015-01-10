@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/zsh
 
 # This script deploys and redeploys remote server.
 # It is NOT meant to run with Vagrant, neither it
-# is meant to run ON the remote server.
+# is meant to run ON the remote server itself.
+#
+# It needs Ruby to run provision.rb.
 
 # Usage:
 # ./bin/deploy.sh
@@ -13,8 +15,9 @@ PROJECT=ppt
 
 deploy () {
   echo "~ Running deployer.sh $PROJECT $*"
-  ~/Dropbox/Code/deployment/server/bin/deployer.sh $PROJECT $*
+  ~/Dropbox/Projects/OSS/deployment/server/bin/deployer.sh $PROJECT $*
 }
+
 if [[ $# -gt 0 ]]; then
   deploy $*
 else
