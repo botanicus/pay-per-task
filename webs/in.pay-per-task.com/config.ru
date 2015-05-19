@@ -12,6 +12,7 @@ require 'bunny'
 
 require 'redis'
 require 'json'
+require_relative 'responses'
 
 def publish(payload, routing_key)
   $exchange.publish(payload, routing_key: routing_key)
@@ -31,18 +32,14 @@ run lambda { |env|
         publish(env['rack.input'].read, routing_key)
         [201, Hash.new, Array.new]
       else
-        message = "Unauthorised: #{username.inspect} with #{auth_key.inspect}.\n"
-        [401, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
+        UnauthorisedResponse.new(username, auth_key).to_response
       end
     else
-      message = "Invalid reqest: service #{service.inspect} isn't supported. Supported services are #{SUPPORTED_SERVICES.join(', ')}\n"
-      [400, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
+      InvalidRequestResponse.new(service, SUPPORTED_SERVICES).to_response
     end
   elsif env['REQUEST_METHOD'] == 'GET' && env['PATH_INFO'] == '/'
-    message = "PPT is running. Yaks!\n"
-    [200, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
+    SuccessfulGetResponse.new.to_response
   else
-    message = "Invalid request: #{env['REQUEST_METHOD']} #{env['PATH_INFO'].inspect}.\n"
-    [404, {'Content-Type' => 'text/plain', 'Content-Length' => message.bytesize.to_s}, [message]]
+    NotFoundResponse.new.to_response
   end
 }
