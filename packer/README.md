@@ -16,7 +16,7 @@ brew install homebrew/binary/packer
 
 # Upgrade
 
-Upgrade Ubuntu version AND its [checksum](https://help.ubuntu.com/community/UbuntuHashes) in `packer.json`. Re-run `build.sh`.
+Upgrade Ubuntu version AND its [checksum](https://help.ubuntu.com/community/UbuntuHashes) in `packer.json` AND `build.sh`. Re-run `build.sh`.
 
 # Spec
 
