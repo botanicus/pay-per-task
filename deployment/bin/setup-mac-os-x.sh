@@ -85,10 +85,10 @@ if ! egrep 'ADDED BY PPT SETUP SCRIPT' /etc/sudoers > /dev/null; then
 EOF
 fi
 
+# TODO: Change this to the current configuration.
 if ! egrep 'Host server' ~/.ssh/config > /dev/null; then
   echo "~ Adding SSH configuration for the production server."
   tee -a ~/.ssh/config > /dev/null <<EOF
-# PPT Linode server.
 Host server
   HostName 178.79.138.233
   User root

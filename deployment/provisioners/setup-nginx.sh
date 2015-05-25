@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: I don't think the init script actually works like that.
+#       There's no Nginx running after vagrant halt; vagrant up.
 sudo rm /etc/nginx/sites-enabled/default
 
 sudo tee /etc/nginx/sites-enabled/$1.conf <<EOF

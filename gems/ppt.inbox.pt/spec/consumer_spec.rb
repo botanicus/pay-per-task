@@ -25,6 +25,7 @@ describe 'ppt.inbox.pt consumer' do
     # because this way it's really self-explanatory,
     # so the spec fulfils its purpose as being both
     # the test and (part of) the documentation.
+    # require 'pry'; binding.pry
     dev = redis.hgetall('devs.ppt.botanicus')
     expect(dev).to eq('a')
 

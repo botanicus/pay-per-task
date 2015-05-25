@@ -1,6 +1,21 @@
 #!/usr/bin/env ruby
 
-# This script runs LOCALLY on either remote server or VM.
+#
+# THIS AIN'T REALLY RUNNING AT ALL!
+# IT'S ~/Dropbox/Projects/OSS/deployment/server/bin/deployer.sh
+# THAT DOES ALL THE MAGIC. I DON'T KNOW WHY IS THIS IN HERE IN THE FIRST PLACE!
+#
+# How should deployer.sh & provision.rb work?
+#
+# Should they be anywhere in path, just installed as dependencies?
+# Should they be copied over here?
+#
+# Check list
+#
+# [ ] still works with Vagrant?
+#
+
+# This script runs LOCALLY on either a remote server or a VM.
 
 require 'yaml'
 require 'fileutils'
