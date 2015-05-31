@@ -1,13 +1,23 @@
 # About
 
-The app runs on [app.pay-per-task.dev](http://app.pay-per-task.dev). It requires the API server to run.
+The PPT frontend app [app.pay-per-task.dev](http://app.pay-per-task.dev) baked into a minimal Nginx container.
 
-## Setup
+# Dependencies
+
+- api.pay-per-task.dev
+
+# Setup
+
+Add `$(boot2docker ip) app.pay-per-task.dev` to `/etc/hosts`.
 
 Bower packages are part of the container, but not part of the repository, so you need to run `bower install` in `content/` (where the `bower.json` file is).
 
-# How The App Is Structured?
+# Status
 
-Regardless of where you go, `app.html` is always served. Yo go to `/`, you get `app.html`. You go to `/pricing` and again, you get `app.html`.
+- WIP
 
-Basically `app.html` works as a layout. In it there's: `<div ng-view>Loading ...</div>` This code triggers angular routing and replaces what is in the div by one of the templates in `templates/`.
+# Known issues
+
+- vhost.conf: build.html vs. app.html.
+- In dev it seems to be really slow. Investigate why.
+- We're using `sendfile off` to make VirtualBox happy in development.
