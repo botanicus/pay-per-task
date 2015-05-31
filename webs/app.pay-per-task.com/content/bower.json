@@ -1,0 +1,22 @@
+{
+  "name": "app.pay-per-task.com",
+  "version": "0.0.1",
+  "authors": [
+    "James C Russell <james@101ideas.cz>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "1.3",
+    "angular-route": "1.3",
+    "angular-ui-bootstrap": "~0.11.0",
+    "bootstrap": "3.1"
+  }
+}

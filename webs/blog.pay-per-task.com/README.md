@@ -17,6 +17,5 @@ tags: ['documentation', 'doxxu']
 
 # TODO
 
-- Prerendering.
 - GA.
 - Disquis.

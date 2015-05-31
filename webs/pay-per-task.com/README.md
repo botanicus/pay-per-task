@@ -2,22 +2,9 @@
 
 The presentation web runs on [pay-per-task.dev](http://pay-per-task.dev). It's all static, but it calls the API in order to add newsletter subscribers.
 
-# Development
+## Setup
 
-To install JS/CSS frameworks and their plugins, use [Bower.io](http://bower.io)
-
-First, install bower:
-
-```
-homebrew install node
-npm install -g bower
-```
-
-Then **in content/**, run:
-
-```
-bower install angular#1.3
-```
+Bower packages are part of the container, but not part of the repository, so you need to run `bower install` in `content/` (where the `bower.json` file is).
 
 # How The App Is Structured?
 
