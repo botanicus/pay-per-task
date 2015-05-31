@@ -1,4 +1,4 @@
-NAME = 'blog.pay-per-task.com'
+NAME = File.basename(Dir.pwd)
 PATH = "/webs/#{NAME}"
 
 desc "Build the image."

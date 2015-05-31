@@ -14,7 +14,7 @@ TODO!
 
 # Status
 
-- WIP, mostly done.
+- WIP. Add CSS. generate.rb crashes.
 
 # Known issues
 

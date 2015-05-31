@@ -16,10 +16,19 @@ app.config(function ($locationProvider, $routeProvider, $httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 });
 
-/* Set up the title. */
-app.run(function ($location, $rootScope, Session) {
+app.run(function ($rootScope, $window, $location, Session) {
   Session.development = true;
 
+  // Set up Google Analytics.
+  // TODO: Not hosted within MY account. The website uses UA-51610302-1.
+  // var isIP = $location.host().match(/^(\d+\.)+\d+$/);
+  // var cookieDomain = isIP ? 'none' : 'auto';
+  // $window.ga('create', 'UA-63572342-1', cookieDomain);
+  // $rootScope.$on('$routeChangeSuccess', function () {
+  //   $window.ga('send', 'pageview', $location.path());
+  // });
+
+  /* Set up the title. */
   $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
     $rootScope.title = current.$$route ? current.$$route.title : null;
   });

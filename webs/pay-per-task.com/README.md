@@ -4,7 +4,7 @@ The PPT landing page [pay-per-task.dev](http://pay-per-task.dev) baked into a mi
 
 # Dependencies
 
-- api.pay-per-task.dev for adding newsletter subscribers.
+- api.pay-per-task.dev for adding newsletter subscribers, sign-up and log-in.
 
 # Setup
 
@@ -18,7 +18,13 @@ TODO!
 
 # Status
 
-- WIP, mostly done.
+- WIP.
+
+- Phase I: Revisit the copy. Login isn't done – disable for now! Are cookies necessary? Do we need to load ui, animate and cookies for everyone? Set up GA (transfer account?). Newsletter sign-up.
+- Estimate: 3 days.
+
+- Phase II: Sign-up, log-in & account menu.
+- Estimate: 2 days.
 
 # Known issues
 
