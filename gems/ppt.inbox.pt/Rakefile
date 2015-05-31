@@ -1,0 +1,33 @@
+NAME = File.basename(Dir.pwd)
+PATH = "/apps/#{NAME}"
+
+desc "Build the image."
+task :build do
+  sh "docker build -t #{NAME} ."
+end
+
+desc "Run the container."
+task :run do
+  gem_paths = Dir.glob("#{Dir.pwd}/../*").select { |path| File.directory?(path) }
+  gem_paths.map! do |path|
+    path = File.expand_path(path)
+    name = File.basename(path)
+    "-v #{path}:/gems/#{name}:ro"
+  end
+
+  sh "docker run -v #{Dir.pwd}:#{PATH}:ro #{gem_paths.join(" ")} #{NAME}" # Connect to Redis, RabbitMQ. Docker compose for this?
+end
+
+desc "SSH into a running container."
+task :ssh do
+  id = %x{docker ps | grep #{NAME}:latest | awk '{ print $1 }'}.chomp
+  sh "docker exec -it #{id} /bin/sh"
+end
+
+desc "Build and run the container."
+task default: [:build, :run]
+
+desc "Publish the image."
+task :publish do
+  # TODO
+end

@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
+source 'https://2o3qM2tByL-as-g1Esde@gem.fury.io/botanicus/'
 
 gem 'http'
 
-gem 'ppt', path: '/webs/ppt/gems/ppt'
+gem 'ppt'#, path: '/gems/ppt'
 
 # Those are dependencies of ppt. We can leave it up to RubyGems
 # to handle them, but then we'd have to create a new release
@@ -10,8 +11,8 @@ gem 'ppt', path: '/webs/ppt/gems/ppt'
 #
 # Local overrides through bundle config local.GEMNAME don't work
 # either if the gem is specified in ppt.gemspec rather than in here.
-gem 'pipeline.rb', github: 'botanicus/pipeline.rb', branch: 'master'
-gem 'simple-orm', github: 'botanicus/simple-orm', branch: 'master'
+gem 'pipeline.rb'#, github: 'botanicus/pipeline.rb', branch: 'master'
+gem 'simple-orm'#, github: 'botanicus/simple-orm', branch: 'master'
 
 group(:development, :test) do
   gem 'pry'
