@@ -1,4 +1,4 @@
-NAME = 'cdn.pay-per-task.com'
+NAME = 'blog.pay-per-task.com'
 PATH = "/webs/#{NAME}"
 
 desc "Build the image."

@@ -14,10 +14,10 @@ Bower packages are part of the container, but not part of the repository, so you
 
 # Status
 
-- WIP
+- WIP, barely started.
 
 # Known issues
 
 - vhost.conf: build.html vs. app.html.
-- In dev it seems to be really slow. Investigate why.
+- move build functionality into the Rakefile.
 - We're using `sendfile off` to make VirtualBox happy in development.
