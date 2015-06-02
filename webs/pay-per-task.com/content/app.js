@@ -23,7 +23,7 @@ app.run(function ($rootScope, $window, $location, Session) {
   // TODO: Not hosted within MY account. The website uses UA-51610302-1.
   // var isIP = $location.host().match(/^(\d+\.)+\d+$/);
   // var cookieDomain = isIP ? 'none' : 'auto';
-  // $window.ga('create', 'UA-63572342-1', cookieDomain);
+  // $window.ga('create', 'UA-47784024-1', cookieDomain);
   // $rootScope.$on('$routeChangeSuccess', function () {
   //   $window.ga('send', 'pageview', $location.path());
   // });
