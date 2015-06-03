@@ -20,13 +20,13 @@ app.run(function ($rootScope, $window, $location, Session) {
   Session.development = true;
 
   // Set up Google Analytics.
-  // TODO: Not hosted within MY account. The website uses UA-51610302-1.
-  // var isIP = $location.host().match(/^(\d+\.)+\d+$/);
-  // var cookieDomain = isIP ? 'none' : 'auto';
-  // $window.ga('create', 'UA-47784024-1', cookieDomain);
-  // $rootScope.$on('$routeChangeSuccess', function () {
-  //   $window.ga('send', 'pageview', $location.path());
-  // });
+  // TODO: Not hosted within MY account, but rather under info@pay-per-task.com.
+  if ($location.host() == 'pay-per-task.com') {
+    $window.ga('create', 'UA-51610302-1');
+    $rootScope.$on('$routeChangeSuccess', function () {
+      $window.ga('send', 'pageview', $location.path());
+    });
+  }
 
   /* Set up the title. */
   $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
