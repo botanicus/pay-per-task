@@ -13,13 +13,13 @@ namespace :ci do
     # PhantomJS headless
     # Create a Dockerfile in Test and create a new layer with the testing tools?
     #   ... does it help?
-    sh "cd content && bower install"
+    sh "cd content && bower install > /dev/null"
 
     Rake::Task['docker:build'].execute
     sh "docker run -d -p 80:80 #{NAME}"
 
     # Setup.
-    sh "npm install protractor"
+    sh "npm install protractor > /dev/null"
     sh "webdriver-manager update"
 
     # Tests.
