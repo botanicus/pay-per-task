@@ -60,6 +60,7 @@ pids.each do |(subproject, pid)|
     exitstatus = 1
     failed << subproject
   end
+  puts "Project #{subproject} finished with #{$?.exitstatus}."
 end
 
 if exitstatus == 1
