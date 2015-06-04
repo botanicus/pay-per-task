@@ -13,9 +13,7 @@ namespace :ci do
     # PhantomJS headless
     # Create a Dockerfile in Test and create a new layer with the testing tools?
     #   ... does it help?
-    Dir.chdir('content') do
-      sh "bower install"
-    end
+    sh "cd content && bower install"
 
     Rake::Task['docker:build'].execute
     sh "docker run -d -p 80:80 #{NAME}"
