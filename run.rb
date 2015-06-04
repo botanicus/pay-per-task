@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 unless ENV['previous_build_commit']
   abort "You must set up environment variable previous_build_commit."
 end
