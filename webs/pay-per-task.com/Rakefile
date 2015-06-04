@@ -5,7 +5,7 @@ desc "Build and run the container."
 task default: ['docker:build', 'docker:run']
 
 task :test do
-  puts "I wrrrrk my friieeeend!"
+  puts "I wrrrrk my friiieeeend!"
 end
 
 desc "Open the running site."
