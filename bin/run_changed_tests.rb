@@ -1,12 +1,23 @@
 #!/usr/bin/env ruby
 
+require 'open-uri'
+
+URL = 'https://circleci.com/api/v1/project'
+PRJ = 'botanicus/pay-per-task'
+TKN = 'b242fa5732d25efc8c4257180206342c9d5b404e'
+
+# https://circleci.com/docs/api
+open("#{URL}/#{PRJ}?circle-token=#{TKN}") do |stream|
+  data = JSON.parse(stream.read)
+  range = data["compare"].split("/").last
+end
 # Codeship
 # export previous_build_commit=$(curl https://codeship.com/api/v1/projects/83840.json?api_key=31624550ecd801322af5768767ec3f20 | ruby -rjson -ne 'puts JSON.parse($_)["builds"][-2]["commit_id"]')
 
 # TODO: Dependencies (when the api changes, re-run frontend tests as well)
-unless ENV['previous_build_commit']
-  abort "You must set up environment variable previous_build_commit."
-end
+# unless ENV['previous_build_commit']
+#   abort "You must set up environment variable previous_build_commit."
+# end
 
 def find_rakefile(dir)
   if File.exist?(File.join("#{dir}/Rakefile"))
@@ -16,7 +27,7 @@ def find_rakefile(dir)
   end
 end
 
-files = %x{git diff --name-only #{ENV['previous_build_commit']} HEAD}.split("\n")
+files = %x{git diff --name-only #{range}}.split("\n")
 puts "~ Changed files: #{files.inspect}"
 dirs = files.map! { |file| File.dirname(file) }.uniq
 
@@ -30,8 +41,7 @@ changed_subprojects.each do |subproject|
   fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
-      p %x{which docker}
-      puts %x{rake test}
+      puts %x{rake ci:build}
     end
   end
 end
