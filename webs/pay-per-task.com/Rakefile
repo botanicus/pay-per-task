@@ -9,8 +9,8 @@ task default: ['docker:build', 'docker:run']
 namespace :ci do
   task :build do
     # TODO: Haproxy -> API & this.
-    # TODO: Installing protractor will take ages.
     # PhantomJS headless
+    # TODO: Installing protractor will take ages.
     # Create a Dockerfile in Test and create a new layer with the testing tools?
     #   ... does it help?
     sh "cd content && bower install > /dev/null"
