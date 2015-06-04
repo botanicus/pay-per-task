@@ -4,3 +4,7 @@ machine:
 test:
   override:
     - ./bin/run_changed_tests.rb
+
+notify:
+  webhooks:
+    - url: https://hooks.slack.com/services/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
