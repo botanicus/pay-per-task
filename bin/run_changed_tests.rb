@@ -27,10 +27,11 @@ puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
-  p Dir.pwd
   fork do
     Dir.chdir(subproject) do
-      puts "~ #{Dir.pwd}"
+      puts "~ #{subproject}"
+      p %x{which rake}
+      p %x{which bundle}
       puts %x{rake test}
       puts %x{bundle install}
       puts %x{bundle exec rake test}
