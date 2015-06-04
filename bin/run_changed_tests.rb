@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# Codeship
+# export previous_build_commit=$(curl https://codeship.com/api/v1/projects/83840.json?api_key=31624550ecd801322af5768767ec3f20 | ruby -rjson -ne 'puts JSON.parse($_)["builds"][-2]["commit_id"]')
+
+# TODO: Dependencies (when the api changes, re-run frontend tests as well)
 unless ENV['previous_build_commit']
   abort "You must set up environment variable previous_build_commit."
 end
@@ -25,7 +29,8 @@ changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
   Dir.chdir(subproject) do
     fork do
-      puts "~ #{subproject}"
+      puts "~ #{Dir.pwd}"
+      puts %x{rake test}
       puts %x{bundle install}
       puts %x{bundle exec rake test}
     end
