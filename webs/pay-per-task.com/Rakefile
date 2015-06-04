@@ -7,16 +7,18 @@ task default: ['docker:build', 'docker:run']
 # Services do run in Docker, but the integration tests don't have to.
 # Unit: docker run myimage bundle exec rake test
 namespace :ci do
-  task build: ['docker:build'] do
+  task :build do
     # TODO: Haproxy -> API & this.
     # TODO: Installing protractor will take ages.
     # PhantomJS headless
     # Create a Dockerfile in Test and create a new layer with the testing tools?
     #   ... does it help?
-    sh "docker run -d -p 80:80 #{NAME}"
     Dir.chdir('content') do
       sh "bower install"
     end
+
+    Rake::Tasks['docker:build'].execute
+    sh "docker run -d -p 80:80 #{NAME}"
 
     # Setup.
     sh "npm install protractor"
