@@ -1,4 +1,4 @@
-## About
+# About
 
 **Development status:** WIP and untested.
 
@@ -13,3 +13,11 @@ It relies on the PT API v5 and it uses the company object and the API key from t
   - Stories and devs are stored to Redis.
   - Their JSON is then published to `devs.new` resp. `stories.new`.
 - **Error handling:** Malformatted JSON results in a log message.
+
+# Release
+
+- Make sure you pushed current version of ppt and other libraries.
+https://manage.fury.io/dashboard/botanicus#/intro?kind=ruby
+curl -F package=@ppt-0.0.1.gem https://2o3qM2tByL-as-g1Esde@push.fury.io/botanicus/
+
+rake build

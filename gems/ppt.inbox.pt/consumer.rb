@@ -20,4 +20,4 @@ module PPT::PT
   end
 end
 
-PPT::PT::Consumer.run(PPT.root)
+PPT::PT::Consumer.run(Dir.pwd)
