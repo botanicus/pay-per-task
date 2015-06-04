@@ -4,13 +4,21 @@ The PPT landing page [pay-per-task.dev](http://pay-per-task.dev) baked into a mi
 
 # Dependencies
 
-- api.pay-per-task.dev for adding newsletter subscribers and in the future also for sign-up and log-in.
+[api.pay-per-task.dev](http://docs.pay-per-task.dev/webs/api.pay-per-task.dev)
+  - Subscribe to the newsletter.
+  - [FUTURE] Sign-up, log-in and onboarding.
 
 # Setup
 
-Add `$(boot2docker ip) pay-per-task.dev` to `/etc/hosts`.
+```
+for domain in pay-per-task.dev api.pay-per-task.dev; do
+  echo "$(boot2docker ip) api.pay-per-task.dev" | sudo tee -a /etc/hosts
+done
+```
 
 Bower packages are part of the container, but not part of the repository, so you need to run `bower install` in `content/` (where the `bower.json` file is).
+
+NOTE: This will probably change, as for automatic build of the image there doesn't seem to be any hooks, so we might have to include those anyway. To be sorted as port of #96176258.
 
 # Test suite
 
@@ -18,13 +26,7 @@ TODO!
 
 # Status
 
-- WIP.
-
-- Phase I: Revisit the copy. Login isn't done – disable for now! Are cookies necessary? Do we need to load ui, animate and cookies for everyone? Set up GA (transfer account?). Newsletter sign-up.
-- Estimate: 3 days.
-
-- Phase II: Sign-up, log-in & account menu.
-- Estimate: 2 days.
+- WIP. Both the copy and the functionality needs to be revisited. Basic styling needed, CI & deployment to be set up.
 
 # Known issues
 
