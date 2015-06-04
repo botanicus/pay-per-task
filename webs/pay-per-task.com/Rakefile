@@ -1,6 +1,15 @@
 NAME = File.basename(Dir.pwd)
 PATH = "/webs/#{NAME}"
 
+desc "Build and run the container."
+task default: ['docker:build', 'docker:run']
+
+desc "Open the running site."
+task :open do
+  ip = %x{boot2docker ip}
+  sh "open http://#{ip}"
+end
+
 namespace :docker do
   desc "Build the image."
   task :build do
@@ -17,9 +26,6 @@ namespace :docker do
     id = %x{docker ps | grep #{NAME}:latest | awk '{ print $1 }'}.chomp
     sh "docker exec -it #{id} /bin/sh"
   end
-
-  desc "Build and run the container."
-  task default: [:build, :run]
 
   desc "Publish the image."
   task :publish do
