@@ -39,10 +39,10 @@ puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
-  fork do
+  # fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
       puts %x{rake ci:build}
     end
-  end
+  # end
 end

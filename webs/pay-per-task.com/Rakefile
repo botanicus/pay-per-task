@@ -5,7 +5,7 @@ desc "Build and run the container."
 task default: ['docker:build', 'docker:run']
 
 task 'ci:build' do
-  puts "I raaaan!"
+  puts "I raaaaan!"
   # Run the tests, trigger Dockerhub build
   # (Dockerhub can have multiple repos, I think
   # here it makes sense).
