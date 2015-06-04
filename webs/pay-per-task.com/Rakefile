@@ -4,12 +4,41 @@ PATH = "/webs/#{NAME}"
 desc "Build and run the container."
 task default: ['docker:build', 'docker:run']
 
-task 'ci:build' do
-  puts "I raaaaan!"
-  # Run the tests, trigger Dockerhub build
-  # (Dockerhub can have multiple repos, I think
-  # here it makes sense).
-  sh "bower install"
+# Services do run in Docker, but the integration tests don't have to.
+# Unit: docker run myimage bundle exec rake test
+namespace :ci do
+  task build: ['docker:build'] do
+    # TODO: Haproxy -> API & this.
+    # TODO: Installing protractor will take ages.
+    # PhantomJS headless
+    # Create a Dockerfile in Test and create a new layer with the testing tools?
+    #   ... does it help?
+    sh "docker run -d -rm -p 80:80 #{NAME}"
+    Dir.chdir('content') do
+      sh "bower install"
+    end
+
+    # Setup.
+    sh "node install protractor"
+    sh "webdriver-manager update"
+
+    # Tests.
+    fork { sh "webdriver-manager start" }
+    sleep 2.5 # Catch up with webdriver
+    puts "~ Running the tests."
+    sh "./protractor.conf.js"
+
+    # TODO: Run the tests.
+    # Not necessary I guess?
+    # sh <<-EOF
+    #   for container in $(docker ps | awk '{ print $1 }'); do
+    #     test $container '!=' CONTAINER && docker kill $container
+    #   done
+    # EOF
+    # TODO: Trigger Dockerhub build just for this repo.
+    # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    # - docker push circleci/elasticsearch
+  end
 end
 
 desc "Open the running site."
