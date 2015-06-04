@@ -15,7 +15,7 @@ end
 files = %x{git diff --name-only #{ENV['previous_build_commit']} HEAD}.split("\n")
 puts "~ Changed files: #{files.inspect}"
 dirs = files.map! { |file| File.dirname(file) }.uniq
-p dirs
+
 changed_subprojects = dirs.map do |dir|
   find_rakefile(dir)
 end.compact
@@ -23,9 +23,11 @@ puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
-  fork do
-    puts "~ #{subproject}"
-    puts %x{bundle install}
-    puts %x{bundle exec rake test}
+  Dir.chdir(subproject) do
+    fork do
+      puts "~ #{subproject}"
+      puts %x{bundle install}
+      puts %x{bundle exec rake test}
+    end
   end
 end
