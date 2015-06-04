@@ -13,7 +13,7 @@ namespace :ci do
     # PhantomJS headless
     # Create a Dockerfile in Test and create a new layer with the testing tools?
     #   ... does it help?
-    sh "docker run -d -rm -p 80:80 #{NAME}"
+    sh "docker run -d -p 80:80 #{NAME}"
     Dir.chdir('content') do
       sh "bower install"
     end
