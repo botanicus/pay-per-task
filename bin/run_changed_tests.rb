@@ -3,6 +3,7 @@
 require 'json'
 require 'open-uri'
 
+# TODO: this is in ENV['CIRCLE_COMPARE_URL']
 URL = 'https://circleci.com/api/v1/project'
 PRJ = 'botanicus/pay-per-task'
 TKN = 'b242fa5732d25efc8c4257180206342c9d5b404e'
@@ -43,7 +44,7 @@ changed_subprojects.each do |subproject|
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
       # puts %x{rake ci:build}
-      push %x{./build.sh} # TODO: replace elsewhere (fid_rakefile)
+      puts %x{./build.sh} # TODO: replace elsewhere (fid_rakefile)
     end
   # end
 end
