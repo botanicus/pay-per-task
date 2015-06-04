@@ -25,6 +25,6 @@ changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
   fork do
     puts "~ #{subproject}"
-    puts %x{rake test}
+    puts %x{bundle exec rake test}
   end
 end
