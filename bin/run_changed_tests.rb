@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'json'
 require 'open-uri'
 
 URL = 'https://circleci.com/api/v1/project'
