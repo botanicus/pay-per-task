@@ -19,7 +19,7 @@ namespace :ci do
     end
 
     # Setup.
-    sh "node install protractor"
+    sh "npm install protractor"
     sh "webdriver-manager update"
 
     # Tests.
