@@ -8,10 +8,10 @@ PRJ = 'botanicus/pay-per-task'
 TKN = 'b242fa5732d25efc8c4257180206342c9d5b404e'
 
 # https://circleci.com/docs/api
-open("#{URL}/#{PRJ}?circle-token=#{TKN}") do |stream|
-  data = JSON.parse(stream.read)
-  range = data["compare"].split("/").last
-end
+stream = open("#{URL}/#{PRJ}?circle-token=#{TKN}")
+data = JSON.parse(stream.read)
+range = data[0]["compare"].split("/").last
+
 # Codeship
 # export previous_build_commit=$(curl https://codeship.com/api/v1/projects/83840.json?api_key=31624550ecd801322af5768767ec3f20 | ruby -rjson -ne 'puts JSON.parse($_)["builds"][-2]["commit_id"]')
 
