@@ -44,6 +44,8 @@ app.controller('MainController', function ($scope, $window, $location, $http, $m
     };
   });
 
+  $scope.year = new Date().getFullYear();
+
   $scope.displayLogInDialog = function () {
     $scope.modal = $modal.open({
       templateUrl: 'templates/login.html',
