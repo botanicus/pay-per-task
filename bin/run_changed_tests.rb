@@ -42,7 +42,8 @@ changed_subprojects.each do |subproject|
   # fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
-      puts %x{rake ci:build}
+      # puts %x{rake ci:build}
+      push %x{./build.sh} # TODO: replace elsewhere (fid_rakefile)
     end
   # end
 end
