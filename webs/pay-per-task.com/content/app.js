@@ -21,7 +21,7 @@ app.run(function ($rootScope, $window, $location, Session) {
 
   // Set up Google Analytics.
   // TODO: Not hosted within MY account, but rather under info@pay-per-task.com.
-  if ($location.host() == 'pay-per-task.com') {
+  if ($location.host() == 'pay-per-task.com' && $window.ga) {
     $window.ga('create', 'UA-51610302-1');
     $rootScope.$on('$routeChangeSuccess', function () {
       $window.ga('send', 'pageview', $location.path());
@@ -37,9 +37,8 @@ app.run(function ($rootScope, $window, $location, Session) {
 /* Main controller. */
 app.controller('MainController', function ($scope, $window, $location, $http, $modal, Links, Session, currentUser, $cookies) {
   $scope.$on('$viewContentLoaded', function (event) {
-    console.log("~ Triggering Google Analytics.");
-
-    if (Session.development) {
+    if (Session.development && $window.ga) {
+      console.log("~ Triggering Google Analytics.");
       $window.ga('send', 'pageview', {page: $location.path()});
     };
   });

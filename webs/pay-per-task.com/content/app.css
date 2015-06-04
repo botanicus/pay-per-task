@@ -1,3 +1,7 @@
+@import url('assets/stylesheets/mobile.css');
+@import url('assets/stylesheets/tablet.css');
+@import url('assets/stylesheets/desktop.css');
+
 /* https://raw.githubusercontent.com/botanicus/angular-notifications/master/example/styles.css */
 .notification-success { background-color: lightgreen; }
 .notification-warning { background-color: yellow; }
