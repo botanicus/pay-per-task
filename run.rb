@@ -21,8 +21,8 @@ puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 changed_subprojects.each do |subproject|
   puts "~ Running tests in #{subproject}"
-  # fork do
-  #   puts "~ #{subproject}"
-  #   puts %x{rake test}
-  # end
+  fork do
+    puts "~ #{subproject}"
+    puts %x{rake test}
+  end
 end
