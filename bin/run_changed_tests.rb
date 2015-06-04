@@ -38,13 +38,33 @@ changed_subprojects = dirs.map do |dir|
 end.compact
 puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
-changed_subprojects.each do |subproject|
+pids = changed_subprojects.map do |subproject|
   puts "~ Running tests in #{subproject}"
-  # fork do
+  pid = fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
       # puts %x{rake ci:build}
       puts %x{./build.sh} # TODO: replace elsewhere (fid_rakefile)
+      5.times { puts }
     end
-  # end
+  end
+  [subproject, pid]
 end
+
+exitstatus = 0
+failed = Array.new
+
+pids.each do |(subproject, pid)|
+  Process.waitpid(pid)
+  unless $?.exitstatus == 0
+    exitstatus = 1
+    failed << subproject
+  end
+end
+
+if exitstatus == 1
+  puts "==== ERROR ====="
+  p failed
+end
+
+exit exitstatus
