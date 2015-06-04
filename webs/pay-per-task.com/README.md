@@ -4,7 +4,7 @@ The PPT landing page [pay-per-task.dev](http://pay-per-task.dev) baked into a mi
 
 # Dependencies
 
-- api.pay-per-task.dev for adding newsletter subscribers, sign-up and log-in.
+- api.pay-per-task.dev for adding newsletter subscribers and in the future also for sign-up and log-in.
 
 # Setup
 
