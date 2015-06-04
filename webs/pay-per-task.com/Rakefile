@@ -17,7 +17,7 @@ namespace :ci do
       sh "bower install"
     end
 
-    Rake::Tasks['docker:build'].execute
+    Rake::Task['docker:build'].execute
     sh "docker run -d -p 80:80 #{NAME}"
 
     # Setup.
