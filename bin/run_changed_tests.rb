@@ -30,11 +30,7 @@ changed_subprojects.each do |subproject|
   fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
-      p %x{which rake}
-      p %x{which bundle}
       puts %x{rake test}
-      puts %x{bundle install}
-      puts %x{bundle exec rake test}
     end
   end
 end
