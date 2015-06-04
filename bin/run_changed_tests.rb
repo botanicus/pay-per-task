@@ -30,6 +30,7 @@ changed_subprojects.each do |subproject|
   fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
+      p %{which docker}
       puts %x{rake test}
     end
   end
