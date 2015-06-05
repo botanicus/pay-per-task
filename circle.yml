@@ -7,12 +7,12 @@ machine:
 dependencies:
   override:
     # Don't do the default Railsy stuff (CircleCI).
-    - true
+    - ls
 
 database:
   override:
     # Don't do the default Railsy stuff (CircleCI).
-    - true
+    - ls
 
 test:
   override:
