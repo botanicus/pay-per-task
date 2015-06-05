@@ -13,11 +13,11 @@ echo "~ Installing protractor."
 npm install protractor -g > /dev/null || exit 1
 
 echo "~ Getting the XYZ"
-webdriver-manager update || exit 1
+webdriver-manager update > /dev/null || exit 1
 
 echo "~ Starting the XYZ"
-(webdriver-manager start || exit 1) &
+(webdriver-manager start > /dev/null || exit 1) &
 sleep 2.5
 
-echo -e "\n\n\n\n\n~ Running the integration tests."
+echo -e "\n~ Running the integration tests."
 ./protractor.conf.js
