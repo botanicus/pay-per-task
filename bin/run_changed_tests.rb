@@ -46,7 +46,9 @@ pids = changed_subprojects.map do |subproject|
       puts "~ #{subproject}"
       # system 'rake ci:build'
       return_value = system './build.sh' # TODO: replace elsewhere (fid_rakefile)
-      5.times { puts }
+      unless subproject == changed_subprojects.last
+        5.times { puts }
+      end
     end
     exit(return_value ? 0 : 1)
   end
