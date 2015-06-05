@@ -41,12 +41,14 @@ puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 pids = changed_subprojects.map do |subproject|
   puts "~ Running tests in #{subproject}"
   pid = fork do
+    return_value = true
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
       # system 'rake ci:build'
-      system './build.sh' # TODO: replace elsewhere (fid_rakefile)
+      return_value = system './build.sh' # TODO: replace elsewhere (fid_rakefile)
       5.times { puts }
     end
+    exit(return_value ? 0 : 1)
   end
   [subproject, pid]
 end
