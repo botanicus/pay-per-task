@@ -21,6 +21,6 @@ echo "~ Starting the XYZ"
 webdriver_pid=$!
 sleep 2.5
 
-echo "~ Running the integration tests."
+echo "\n\n\n\n\n~ Running the integration tests."
 ./protractor.conf.js
 kill $webdriver_pid
