@@ -19,7 +19,7 @@ echo "~ Starting the XYZ"
 # rake ci:run:webdriver
 (webdriver-manager start) &
 webdriver_pid=$!
-# sleep 2.5
+sleep 2.5
 
 echo "~ Running the integration tests."
 ./protractor.conf.js
