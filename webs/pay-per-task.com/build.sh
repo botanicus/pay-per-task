@@ -38,4 +38,4 @@ echo -e "\n~ Running the integration tests in PhantomJS."
 # BROWSER=chrome ./protractor.conf.js || exit 1
 
 # Deployment.
-./deploy.rb
+$ROOT/bin/deploy.rb
