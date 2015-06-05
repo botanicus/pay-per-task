@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "~ Installing Bower packages."
-cd content && bower install > /dev/null || exit 1 && cd -
+cd content && bower install > /dev/null || exit 1 && cd ..
 
 echo "~ Building the Docker image."
 docker build -t pay-per-task.com . > /dev/null || exit 1
