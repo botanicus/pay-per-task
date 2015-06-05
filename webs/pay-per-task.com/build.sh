@@ -36,3 +36,4 @@ echo -e "\n~ Running the integration tests in PhantomJS."
 
 # Deployment.
 $ROOT/bin/deploy.rb
+

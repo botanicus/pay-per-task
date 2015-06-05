@@ -10,29 +10,35 @@ DOCKERHUB_API = 'https://registry.hub.docker.com'
 
 REPO_NAME = File.basename(Dir.pwd)
 
-system "ssh-add #{ENV['ROOT']}/ssh_key"
+def run(command)
+  puts "~ #{command}"
+  system command
+end
+
+run "ssh-add #{ENV['ROOT']}/ssh_key"
 
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
   # clone it, replace the code, commit, push
-  system "rm -rf #{ENV['ROOT']}/.git"
-  system "git clone --bare ssh://git@bitbucket.org/botanicus/#{REPO_NAME} .git"
-  system "git add ."
-  system "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
-  system "git push"
+  run "rm -rf #{ENV['ROOT']}/.git"
+  run "git clone --bare ssh://git@bitbucket.org/botanicus/#{REPO_NAME} .git"
+  run "git add ."
+  run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
+  run "git push"
 else
   puts "~ Repository #{REPO_NAME} doesn't exist yet, creating a PUBLIC one."
-  json = {scm: 'git'}.to_json
-  system "curl -X POST --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus/#{REPO_NAME} -d '#{json}'"
+  json = {scm: 'git', is_private: true}.to_json
+  %x{curl -X POST --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus/#{REPO_NAME} -d '#{json}'}
   # As of now, it's impossible to create automated builds through the API as far as I know.
-  # system "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
+  # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
+  # TODO: This should go into Slack, no one reads this.
   puts ">>> CREATE automated build. So far this isn't supported in the API."
   # connect them via webhooks
   # commit & push
   # tutum?
-  system "rm -rf #{ENV['ROOT']}/.git"
-  system "git add ."
-  system "git remote add origin ssh://git@bitbucket.org/botanicus/#{REPO_NAME}"
-  system "git push -u origin master"
+  run "rm -rf #{ENV['ROOT']}/.git"
+  run "git add ."
+  run "git remote add origin ssh://git@bitbucket.org/botanicus/#{REPO_NAME}"
+  run "git push -u origin master"
 end
