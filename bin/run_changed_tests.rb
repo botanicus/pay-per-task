@@ -21,6 +21,8 @@ range = data[0]["compare"].split("/").last
 #   abort "You must set up environment variable previous_build_commit."
 # end
 
+ENV['ROOT'] = Dir.pwd
+
 def find_rakefile(dir)
   if File.exist?(File.join("#{dir}/Rakefile"))
     dir

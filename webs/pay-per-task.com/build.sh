@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# TODO: Haproxy -> API & this.
+# TODO: Installing protractor will take ages.
+# Create a Dockerfile in Test and create a new layer with the testing tools?
+#   ... does it help?
+# TODO: Trigger Dockerhub build just for this repo.
+# - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+# - docker push circleci/elasticsearch
+# TODO: Run other browsers.
+# https://circleci.com/docs/installing-custom-software
 echo "~ Installing Bower packages."
 cd content && bower install > /dev/null || exit 1 && cd ..
 
@@ -19,7 +28,6 @@ echo "~ Starting the XYZ"
 (webdriver-manager start &> /dev/null || exit 1) &
 sleep 2.5
 
-# TODO: Run other browsers.
 echo -e "\n~ Running the integration tests in PhantomJS."
 ./protractor.conf.js || exit 1
 
@@ -28,3 +36,6 @@ echo -e "\n~ Running the integration tests in PhantomJS."
 
 # echo -e "\n~ Running the integration tests in Google Chrome."
 # BROWSER=chrome ./protractor.conf.js || exit 1
+
+# Deployment.
+./deploy.rb
