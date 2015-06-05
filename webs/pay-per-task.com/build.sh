@@ -16,11 +16,8 @@ echo "~ Getting the XYZ"
 webdriver-manager update || exit 1
 
 echo "~ Starting the XYZ"
-# rake ci:run:webdriver
 (webdriver-manager start || exit 1) &
-# webdriver_pid=$!
 sleep 2.5
 
-echo "\n\n\n\n\n~ Running the integration tests."
+echo -e "\n\n\n\n\n~ Running the integration tests."
 ./protractor.conf.js
-# kill $webdriver_pid
