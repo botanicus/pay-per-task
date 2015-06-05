@@ -1,9 +1,6 @@
 #!/bin/bash
 
 # TODO: Haproxy -> API & this.
-# TODO: Installing protractor will take ages.
-# Create a Dockerfile in Test and create a new layer with the testing tools?
-#   ... does it help?
 # TODO: Trigger Dockerhub build just for this repo.
 # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 # - docker push circleci/elasticsearch
