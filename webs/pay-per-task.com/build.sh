@@ -20,4 +20,4 @@ webdriver-manager start &
 sleep 2.5
 
 echo "~ Running the integration tests."
-./protractor.conf.js
+# ./protractor.conf.js
