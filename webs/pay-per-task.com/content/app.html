@@ -27,37 +27,37 @@
 
   <body>
     <nav class="navbar navbar-default" ng-controller="NavbarController">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" aria-expanded="true">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Pay Per Task</a>
-      </div>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" aria-expanded="true">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Pay Per Task</a>
+        </div>
 
-      <div class="navbar-collapse collapse in" collapse="isCollapsed" aria-expanded="true">
-        <ul class="nav navbar-nav">
-          <li class="{{currentPath == '/' ? 'active' : ''}}">
-            <a href="/" ng-click="isCollapsed = !isCollapsed">
-              Why Pay-Per-Task? <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="{{currentPath == '/pricing' ? 'active' : ''}}">
-            <a href="/pricing" ng-click="isCollapsed = !isCollapsed">Pricing <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="{{currentPath == '/about-us' ? 'active' : ''}}">
-            <a href="/about-us" ng-click="isCollapsed = !isCollapsed">About us <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="{{currentPath == '/contact' ? 'active' : ''}}">
-            <a href="/contact" ng-click="isCollapsed = !isCollapsed">Contact <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
+        <div class="navbar-collapse collapse in" collapse="isCollapsed" aria-expanded="true">
+          <ul class="nav navbar-nav">
+            <li class="{{currentPath == '/' ? 'active' : ''}}">
+              <a href="/" ng-click="isCollapsed = !isCollapsed">
+                Why Pay-Per-Task? <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="{{currentPath == '/pricing' ? 'active' : ''}}">
+              <a href="/pricing" ng-click="isCollapsed = !isCollapsed">Pricing <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="{{currentPath == '/about-us' ? 'active' : ''}}">
+              <a href="/about-us" ng-click="isCollapsed = !isCollapsed">About us <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="{{currentPath == '/contact' ? 'active' : ''}}">
+              <a href="/contact" ng-click="isCollapsed = !isCollapsed">Contact <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
     <div class="container">
       <div ng-view><i class="fa fa-spinner"></i></div>
