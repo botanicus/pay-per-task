@@ -16,7 +16,7 @@ echo "~ Getting the XYZ"
 webdriver-manager update || exit 1
 
 echo "~ Starting the XYZ"
-webdriver-manager start &
+nohup webdriver-manager start
 sleep 2.5
 
 echo "~ Running the integration tests."
