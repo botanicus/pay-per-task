@@ -5,6 +5,9 @@ machine:
     - redis
 
 dependencies:
+  pre:
+    - cp ssh_key ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
   override:
     # Don't do the default Railsy stuff (CircleCI).
     - echo "Do nothing." > /dev/null
