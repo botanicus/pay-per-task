@@ -26,47 +26,38 @@
   </head>
 
   <body>
-    <header class="navbar navbar-default">
-      <div class="content">
-        <div class="pull-left">
-          <a id="logo" role="button" href="/">PAY PER TASK</a>
-
-          <span id="main-navigation">
-            <page link="/pricing">Pricing</page> |
-            <page link="/about-us">About Us</page> |
-            <page link="/contact">Contact</page>
-          </span>
-        </div>
-
-        <div class="pull-right">
-          <!-- Authenticated user. -->
-          <ul class="nav dropdown">
-            <div ng-show="currentUser.loggedIn" id="right-corner" class="dropdown">
-              <div data-toggle="dropdown" class="dropdown-toggle">
-                <img ng-src="{{currentUser.gravatarLink}}" ng-show="currentUser.gravatarLink" alt="ACCOUNT" />
-                <i class="fa fa-caret-down"></i>
-              </div>
-
-              <ul class="dropdown-menu" role="menu" id="account-dropdown">
-                <li role="presentation" class="dropdown-header">This week</li>
-                <div ng-repeat="(title, statistic) in currentUser.stats">
-                  <li role="text"><strong>{{title}}:</strong> <em>{{statistic}}.</em></li>
-                </div>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation" class="dropdown-header">Your Account</li>
-                <li role="menuitem"><a href="{{Links.profile}}">Your Profile</a></li>
-                <li role="menuitem"><a href ng-click="logOut()">Log out</a></li>
-              </ul>
-            </div>
-          </ul>
-
-          <!-- Unauthenticated user. -->
-          <div ng-hide="currentUser.loggedIn">
-            <!-- <a href ng-click="displayLogInDialog()">LOG IN</a> -->
-          </div>
-        </div>
+    <nav class="navbar navbar-default" ng-controller="NavbarController">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed" aria-expanded="true">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Pay Per Task</a>
       </div>
-    </header>
+
+      <div class="navbar-collapse collapse in" collapse="isCollapsed" aria-expanded="true">
+        <ul class="nav navbar-nav">
+          <li class="{{currentPath == '/' ? 'active' : ''}}">
+            <a href="/" ng-click="isCollapsed = !isCollapsed">
+              Why Pay-Per-Task? <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="{{currentPath == '/pricing' ? 'active' : ''}}">
+            <a href="/pricing" ng-click="isCollapsed = !isCollapsed">Pricing <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="{{currentPath == '/about-us' ? 'active' : ''}}">
+            <a href="/about-us" ng-click="isCollapsed = !isCollapsed">About us <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="{{currentPath == '/contact' ? 'active' : ''}}">
+            <a href="/contact" ng-click="isCollapsed = !isCollapsed">Contact <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
     <div class="container">
       <div ng-view><i class="fa fa-spinner"></i></div>

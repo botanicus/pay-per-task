@@ -142,3 +142,11 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
       });
   };
 });
+
+app.controller('NavbarController', function ($scope, $document) {
+  $scope.isCollapsed = true;
+
+  $scope.$on('$routeChangeSuccess', function () {
+    $scope.currentPath = window.location.pathname;
+  });
+});
