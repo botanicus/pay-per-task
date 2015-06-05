@@ -4,43 +4,11 @@ PATH = "/webs/#{NAME}"
 desc "Build and run the container."
 task default: ['docker:build', 'docker:run']
 
-# Services do run in Docker, but the integration tests don't have to.
-# Unit: docker run myimage bundle exec rake test
+# Services and unit tests run in Docker.
+# Integration tests runs ON the CI AGAINST the containers.
 namespace :ci do
-  task 'run:webdriver' do
-    fork { sh "webdriver-manager start" }
-  end
   task :build do
-    # TODO: Haproxy -> API & this.
-    # PhantomJS headless
-    # TODO: Installing protractor will take ages.
-    # Create a Dockerfile in Test and create a new layer with the testing tools?
-    #   ... does it help?
-    sh "cd content && bower install > /dev/null"
-
-    Rake::Task['docker:build'].execute
-    sh "docker run -d -p 80:80 #{NAME}"
-
-    # Setup.
-    sh "npm install protractor > /dev/null"
-    sh "webdriver-manager update"
-
-    # Tests.
-    fork { sh "webdriver-manager start" }
-    sleep 2.5 # Catch up with webdriver
-    puts "~ Running the tests."
-    sh "./protractor.conf.js"
-
-    # TODO: Run the tests.
-    # Not necessary I guess?
-    # sh <<-EOF
-    #   for container in $(docker ps | awk '{ print $1 }'); do
-    #     test $container '!=' CONTAINER && docker kill $container
-    #   done
-    # EOF
-    # TODO: Trigger Dockerhub build just for this repo.
-    # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    # - docker push circleci/elasticsearch
+    #
   end
 end
 
