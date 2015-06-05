@@ -43,8 +43,8 @@ pids = changed_subprojects.map do |subproject|
   pid = fork do
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
-      # puts %x{rake ci:build}
-      puts %x{./build.sh} # TODO: replace elsewhere (fid_rakefile)
+      # system 'rake ci:build'
+      system './build.sh' # TODO: replace elsewhere (fid_rakefile)
       5.times { puts }
     end
   end
