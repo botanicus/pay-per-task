@@ -10,6 +10,8 @@ DOCKERHUB_API = 'https://registry.hub.docker.com'
 
 REPO_NAME = File.basename(Dir.pwd)
 
+system "ssh-add #{ENV['ROOT']}/ssh_key"
+
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
