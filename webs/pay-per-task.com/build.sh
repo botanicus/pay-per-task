@@ -16,8 +16,8 @@ echo "~ Getting the XYZ"
 webdriver-manager update || exit 1
 
 echo "~ Starting the XYZ"
-nohup webdriver-manager start
-sleep 2.5
+# webdriver-manager start &
+# sleep 2.5
 
 echo "~ Running the integration tests."
 # ./protractor.conf.js
