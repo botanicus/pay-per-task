@@ -19,5 +19,12 @@ echo "~ Starting the XYZ"
 (webdriver-manager start &> /dev/null || exit 1) &
 sleep 2.5
 
-echo -e "\n~ Running the integration tests."
-./protractor.conf.js
+# TODO: Run other browsers.
+echo -e "\n~ Running the integration tests in PhantomJS."
+./protractor.conf.js || exit 1
+
+# echo -e "\n~ Running the integration tests in Firefox."
+# BROWSER=firefox ./protractor.conf.js || exit 1
+
+# echo -e "\n~ Running the integration tests in Google Chrome."
+# BROWSER=chrome ./protractor.conf.js || exit 1

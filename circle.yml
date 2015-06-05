@@ -1,6 +1,15 @@
 machine:
   services:
     - docker
+    - rabbitmq-server
+    - redis
+
+dependencies:
+  override:
+
+database:
+  override:
+
 test:
   override:
     - ./bin/run_changed_tests.rb
