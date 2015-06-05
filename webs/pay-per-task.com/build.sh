@@ -16,8 +16,9 @@ echo "~ Getting the XYZ"
 webdriver-manager update || exit 1
 
 echo "~ Starting the XYZ"
-(webdriver-manager start) &
-# sleep 2.5
+rake ci:run:webdriver
+# (webdriver-manager start) &
+sleep 2.5
 
 echo "~ Running the integration tests."
-# ./protractor.conf.js
+./protractor.conf.js
