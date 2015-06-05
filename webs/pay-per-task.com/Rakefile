@@ -7,6 +7,9 @@ task default: ['docker:build', 'docker:run']
 # Services do run in Docker, but the integration tests don't have to.
 # Unit: docker run myimage bundle exec rake test
 namespace :ci do
+  task 'run:webdriver' do
+    fork { sh "webdriver-manager start" }
+  end
   task :build do
     # TODO: Haproxy -> API & this.
     # PhantomJS headless
