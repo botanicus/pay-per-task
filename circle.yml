@@ -6,9 +6,13 @@ machine:
 
 dependencies:
   override:
+    # Don't do the default Railsy stuff (CircleCI).
+    - true
 
 database:
   override:
+    # Don't do the default Railsy stuff (CircleCI).
+    - true
 
 test:
   override:
