@@ -39,7 +39,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   run "git clone --bare ssh://bitbucket/botanicus/#{REPO_NAME}.git"
   run "git add ."
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
-  run "git push"
+  run "git push -u origin master"
 else
   puts "~ Repository #{REPO_NAME} doesn't exist yet, creating."
   json = {scm: 'git', is_private: true}.to_json
