@@ -34,9 +34,11 @@ sudo apt-get -y install firefox > /dev/null
 BROWSER=firefox ./protractor.conf.js || exit 1
 
 echo -e "\n~ Running the integration tests in Google Chrome."
+sudo dpkg --configure --pending
 sudo apt-get -y install google-chrome-stable > /dev/null
+echo
+sudo dpkg --configure --pending
 BROWSER=chrome ./protractor.conf.js || exit 1
 
 # Deployment.
 $ROOT/bin/deploy.rb
-
