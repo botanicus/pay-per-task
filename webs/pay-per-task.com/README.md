@@ -2,6 +2,11 @@
 
 The PPT landing page [pay-per-task.dev](http://pay-per-task.dev) baked into a minimal Nginx container.
 
+[CI](https://circleci.com/gh/botanicus/pay-per-task) |
+[GH](https://github.com/botanicus/pay-per-task) |
+[BB](https://bitbucket.org/botanicus/pay-per-task.com/commits) mirror |
+[Tutum](https://dashboard.tutum.co/node/show/76b63c37-1828-4d02-9182-8b174e578229/)
+
 # Dependencies
 
 [api.pay-per-task.dev](http://docs.pay-per-task.dev/webs/api.pay-per-task.dev)
