@@ -15,6 +15,8 @@ def run(command)
   system command
 end
 
+puts "~ Running the deploy script."
+
 # ENV['GIT_SSH_COMMAND'] = "ssh -i #{ENV['ROOT']}/ssh_key"
 
 File.open("#{ENV['HOME']}/.ssh/config", 'a') do |file|
@@ -25,6 +27,9 @@ Host bitbucket
   IdentityFile #{ENV['ROOT']}/ssh_key
   EOF
 end
+
+puts "~ #{ENV['HOME']}/.ssh/config:"
+puts File.read("#{ENV['HOME']}/.ssh/config")
 # run "ssh-add #{ENV['ROOT']}/ssh_key"
 
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
