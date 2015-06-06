@@ -32,6 +32,8 @@ Host bitbucket
   EOF
 end
 
+# Add to instructions for Slack:
+# Go to your Bitbucket repo settings, find the Hooks section, and add https://hooks.slack.com/services/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 as a POST URL.
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
