@@ -31,6 +31,7 @@ NOTE: This will probably change, as for automatic build of the image there doesn
 
 ```
 npm install -g protractor
+webdriver-manager start
 
 ./protractor.conf.js
 BROWSER=chrome ./protractor.conf.js
