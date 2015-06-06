@@ -47,8 +47,7 @@ else
   run "curl -X POST --user #{BITBUCKET_CREDENTIALS} -H 'Content-Type: application/json' #{BITBUCKET_API}/repositories/botanicus/#{REPO_NAME}.git -d '#{json}'"
   # As of now, it's impossible to create automated builds through the API as far as I know.
   # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
-  # TODO: This should go into Slack, no one reads this.
-  puts ">>> CREATE automated build. So far this isn't supported in the API."
+  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "TODO: Create an automated build for <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME}>. Dockerhub doesn't have API for this.", "username": "Deployment notifications", "channel": "#general"}'}
   # connect them via webhooks
   # commit & push
   # tutum?
