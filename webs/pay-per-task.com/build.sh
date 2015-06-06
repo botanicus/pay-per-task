@@ -1,6 +1,5 @@
 #!/bin/bash
 
-pwd
 # TODO: Haproxy -> API & this.
 # TODO: Trigger Dockerhub build just for this repo.
 # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
@@ -14,7 +13,6 @@ echo "~ Running the pay-per-task.com image."
 docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 
 echo "~ Installing the gems."
-pwd
 bundle install || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
