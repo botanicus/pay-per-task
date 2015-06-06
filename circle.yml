@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get update
+    - sudo apt-get update > /dev/null
   override:
     # Don't do the default Railsy stuff (CircleCI).
     - echo "Do nothing." > /dev/null

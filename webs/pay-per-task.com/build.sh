@@ -29,11 +29,11 @@ echo -e "\n~ Running the integration tests in PhantomJS."
 ./protractor.conf.js || exit 1
 
 echo -e "\n~ Running the integration tests in Firefox."
-sudo apt-get -y install firefox
+sudo apt-get -y install firefox > /dev/null
 BROWSER=firefox ./protractor.conf.js || exit 1
 
 echo -e "\n~ Running the integration tests in Google Chrome."
-sudo apt-get -y install google-chrome-stable
+sudo apt-get -y install google-chrome-stable > /dev/null
 BROWSER=chrome ./protractor.conf.js || exit 1
 
 # Deployment.
