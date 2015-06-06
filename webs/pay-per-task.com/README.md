@@ -30,16 +30,9 @@ NOTE: This will probably change, as for automatic build of the image there doesn
 # Test suite
 
 ```
-npm install -g protractor
-webdriver-manager start
-
-./protractor.conf.js
-BROWSER=chrome ./protractor.conf.js
-BROWSER=firefox ./protractor.conf.js
-BROWSER=safari ./protractor.conf.js
-./protractor.conf.js --specs tests/features/contact.js
-
-BROWSER=chrome rake test
+brew install chromedriver
+DBG=t cucumber # Save screenshots.
+BROWSER=chrome cucumber
 ```
 
 # Status

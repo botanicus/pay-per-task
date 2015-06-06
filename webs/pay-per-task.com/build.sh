@@ -15,27 +15,20 @@ docker build -t pay-per-task.com . > /dev/null || exit 1
 echo "~ Running the pay-per-task.com image."
 docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 
-echo "~ Installing protractor."
-npm install protractor -g > /dev/null || exit 1
-
-echo "~ Getting the XYZ"
-webdriver-manager update > /dev/null || exit 1
-
-echo "~ Starting the XYZ"
-(webdriver-manager start &> /dev/null || exit 1) &
-sleep 2.5
+echo "~ Installing the gems."
+bundle install > /dev/null || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
-./protractor.conf.js || exit 1
+bundle exec cucumber || exit 1
 
 # https://circleci.com/docs/browser-debugging#interact-with-the-browser-over-vnc
 echo -e "\n~ Running the integration tests in Firefox."
 sudo apt-get -y install firefox > /dev/null
-BROWSER=firefox ./protractor.conf.js || exit 1
+BROWSER=firefox bundle exec cucumber || exit 1
 
 echo -e "\n~ Running the integration tests in Google Chrome."
 sudo apt-get -y install google-chrome-stable > /dev/null
-BROWSER=chrome ./protractor.conf.js || exit 1
+BROWSER=chrome bundle exec cucumber || exit 1
 
 # Deployment.
 $ROOT/bin/deploy.rb
