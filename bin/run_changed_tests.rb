@@ -3,6 +3,8 @@
 require 'json'
 require 'open-uri'
 
+# TODO: Don't just ADD projects, also delete them
+# (or at least send a slack notification as a reminder).
 # TODO: this is in ENV['CIRCLE_COMPARE_URL']
 URL = 'https://circleci.com/api/v1/project'
 PRJ = 'botanicus/pay-per-task'
@@ -37,7 +39,7 @@ dirs = files.map! { |file| File.dirname(file) }.uniq
 
 changed_subprojects = dirs.map do |dir|
   find_rakefile(dir)
-end.compact
+end.compact.uniq
 puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 pids = changed_subprojects.map do |subproject|
