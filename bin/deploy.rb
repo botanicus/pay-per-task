@@ -17,7 +17,7 @@ end
 
 # ENV['GIT_SSH_COMMAND'] = "ssh -i #{ENV['ROOT']}/ssh_key"
 
-File.open('~/.ssh/config', 'a') do |file|
+File.open("#{ENV['HOME']}/.ssh/config", 'a') do |file|
   file.puts <<-EOF
 Host bitbucket
   User git
