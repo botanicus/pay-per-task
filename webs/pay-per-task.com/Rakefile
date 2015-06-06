@@ -8,7 +8,12 @@ task default: ['docker:build', 'docker:run']
 # Integration tests runs ON the CI AGAINST the containers.
 namespace :ci do
   task :build do
-    #
+    # PhantomJS
+    Rake::Task['test:integration']
+    [:chrome, :chromium, :canary, :firefox, :firefox_nightly, :safari].each do |browser|
+      ENV['BROWSER'] = browser
+      Rake::Task['test:integration'].execute
+    end
   end
 end
 
@@ -16,6 +21,21 @@ desc "Open the running site."
 task :open do
   ip = %x{boot2docker ip}
   sh "open http://#{ip}"
+end
+
+desc "Run all the tests."
+task test: ['test:unit', 'test:integration']
+
+namespace :test do
+  desc "Run the end to end tests."
+  task :unit do
+    puts "TODO: Run the unit tests."
+  end
+
+  desc "Run the end to end tests."
+  task :integration do
+    sh "./protractor.conf.js"
+  end
 end
 
 namespace :docker do
@@ -27,8 +47,8 @@ namespace :docker do
   desc "Run the container."
   task :run do
     sh "docker run -d -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
-    api_ppt_path = File.join(File.dirname(PATH), 'api.pay-per-task.com')
-    sh "docker run -d -p 80:80 -v #{api_ppt_path}:/webs/api.pay-per-task.com:ro api.pay-per-task.com"
+    # api_ppt_path = File.join(File.dirname(PATH), 'api.pay-per-task.com')
+    # sh "docker run -d -p 80:80 -v #{api_ppt_path}:/webs/api.pay-per-task.com:ro api.pay-per-task.com"
   end
 
   desc "SSH into a running container."
