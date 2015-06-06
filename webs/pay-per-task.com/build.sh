@@ -28,6 +28,7 @@ sleep 2.5
 echo -e "\n~ Running the integration tests in PhantomJS."
 ./protractor.conf.js || exit 1
 
+# https://circleci.com/docs/browser-debugging#interact-with-the-browser-over-vnc
 echo -e "\n~ Running the integration tests in Firefox."
 sudo apt-get -y install firefox > /dev/null
 BROWSER=firefox ./protractor.conf.js || exit 1

@@ -15,7 +15,8 @@ def run(command)
   system command
 end
 
-run "ssh-add #{ENV['ROOT']}/ssh_key"
+ENV['GIT_SSH_COMMAND'] = "ssh -i #{ENV['ROOT']}/ssh_key"
+# run "ssh-add #{ENV['ROOT']}/ssh_key"
 
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
