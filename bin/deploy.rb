@@ -39,7 +39,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
   # clone it, replace the code, commit, push
   run "rm -rf #{ENV['ROOT']}/.git"
-  run "git clone --bare ssh://bitbucket/botanicus/#{REPO_NAME}.git"
+  run "git clone --bare ssh://bitbucket/botanicus/#{REPO_NAME}.git .git"
   run "git add ."
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
@@ -54,6 +54,6 @@ else
   run "git commit -a -m 'Initial import from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
   # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
-  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "@botanicus: Please create an automated build for <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME}>. Dockerhub does not have API for this.", "username": "Deployment notifications", "channel": "#general"}'}
+  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "@botanicus: Please create <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME} automated build>. Dockerhub does not have API for this.", "username": "Deployment notifications", "channel": "#general"}'}
   # tutum?
 end
