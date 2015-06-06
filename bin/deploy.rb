@@ -32,8 +32,6 @@ Host bitbucket
   EOF
 end
 
-# run "ssh-add #{ENV['ROOT']}/ssh_key"
-
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
@@ -43,7 +41,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   run "git config core.bare false" # Haha LOL.
   run "git add ."
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
-  run "git push -u origin master"
+  run "git push -f origin master"
 else
   puts "~ Repository #{REPO_NAME} doesn't exist yet, creating."
   json = {scm: 'git', is_private: true}.to_json
