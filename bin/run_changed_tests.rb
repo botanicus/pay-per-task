@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+ENV['CI'] = 'true'
+
 require 'json'
 require 'open-uri'
 
