@@ -4,6 +4,6 @@ Feature: Contact page
   I want to be able to contact the mighty brains behind PPT.
   So that I can buy them beer and prostitutes.
 
-Scenario: do something Ajaxy
+Scenario: Going to the contact page
   When I click "Contact"
   Then I should see "Get in touch"
