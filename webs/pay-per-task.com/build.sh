@@ -28,8 +28,9 @@ sleep 2.5
 echo -e "\n~ Running the integration tests in PhantomJS."
 ./protractor.conf.js || exit 1
 
-# echo -e "\n~ Running the integration tests in Firefox."
-# BROWSER=firefox ./protractor.conf.js || exit 1
+echo -e "\n~ Running the integration tests in Firefox."
+sudo apt-get -y install firefox
+BROWSER=firefox ./protractor.conf.js || exit 1
 
 echo -e "\n~ Running the integration tests in Google Chrome."
 sudo apt-get -y install google-chrome-stable
