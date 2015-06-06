@@ -15,6 +15,9 @@ docker build -t pay-per-task.com . > /dev/null || exit 1
 echo "~ Running the pay-per-task.com image."
 docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 
+echo "~ Installing LibXML 2."
+sudo apt-get install -y libxml2 libxml2-dev libxslt1-dev > /dev/null
+
 echo "~ Installing the gems."
 bundle install || exit 1
 
