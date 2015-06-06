@@ -44,15 +44,13 @@ else
   puts "~ Repository #{REPO_NAME} doesn't exist yet, creating."
   json = {scm: 'git', is_private: true}.to_json
   run "curl -X POST --user #{BITBUCKET_CREDENTIALS} -H 'Content-Type: application/json' #{BITBUCKET_API}/repositories/botanicus/#{REPO_NAME} -d '#{json}'"
-  # As of now, it's impossible to create automated builds through the API as far as I know.
-  # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
-  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "TODO: Create an automated build for <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME}>. Dockerhub does not have API for this.", "username": "Deployment notifications", "channel": "#general"}'}
-  # connect them via webhooks
-  # commit & push
-  # tutum?
   run "rm -rf #{ENV['ROOT']}/.git"
   run "git init"
   run "git add ."
   run "git remote add origin ssh://bitbucket/botanicus/#{REPO_NAME}.git"
+  run "git commit -a -m 'Initial import from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
+  # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
+  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "TODO: Create an automated build for <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME}>. Dockerhub does not have API for this.", "username": "Deployment notifications", "channel": "#general"}'}
+  # tutum?
 end
