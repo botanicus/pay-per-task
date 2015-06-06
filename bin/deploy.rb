@@ -43,6 +43,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   run "git config core.bare false" # Haha LOL.
   run "git add ."
   # https://circleci.com/docs/environment-variables
+  # TODO: Don't use CIRCLE_COMPARE_URL, if the build failed before, those changes would NOT be included!
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")} GH #{ENV['CIRCLE_COMPARE_URL']} | CI https://circleci.com/gh/botanicus/pay-per-task/#{ENV['CIRCLE_BUILD_NUM']}'."
   run "git push -f origin master"
 else
