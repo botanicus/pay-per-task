@@ -1,24 +1,20 @@
 #!/bin/bash
 
+pwd
 # TODO: Haproxy -> API & this.
 # TODO: Trigger Dockerhub build just for this repo.
 # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 # - docker push circleci/elasticsearch
 # TODO: Run other browsers.
 # https://circleci.com/docs/installing-custom-software
-echo "~ Installing Bower packages."
-cd content && bower install > /dev/null || exit 1 && cd ..
-
 echo "~ Building the Docker image."
 docker build -t pay-per-task.com . > /dev/null || exit 1
 
 echo "~ Running the pay-per-task.com image."
 docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 
-echo "~ Installing LibXML 2."
-sudo apt-get install -y libxml2 libxml2-dev libxslt1-dev > /dev/null
-
 echo "~ Installing the gems."
+pwd
 bundle install || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
