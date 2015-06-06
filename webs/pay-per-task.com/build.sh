@@ -40,4 +40,3 @@ BROWSER=chrome ./protractor.conf.js || exit 1
 # Deployment.
 $ROOT/bin/deploy.rb
 
-
