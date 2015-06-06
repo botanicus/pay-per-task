@@ -40,6 +40,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   # clone it, replace the code, commit, push
   run "rm -rf #{ENV['ROOT']}/.git"
   run "git clone --bare ssh://bitbucket/botanicus/#{REPO_NAME}.git .git"
+  run "git config core.bare false" # Haha LOL.
   run "git add ."
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
