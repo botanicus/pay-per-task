@@ -37,7 +37,7 @@ if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
   # clone it, replace the code, commit, push
   run "rm -rf #{ENV['ROOT']}/.git"
-  run "git clone --bare bitbucket/botanicus/#{REPO_NAME} .git"
+  run "git clone --bare bitbucket/botanicus/#{REPO_NAME}.git"
   run "git add ."
   run "git commit -a -m 'Build from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push"
