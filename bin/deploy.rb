@@ -21,7 +21,7 @@ puts "~ Running the deploy script."
 
 run "chmod 600 #{ENV['ROOT']}/ssh_key"
 run "git config --global user.email 'info@pay-per-task.com'"
-git "config --global user.name 'Deployer'"
+run "git config --global user.name 'Deployer'"
 
 File.open("#{ENV['HOME']}/.ssh/config", 'a') do |file|
   file.puts <<-EOF
