@@ -13,7 +13,7 @@ echo "~ Running the pay-per-task.com image."
 docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 
 echo "~ Installing the gems."
-bundle install || exit 1
+bundle install &> /dev/null || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
 bundle exec cucumber || exit 1
