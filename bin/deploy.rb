@@ -54,6 +54,6 @@ else
   run "git commit -a -m 'Initial import from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
   # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
-  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "@botanicus: Please create <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME} automated build>. Dockerhub does not have API for this. Also add https://registry.hub.docker.com/hooks/bitbucket to <https://bitbucket.org/botanicus/#{REPO_NAME}/admin/hooks|#{REPO_NAME} hooks>", "username": "Deployment notifications", "channel": "#general"}'}
+  run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": "@botanicus:\n1. Please create <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME} automated build>. Dockerhub does not have API for this. Also add https://registry.hub.docker.com/hooks/bitbucket to <https://bitbucket.org/botanicus/#{REPO_NAME}/admin/hooks|#{REPO_NAME} hooks>\n2. Then deploy it <https://dashboard.tutum.co/container/launch/#tab-image-privates|from private> or <https://dashboard.tutum.co/container/launch/#tab-image-community|from public build>. Do not forget to\n  - Expose and map ports and make them published if necessary.\n  - Turn autorestart on.\n  - Maybe some links and volumes?", "username": "Deployment notifications", "channel": "#general"}'}
   # tutum?
 end
