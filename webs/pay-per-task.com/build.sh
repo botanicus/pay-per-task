@@ -28,4 +28,5 @@ sudo apt-get -y install google-chrome-stable > /dev/null
 BROWSER=chrome bundle exec cucumber || exit 1
 
 # Deployment.
+echo -e "\n\n"
 $ROOT/bin/deploy.rb
