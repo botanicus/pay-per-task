@@ -19,6 +19,7 @@ puts "~ Running the deploy script."
 
 # ENV['GIT_SSH_COMMAND'] = "ssh -i #{ENV['ROOT']}/ssh_key"
 
+run "chmod 600 #{ENV['ROOT']}/ssh_key"
 File.open("#{ENV['HOME']}/.ssh/config", 'a') do |file|
   file.puts <<-EOF
 Host bitbucket
