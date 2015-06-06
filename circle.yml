@@ -3,6 +3,9 @@ machine:
     - docker
     - rabbitmq-server
     - redis
+  hosts:
+    pay-per-task.dev: 127.0.0.1
+    blog.pay-per-task.dev: 127.0.0.1
 
 dependencies:
   pre:
