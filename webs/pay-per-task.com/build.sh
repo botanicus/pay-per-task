@@ -16,16 +16,18 @@ echo "~ Installing the gems."
 bundle install &> /dev/null || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
-bundle exec cucumber -p CI || exit 1
+bundle exec cucumber -p CI || FAILED=true
 
 # https://circleci.com/docs/browser-debugging#interact-with-the-browser-over-vnc
 echo -e "\n~ Running the integration tests in Firefox."
 sudo apt-get -y install firefox > /dev/null
-BROWSER=firefox bundle exec cucumber -p CI || exit 1
+BROWSER=firefox bundle exec cucumber -p CI || FAILED=true
 
 echo -e "\n~ Running the integration tests in Google Chrome."
 sudo apt-get -y install google-chrome-stable > /dev/null
-BROWSER=chrome bundle exec cucumber -p CI || exit 1
+BROWSER=chrome bundle exec cucumber -p CI || FAILED=true
+
+test -z "$FAILED" || exit 1
 
 # Deployment.
 echo -e "\n\n"
