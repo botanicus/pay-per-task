@@ -1,0 +1,3 @@
+# https://github.com/cucumber/cucumber/wiki/cucumber.yml
+smoke: SITE=pay-per-task.com --tags @smoke
+wip: --tags @wip

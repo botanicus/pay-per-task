@@ -40,7 +40,7 @@ BROWSER=chrome cucumber
 For smoke tests we use our existing features suite. Any feature that doesn't corrupt data should by tagged by tag `@smoke`.
 
 ```
-cucumber --tags @smoke
+cucumber --profile smoke
 ```
 
 # Status

@@ -11,7 +11,7 @@ else
   Capybara.default_driver = :poltergeist
 end
 
-Capybara.app_host = 'http://pay-per-task.dev/'
+Capybara.app_host = "http://#{ENV['SITE'] || 'pay-per-task.dev'}/"
 Capybara.run_server = false
 
 # Hooks
