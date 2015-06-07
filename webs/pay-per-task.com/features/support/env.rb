@@ -8,7 +8,7 @@ if ENV['BROWSER']
 else
   # PhantomJS.
   require 'capybara/poltergeist'
-  Capybara.javascript_driver = :poltergeist
+  Capybara.default_driver = :poltergeist
 end
 
 Capybara.app_host = 'http://pay-per-task.dev/'
