@@ -4,6 +4,6 @@ Feature: Contact page
   I want to be able to contact the mighty brains behind PPT.
   So that I can buy them beer and prostitutes.
 
-Scenario: Going to the contact page
+Scenario: Going to the about us page
   When I click "Contact"
-  Then I should see "Get in touch"
+  Then I should see "Get in touch" in the main content

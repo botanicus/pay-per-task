@@ -5,6 +5,8 @@ if ENV['BROWSER']
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: ENV['BROWSER'].to_sym)
   end
+
+  Capybara.default_driver = :selenium
 else
   # PhantomJS.
   require 'capybara/poltergeist'
@@ -20,12 +22,11 @@ Before do |scenario|
 end
 
 After do |scenario|
-  slug = scenario.title.delete("'").tr(' ', '_').downcase
-  if ENV['DBG'] && scenario.failed?
-    Dir.mkdir('tmp')
-    save_and_open_screenshot("tmp/#{slug}.png")
-  elsif ENV['CI'] && scenario.failed?
-    path = File.join(ENV['CIRCLE_ARTIFACTS'], "#{slug}.png")
+  if scenario.failed?
+    slug = scenario.title.delete("'").tr(' ', '_').downcase
+    path = File.join(ENV['SCREENSHOT_DIR'] || 'tmp', "#{slug}.png")
+
     save_screenshot(path)
+    puts "~ Scenario #{title} failed, screenshot saved to #{path}"
   end
 end
