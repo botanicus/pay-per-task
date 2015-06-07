@@ -27,6 +27,8 @@ After do |scenario|
     path = File.join(ENV['SCREENSHOT_DIR'] || 'tmp', "#{slug}.png")
 
     save_screenshot(path)
+    # TODO: On CI, this never goes to console.
+    # It's important there since we don't fail early.
     puts "~ Scenario #{title} failed, screenshot saved to #{path}"
   end
 end

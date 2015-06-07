@@ -6,4 +6,4 @@ Feature: The about us page
 
 Scenario: Going to the contact page
   When I click "About us"
-  Then I should see "About uss" in the main content
+  Then I should see "About us" in the main content
