@@ -35,6 +35,14 @@ DBG=t cucumber # Save screenshots.
 BROWSER=chrome cucumber
 ```
 
+## Smoke tests
+
+For smoke tests we use our existing features suite. Any feature that doesn't corrupt data should by tagged by tag `@smoke`.
+
+```
+cucumber --tags @smoke
+```
+
 # Status
 
 - WIP. Both the copy and the functionality needs to be revisited. Basic styling needed, CI & deployment to be set up.
