@@ -1,4 +1,9 @@
 # https://github.com/cucumber/cucumber/wiki/cucumber.yml
 smoke: SITE=pay-per-task.com --tags @smoke
 wip: --tags @wip
-CI: CI=true SCREENSHOT_DIR=<%= ENV['CIRCLE_ARTIFACTS'] || abort('CIRCLE_ARTIFACTS empty') %>/<%= ENV['BROWSER'] || 'phantomjs' %> --format html --out <%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs', 'features.html') %>
+CI: >
+  CI=true
+  _=<%= ENV['CIRCLE_ARTIFACTS'] || abort('CIRCLE_ARTIFACTS empty') %>
+  SCREENSHOT_DIR=<%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs') %>
+  --format html
+  --out <%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs', 'features.html') %>
