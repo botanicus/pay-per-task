@@ -57,6 +57,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    syntax (1.2.0)
     websocket (1.2.2)
     websocket-driver (0.5.4)
       websocket-extensions (>= 0.1.0)
@@ -73,3 +74,4 @@ DEPENDENCIES
   poltergeist
   rspec
   selenium-webdriver
+  syntax
