@@ -67,21 +67,3 @@ footer .footer {
   width: 32px;
   margin: 2px;
 }
-
-/* BIGGER MOBILE*/
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-  /* Page: .about-us */
-  .about-us h1 {
-    font-size: 32px;
-  }
-  .about-us h2 {
-    font-size: 24px;
-  }
-  .about-us h3 {
-    font-size: 22px;
-  }
-  .about-us .social-media-icon {
-    margin-top: 4px;
-    margin-right: 5px;
-  }
-}
