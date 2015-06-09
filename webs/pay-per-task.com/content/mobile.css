@@ -1,0 +1,87 @@
+/* DEFAULT STYLES */
+h2 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul li {
+  margin-bottom: 20px;
+}
+
+body > .container {
+  padding-top: 70px;
+  margin: 0px auto -80px;
+}
+
+footer, .push {
+  height: 80px;
+}
+
+footer .footer {
+  width: 100%;
+  margin: 0;
+  padding: 0 20px;
+}
+
+/* PAGES */
+.about-us h1 {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.about-us h2 {
+  font-style: italic;
+  text-align: center;
+  margin: 30px 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.about-us h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.about-us .public-links {
+  text-align: center;
+  margin-top: 5px;
+  max-width: 240px;
+}
+
+.about-us .member:nth-of-type(1) {
+  margin-bottom: 25px;
+}
+
+.about-us .member-img {
+  max-width:100%;
+  height:auto;
+}
+
+.about-us .social-media-icon {
+  width: 32px;
+  margin: 2px;
+}
+
+/* BIGGER MOBILE*/
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* Page: .about-us */
+  .about-us h1 {
+    font-size: 32px;
+  }
+  .about-us h2 {
+    font-size: 24px;
+  }
+  .about-us h3 {
+    font-size: 22px;
+  }
+  .about-us .social-media-icon {
+    margin-top: 4px;
+    margin-right: 5px;
+  }
+}

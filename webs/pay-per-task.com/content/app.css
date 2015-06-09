@@ -51,8 +51,10 @@ body > .container {
 
 /* Navigation. */
 .navbar {
+  z-index: 99999;
   position: fixed;
   width: 100%;
+  height: 50px;
 }
 
 #logo {
@@ -129,86 +131,3 @@ html, body {
 footer, .push {
   height: 155px; /* .push must be the same height as .footer */
 }
-
-
-/* MOBILE STYLES */
-
-@media only screen and (max-width: 480px) {
-  h2 {
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  ul li {
-    margin-bottom: 20px;
-  }
-
-  body > .container {
-    padding-top: 70px;
-    margin: 0px auto -80px;
-  }
-
-  footer, .push {
-    height: 80px;
-  }
-
-  footer .footer {
-    width: 100%;
-    margin: 0;
-    padding: 0 20px;
-  }
-
-  /*ABOUT-US - .about-us*/
-  .about-us h1 {
-    margin-top: 0;
-    font-size: 28px;
-  }
-
-  .about-us h2 {
-    margin: 30px 0;
-    font-size: 20px;
-    font-style: italic;
-    letter-spacing: 1px;
-  }
-
-  .about-us h3 {
-    margin-top: 0;
-    font-size: 18px;
-  }
-
-  .member:nth-of-type(1) {
-    margin-bottom: 20px;
-  }
-
-  .public-links {
-    text-align: center;
-    margin-top: 5px;
-  }
-
-  a.github {
-    margin-right: 15px;
-  }
-
-  a.info {
-    width: 24px;
-  }
-
-  a.info img {
-    width: 29px;
-  }
-
-  a.github, a.twitter, a.info {
-    display: inline-block;
-  }
-
-  a.twitter img {
-    width: 24px;
-  }
-}
-
