@@ -1,9 +1,18 @@
 NAME = File.basename(Dir.pwd)
 PATH = "/webs/#{NAME}"
 
+desc "Build and run the container."
+task default: ['docker:build', 'docker:run']
+
 desc "Generate the blog posts."
 task :generate do
   sh "bundle exec blog-generator.rb posts content/api"
+end
+
+desc "Open the running site."
+task :open do
+  ip = %x{boot2docker ip}
+  sh "open http://#{ip}"
 end
 
 namespace :docker do
@@ -14,20 +23,12 @@ namespace :docker do
 
   desc "Run the container."
   task :run do
-    sh "docker run -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
+    sh "docker run -d -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
   end
 
   desc "SSH into a running container."
   task :ssh do
-    id = %x{docker ps | grep #{NAME}:latest | awk '{ print $1 }'}.chomp
+    id = %x{docker ps | grep #{NAME}:latest | head -1 | awk '{ print $1 }'}.chomp
     sh "docker exec -it #{id} /bin/sh"
-  end
-
-  desc "Build and run the container."
-  task default: [:build, :run]
-
-  desc "Publish the image."
-  task :publish do
-    # TODO
   end
 end
