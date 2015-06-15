@@ -1,0 +1,7 @@
+/* Navigation bar */
+.navbar {
+  z-index: 99999;
+  position: fixed;
+  width: 100%;
+  min-height: 50px;
+}
