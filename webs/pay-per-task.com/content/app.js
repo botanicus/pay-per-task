@@ -146,7 +146,17 @@ app.controller('ModalController', function ($scope, $modalInstance, Links, $wind
 app.controller('NavbarController', function ($scope, $document) {
   $scope.isCollapsed = true;
 
-  $scope.$on('$routeChangeSuccess', function () {
-    $scope.currentPath = window.location.pathname;
+  $scope.$on('$routeChangeSuccess', function ($location, $routeParams) {
+    var windowPath = window.location.pathname;
+    var navBarLi = document.querySelectorAll(".navbar-nav li");
+    var currentLink = document.querySelector(".navbar-nav li a[href='" + windowPath + "']");
+
+    for(var i = 0; i < navBarLi.length; i++) {
+      navBarLi[i].classList.remove('active');
+    }
+
+    currentLink.parentElement.classList.add('active');
+
+    $scope.isCollapsed = true;
   });
 });
