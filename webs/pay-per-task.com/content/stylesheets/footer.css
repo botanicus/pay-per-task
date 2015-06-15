@@ -20,3 +20,7 @@ footer .footer {
 footer, .push {
   height: 80px; /* sticky footer: .push must be the same height as .footer */
 }
+
+footer p {
+  margin-bottom: 5px;
+}

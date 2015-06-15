@@ -42,3 +42,7 @@ h2 {
 .container ul li {
   margin-bottom: 20px;
 }
+
+.red {
+  color: rgba(255, 0, 0, 0.4);
+}
