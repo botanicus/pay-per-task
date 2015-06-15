@@ -1,20 +1,19 @@
 @media only screen and (min-width: 992px) {
-
-  /* Page: .about-us */
-  .about-us h1 {
+  h1 {
     font-size: 34px;
   }
 
-  .about-us h2 {
+  h2 {
     font-size: 28px;
     margin: 38px 0;
   }
 
-  .about-us h3 {
+  h3 {
     font-size: 24px;
     margin-bottom: 30px;
   }
 
+  /* Page: .about-us */
   .about-us .member:nth-of-type(1) {
     margin-bottom: 35px;
   }

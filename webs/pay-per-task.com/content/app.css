@@ -29,6 +29,8 @@ h2 {
   font-weight: 300;
   font-style: italic;
   text-align: center;
+  letter-spacing: 1px;
+  line-height: 25px;
 }
 
 .container ul {
