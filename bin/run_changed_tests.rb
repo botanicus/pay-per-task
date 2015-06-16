@@ -36,8 +36,13 @@ def find_build_script(dir)
 end
 
 # Find relevant, changed files.
+# It's important to filter out irrelevant stuff,
+# so we don't do unnecessary redeployments.
+# TODO: this could be split into two things:
+# 1. don't run tests 2. do run tests, but don't redeploy
+# (i. e. when only tests and doc was committed).
 files = %x{git diff --name-only #{range}}.split("\n")
-ignore_list = ['README.md', '.gitignore', 'Rakefile', 'vhost.conf', 'vhost.dev.conf', '.rspec']
+ignore_list = ['README.md', '.gitignore', 'Rakefile', 'vhost.dev.conf', '.rspec']
 ignored_files = files.select { |file| ignore_list.include?(File.basename(file)) }
 files = files - ignored_files
 puts "~ Changed files: #{files.inspect}"
