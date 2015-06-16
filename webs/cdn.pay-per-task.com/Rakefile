@@ -6,24 +6,51 @@ task default: ['docker:build', 'docker:run']
 
 desc "Open the running site."
 task :open do
-  ip = %x{boot2docker ip}
+  ip = %x{boot2docker ip 2> /dev/null}
+  abort("Error: Boot2docker is not running.") if ip.empty?
   sh "open http://#{ip}"
 end
 
 namespace :docker do
+  def container_id
+    value = %x{docker ps | grep #{NAME}:latest | head -1 | awk '{ print $1 }'}.chomp
+    value.empty? ? nil : value
+  end
+
+  def container(&block)
+    if container_id
+      block.call(container_id)
+    else
+      puts "~ No running containers found."
+    end
+  end
+
   desc "Build the image."
   task :build do
     sh "docker build -t #{NAME} ."
   end
 
-  desc "Run the container."
+  desc "Run the container in the foreground."
   task :run do
+    sh "docker run -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
+  end
+
+  desc "Start the container as a daemon."
+  task :start do
     sh "docker run -d -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
+  end
+
+  desc "Stop the container."
+  task :stop do
+    container do |container_id|
+      sh "docker kill #{container_id}"
+    end
   end
 
   desc "SSH into a running container."
   task :ssh do
-    id = %x{docker ps | grep #{NAME}:latest | head -1 | awk '{ print $1 }'}.chomp
-    sh "docker exec -it #{id} /bin/sh"
+    container do |container_id|
+      sh "docker exec -it #{container_id} /bin/sh"
+    end
   end
 end

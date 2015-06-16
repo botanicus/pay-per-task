@@ -19,7 +19,8 @@ end
 
 desc "Open the running site."
 task :open do
-  ip = %x{boot2docker ip}
+  ip = %x{boot2docker ip 2> /dev/null}
+  abort("Error: Boot2docker is not running.") if ip.empty?
   sh "open http://#{ip}"
 end
 
