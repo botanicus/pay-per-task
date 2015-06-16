@@ -10,14 +10,10 @@
 
   h3 {
     font-size: 24px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
 
   /* Page: .about-us */
-  .about-us .member:nth-of-type(1) {
-    margin-bottom: 35px;
-  }
-
   .about-us .social-media-icon {
     margin: 5px 10px;
   }

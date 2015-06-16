@@ -13,6 +13,14 @@
   body > div.container {
     padding: 80px 60px 50px 60px;
   }
+  hr.page-separator {
+    margin: 50px 0;
+  }
+
+  hr.paragraph-separator {
+    margin: 15px 0;
+    border-color: #004164;
+  }
 
   .container-fluid > .navbar-header {
     margin-right: 40px;
