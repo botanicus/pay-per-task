@@ -5,14 +5,18 @@
 html, body {
   height: 100%;
   font-family: 'Open Sans', sans-serif;
+  background-color: #005280;
 }
 
-body > .container {
+body > div.container {
   padding: 70px 15px 50px 15px;
-  margin: 0px auto -80px; /* sticky footer: the bottom margin is the negative value of the footer's height */
+  margin: 0px auto -100px; /* sticky footer: the bottom margin is the negative value of the footer's height */
   min-height: 100%;
   height: auto !important;
   height: 100%;
+  border-left: 1px solid #D8D8D8;
+  border-right: 1px solid #D8D8D8;
+  background-color: #fff;
 }
 
 /* DEFAULT STYLES */
@@ -21,6 +25,7 @@ h1 {
   margin-bottom: 20px;
   font-size: 28px;
   font-weight: 700;
+  color: #004164;
 }
 
 h2 {
@@ -31,18 +36,24 @@ h2 {
   text-align: center;
   letter-spacing: 1px;
   line-height: 25px;
+  color: #004164;
 }
 
-.container ul {
+strong {
+  color: #004164;
+  letter-spacing: 0.03em;
+}
+
+div.container ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.container ul li {
+div.container ul li {
   margin-bottom: 20px;
 }
 
-.red {
-  color: rgba(255, 0, 0, 0.4);
+p.highlight-green {
+  background-color: #5BF400;
 }

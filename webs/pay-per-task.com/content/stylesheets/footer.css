@@ -3,8 +3,8 @@ footer {
   height: 130px;
   padding-top: 15px;
   bottom: 0px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
+  background-color: #002D45;
+  border-top: 10px solid #eee;
   z-index: 100;
 }
 
@@ -13,14 +13,24 @@ footer .footer {
   text-align: center;
   background-size: 50px auto;
   width: 100%;
-  margin: 0;
   padding: 0 20px;
 }
 
 footer, .push {
-  height: 80px; /* sticky footer: .push must be the same height as .footer */
+  height: 100px; /* sticky footer: .push must be the same height as .footer */
 }
 
 footer p {
-  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.red {
+  color: rgba(255, 0, 0, 0.8);
+}
+
+footer p a {
+  color: #0192E0;
 }
