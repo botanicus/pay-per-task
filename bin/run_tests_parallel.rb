@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+changed_subprojects = ARGV.dup
+
 pids = changed_subprojects.map do |subproject|
   puts "~ Running tests in #{subproject}"
   pid = fork do

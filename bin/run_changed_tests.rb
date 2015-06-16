@@ -50,4 +50,5 @@ changed_subprojects = dirs.map do |dir|
 end.compact.uniq
 puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
-system(File.expand_path('../run_tests_parallel.rb', __FILE__))
+runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
+system(runner, changed_subprojects)
