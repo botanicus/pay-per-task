@@ -6,7 +6,7 @@
   <link href="http://blog.pay-per-task.com/doxxu.atom" rel="self" />
   <link href="http://blog.pay-per-task.com" />
   <id>urn:uuid:ebf63efa425706eec7a717c25c08a67c</id>
-  <updated>2015-06-16T10:00:59+01:00</updated>
+  <updated>2015-06-16T10:22:40+01:00</updated>
 
   
   <entry>
@@ -14,7 +14,7 @@
     <link href="http://blog.pay-per-task.com/posts/are-you-losing-money-because-of-lack-of-documentation" />
     <link rel="alternate" type="text/html" href="http://blog.pay-per-task.com/posts/are-you-losing-money-because-of-lack-of-documentation"/>
     <id>urn:uuid:b6497801819e435fecaedad8f598b851</id>
-    <updated>2015-06-16T10:00:59+01:00</updated>
+    <updated>2015-06-16T10:22:40+01:00</updated>
     <!-- TODO: strip HTML from excerpt -->
     <summary>Excerpt</summary>
 <!--     <content type="xhtml">
@@ -22,6 +22,8 @@
 <p>
   <em>Not many companies really care about documentation. And not many of them know how much lack of thereof costs. And I'm not talking just about money, what's more important is its <strong>impact on the error margin</strong> especially on critical things especially in new hires. Is your Achilles' heel exposed?</em>
 </p>
+
+<img src="/assets/posts/docs.ppt.png">
 
 <p>
   <em>Disclaimer: When I talk about documentation, I mean <strong>internal documentation</strong> of software products. There should be documentation for more than software products, but that's not within the scope of this article.</em>
