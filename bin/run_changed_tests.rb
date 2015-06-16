@@ -35,10 +35,16 @@ def find_build_script(dir)
   end
 end
 
+# Find relevant, changed files.
 files = %x{git diff --name-only #{range}}.split("\n")
+ignore_list = ['README.md', '.gitignore', 'Rakefile', 'vhost.conf', 'vhost.dev.conf', '.rspec']
+ignored_files = files.select { |file| ignore_list.include?(File.basename(file)) }
+files = files - ignored_files
 puts "~ Changed files: #{files.inspect}"
-dirs = files.map! { |file| File.dirname(file) }.uniq
+puts "~ Ignored files: #{ignored_files.inspect}"
 
+# Find changed subprojects.
+dirs = files.map! { |file| File.dirname(file) }.uniq
 changed_subprojects = dirs.map do |dir|
   find_build_script(dir)
 end.compact.uniq
@@ -50,8 +56,7 @@ pids = changed_subprojects.map do |subproject|
     return_value = true
     Dir.chdir(subproject) do
       puts "~ #{subproject}"
-      # system 'rake ci:build'
-      return_value = system './build.sh' # TODO: replace elsewhere (fid_rakefile)
+      return_value = system './build.sh'
       unless subproject == changed_subprojects.last
         5.times { puts }
       end
