@@ -2,7 +2,7 @@ NAME = File.basename(Dir.pwd)
 PATH = "/webs/#{NAME}"
 
 desc "Build and run the container."
-task default: ['docker:build', 'docker:run']
+task default: [:generate, 'docker:build', 'docker:run']
 
 desc "Generate the blog posts."
 task :generate do
