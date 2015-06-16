@@ -27,11 +27,11 @@ range = data[0]["compare"].split("/").last
 
 ENV['ROOT'] = Dir.pwd
 
-def find_rakefile(dir)
-  if File.exist?(File.join("#{dir}/Rakefile"))
+def find_build_script(dir)
+  if File.exist?(File.join("#{dir}/build.sh"))
     dir
   elsif dir != '.'
-    find_rakefile(File.dirname(dir))
+    find_build_script(File.dirname(dir))
   end
 end
 
@@ -40,7 +40,7 @@ puts "~ Changed files: #{files.inspect}"
 dirs = files.map! { |file| File.dirname(file) }.uniq
 
 changed_subprojects = dirs.map do |dir|
-  find_rakefile(dir)
+  find_build_script(dir)
 end.compact.uniq
 puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
