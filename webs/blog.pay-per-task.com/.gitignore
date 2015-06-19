@@ -1,2 +1,2 @@
-/content/build
-/content/bower_components
+.DS_Store
+node_modules/
