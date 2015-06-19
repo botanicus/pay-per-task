@@ -1,0 +1,39 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "description": "",
+  "repository": "",
+  "private": true,
+  "src": "src",
+  "test": "test",
+  "dist": "dist",
+  "mainInput": "main",
+  "mainOutput": "main",
+  "dependencies": {
+    "react-router": "~0.13",
+    "flux": "^2.0.2",
+    "events": "^1.0.2",
+    "object-assign": "^2.0.0",
+    "react": "~0.13",
+    "normalize.css": "~3.0.3"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "load-grunt-tasks": "~0.6.0",
+    "grunt-contrib-connect": "~0.8.0",
+    "webpack": "~1.4.3",
+    "grunt-webpack": "~1.0.8",
+    "style-loader": "~0.8.0",
+    "url-loader": "~0.5.5",
+    "css-loader": "~0.9.0",
+    "webpack-dev-server": "~1.6.5",
+    "grunt-open": "~0.2.3",
+    "jshint-loader": "~0.8.0",
+    "jsxhint-loader": "~0.2.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "babel": "^4.0.0",
+    "babel-loader": "^4.0.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "react-hot-loader": "^1.0.7"
+  }
+}
