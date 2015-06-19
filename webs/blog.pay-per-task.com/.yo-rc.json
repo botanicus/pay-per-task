@@ -1,0 +1,8 @@
+{
+  "generator-react-webpack": {
+    "app-name": "blog",
+    "architecture": "flux",
+    "styles-language": "css",
+    "component-suffix": "js"
+  }
+}
