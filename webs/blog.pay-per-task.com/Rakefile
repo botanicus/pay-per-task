@@ -6,9 +6,10 @@ task default: [:generate, 'docker:build', 'docker:run']
 
 desc "Generate the blog posts."
 task :generate do
-  sh "bundle exec blog-generator.rb generator/posts content/api"
+  sh "rm -rf dist/api"
+  sh "bundle exec blog-generator.rb content/posts content/api"
   # TODO: Move this into the blog-generator gem.
-  sh "rm -rf content/assets/posts && cp -R generator/assets content/assets/posts"
+  sh "rm -rf dist/assets/posts && cp -R content/assets dist/assets/posts"
 end
 
 desc "Open the running site."
