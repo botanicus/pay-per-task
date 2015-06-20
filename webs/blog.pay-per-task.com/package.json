@@ -15,7 +15,8 @@
     "events": "^1.0.2",
     "object-assign": "^2.0.0",
     "react": "~0.13",
-    "normalize.css": "~3.0.3"
+    "normalize.css": "~3.0.3",
+    "superagent": "~1.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

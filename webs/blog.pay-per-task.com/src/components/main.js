@@ -8,7 +8,7 @@ var Route = Router.Route;
 // Router.
 var Routes = (
   <Route handler={BlogApp}>
-    <Route name="/" handler={BlogApp}/>
+    <Route name="/" handler={BlogApp} />
   </Route>
 );
 
