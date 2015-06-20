@@ -8,7 +8,6 @@
 var webpack = require('webpack');
 
 module.exports = {
-
   output: {
     filename: 'main.js',
     publicPath: '/assets/'
@@ -18,8 +17,8 @@ module.exports = {
   debug: true,
   devtool: false,
   entry: [
-      'webpack/hot/only-dev-server',
-      './src/components/main.js'
+    'webpack/hot/only-dev-server',
+    './src/components/main.js'
   ],
 
   stats: {
@@ -51,6 +50,9 @@ module.exports = {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
     }, {
+      test: /\.json$/,
+      loader: 'json-loader'
+    }, {
       test: /\.(png|jpg|woff|woff2)$/,
       loader: 'url-loader?limit=8192'
     }]
@@ -60,5 +62,4 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
-
 };

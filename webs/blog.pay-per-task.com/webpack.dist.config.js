@@ -9,7 +9,6 @@
 var webpack = require('webpack');
 
 module.exports = {
-
   output: {
     publicPath: '/assets/',
     path: 'dist/assets/',
@@ -57,6 +56,9 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
+    }, {
+      test: /\.json$/,
+      loader: 'json-loader'
     }, {
       test: /\.(png|jpg|woff|woff2)$/,
       loader: 'url-loader?limit=8192'

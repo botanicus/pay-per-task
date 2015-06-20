@@ -8,22 +8,12 @@ import PostsList from './PostsList';
 require('normalize.css');
 require('../styles/main.css');
 
-request.
-  get('/api/metadata.json').
-  end(function (error, response) {
-    window.metadata = response.body;
-  });
-
-request.
-  get('/api/posts.json').
-  end(function (error, response) {
-    window.posts = response.body;
-  });
+var metadata = require('../../dist/api/metadata.json');
 
 class BlogApp extends React.Component {
   constructor(state) {
     super(state);
-    this.state = {title: 'BlogApp component'};
+    this.state = metadata;
   }
 
   render() {

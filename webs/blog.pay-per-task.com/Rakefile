@@ -6,7 +6,7 @@ task default: [:generate, 'docker:build', 'docker:run']
 
 desc "Generate the blog posts."
 task :generate do
-  sh "grunt build" # this should have --watch version
+  # sh "grunt build" # this should have --watch version
   # sh "rm -rf dist/api"
   sh "bundle exec blog-generator.rb content/posts dist/api"
   # TODO: Move this into the blog-generator gem.
