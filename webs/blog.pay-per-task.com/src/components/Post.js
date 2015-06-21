@@ -3,6 +3,7 @@
 import React from 'react/addons';
 import request from 'superagent';
 import PostInfo from './PostInfo';
+import DisqusThread from 'react-disqus-thread';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -10,17 +11,17 @@ export default class Post extends React.Component {
     this.state = {};
   }
 
-  get postUrl() {
+  get resourceUrl() {
     return `/api/posts/${this.props.params.slug}.json`;
   }
 
   componentDidMount() {
     request.
-      get(this.postUrl).
-      end(this.postCallback.bind(this));
+      get(this.resourceUrl).
+      end(this.callback.bind(this));
   }
 
-  postCallback(error, response) {
+  callback(error, response) {
     this.setState(response.body);
   }
 
@@ -30,6 +31,7 @@ export default class Post extends React.Component {
         <h1>{this.state.title}</h1>
         <PostInfo data={this.state} />
         <span dangerouslySetInnerHTML={{__html: this.state.body}} />
+        <DisqusThread shortname="paypertask" />
       </div>
     );
   }

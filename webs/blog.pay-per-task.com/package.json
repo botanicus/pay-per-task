@@ -17,6 +17,7 @@
     "moment": "^2.10.3",
     "object-assign": "^2.0.0",
     "react": "~0.13",
+    "react-disqus-thread": "^0.2.2",
     "react-g-analytics": "^0.1.0",
     "react-router": "~0.13",
     "superagent": "~1.2.0"

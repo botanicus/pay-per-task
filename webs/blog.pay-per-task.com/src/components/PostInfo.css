@@ -1,7 +1,6 @@
 .tags {
   display: inline;
-  margin: 0;
-  padding: 0;
+  margin: 0 10px 0 2.5px;
 }
 
 .tags span {

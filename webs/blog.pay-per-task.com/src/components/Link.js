@@ -10,7 +10,8 @@ export default class LinkToUnlessCurrent extends React.Component {
       <Link to={this.props.to} params={this.props.params}>
         {this.props.children}
       </Link>
-    )
+    );
+
     var html = React.renderToString(this.element);
     var link = html.match(/.*href="([^"]+).*"/)[1];
 

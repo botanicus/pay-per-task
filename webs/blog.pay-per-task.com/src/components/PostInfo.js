@@ -18,7 +18,6 @@ export default class PostInfo extends React.Component {
   }
 
   render() {
-    this.publishedOn;
     var tagNodes = this.props.data.tags.map((tag) =>
       <span>
         <Link to="tag" params={{slug: tag.slug}}>
@@ -29,11 +28,12 @@ export default class PostInfo extends React.Component {
 
     return (
       <div className="post-info">
-        <em>{this.publishedOn}</em>
-
-        <div className="tags">
+      <strong>Tags: </strong>
+        <span className="tags">
           {tagNodes}
-        </div>
+        </span>
+
+        <em>Written {this.publishedOn}.</em>
 
         <p className="excerpt">
           {this.props.data.excerpt}
