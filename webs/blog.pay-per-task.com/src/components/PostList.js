@@ -3,11 +3,20 @@
 import React from 'react/addons';
 import PostPreview from './PostPreview';
 import request from 'superagent';
+import Head from 'react-helmet';
 
 export default class PostList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {posts: []};
+  }
+
+  get meta() {
+    return [];
+  }
+
+  get links() {
+    return [];
   }
 
   get resourceUrl() {
@@ -29,6 +38,18 @@ export default class PostList extends React.Component {
       <PostPreview data={post} />
     );
 
-    return <div>{nodes}</div>;
+    return (
+      <div>
+        <Head
+          title={this.state.title}
+          meta={this.meta}
+          link={this.links}
+        />
+
+        <div className="posts">
+          {nodes}
+        </div>
+      </div>
+    );
   }
 }

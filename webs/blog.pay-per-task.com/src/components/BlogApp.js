@@ -4,6 +4,7 @@ import React from 'react/addons';
 import PostList from './PostList';
 import {Router, RouteHandler} from 'react-router';
 import GoogleAnalytics from 'react-g-analytics';
+import Head from 'react-helmet';
 
 import Link from './Link';
 
@@ -21,24 +22,33 @@ export default class BlogApp extends React.Component {
     this.state = metadata;
   }
 
-  componentDidMount() {
-    document.title = this.state.title;
-    var feeds = document.querySelectorAll('link[type="application/atom+xml"]');
-    feeds = Array.prototype.slice.call(feeds, 0);
-    feeds.forEach((feed) => document.head.removeChild(feed));
-    var feed = document.createElement('link');
-    feed.rel  = 'alternate';
-    feed.type = 'application/atom+xml';
-    feed.href = this.state.feed;
-    feed.title = this.state.title;
-    document.head.appendChild(feed);
+  get meta() {
+    return [
+      {name: 'description', content: this.state.title},
+      {property: 'og:type', content: 'article'}
+    ];
+  }
+
+  get links() {
+    return [
+      {rel: 'canonical', href: this.state.base_url},
+      {rel: 'alternate', title: this.state.title, href: this.state.feed}
+      // {rel: 'apple-touch-icon', href: 'http://mysite.com/img/apple-touch-icon-57x57.png'},
+      // {rel: 'apple-touch-icon', sizes: '72x72', href: 'http://mysite.com/img/apple-touch-icon-72x72.png'}
+    ];
   }
 
   render() {
     return (
       <div className='main'>
+        <Head
+          title={this.state.title}
+          meta={this.meta}
+          link={this.links}
+        />
+
         <h1><Link to="/">{this.state.title}</Link></h1>
-        <RouteHandler />
+        <RouteHandler metadata={this.state} />
         <GoogleAnalytics id="UA-51610302-2" />
       </div>
     );
