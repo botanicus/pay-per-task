@@ -1,5 +1,5 @@
 # https://github.com/cucumber/cucumber/wiki/cucumber.yml
-smoke: SITE=pay-per-task.com --tags @smoke
+smoke: SITE=<%= File.basename(Dir.pwd) %> --tags @smoke
 wip: --tags @wip
 CI: >
   CI=true
