@@ -5,8 +5,8 @@ import PostPreview from './PostPreview';
 import request from 'superagent';
 
 class PostsList extends React.Component {
-  constructor(state) {
-    super(state);
+  constructor(props) {
+    super(props);
     this.state = {posts: []};
   }
 
@@ -22,9 +22,7 @@ class PostsList extends React.Component {
 
   render() {
     var nodes = this.state.posts.map(post =>
-      <PostPreview data={post}>
-        {post.excerpt}
-      </PostPreview>
+      <PostPreview data={post} />
     );
 
     return <div>{nodes}</div>;

@@ -1,34 +1,20 @@
 'use strict';
 
+import {Link} from 'react-router';
 import React from 'react/addons';
+import PostInfo from './PostInfo';
 
 class PostPreview extends React.Component {
   render() {
-    var tagNodes = this.props.data.tags.map((tag) =>
-      <span>
-        <a href={tag.path}>
-          {tag.title}
-        </a>
-      </span>
-    );
-
     return (
       <div className="post-preview">
         <h2>
-          <a href={this.props.data.path}>
+          <Link to="post" params={{slug: this.props.data.slug}}>
             {this.props.data.title}
-          </a>
+          </Link>
         </h2>
 
-        {this.props.data.published_on}
-
-        <span className="tags">
-          {tagNodes}
-        </span>
-
-        <p className="excerpt">
-          {this.props.data.excerpt}
-        </p>
+        <PostInfo data={this.props.data} />
       </div>
     );
   }

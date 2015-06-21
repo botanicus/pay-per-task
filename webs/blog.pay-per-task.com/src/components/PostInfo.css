@@ -1,0 +1,21 @@
+.tags {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.tags span {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tags span:after {
+  content: ", ";
+  color: #aaa;
+}
+
+.tags span:last-child:after {
+  content: "";
+}

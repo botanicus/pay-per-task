@@ -2,10 +2,11 @@
 
 import React from 'react/addons';
 import request from 'superagent';
+import PostInfo from './PostInfo';
 
 class Post extends React.Component {
-  constructor(state) {
-    super(state);
+  constructor(props) {
+    super(props);
     this.state = {};
   }
 
@@ -27,7 +28,7 @@ class Post extends React.Component {
     return (
       <div>
         <h1>{this.state.title}</h1>
-        {this.state.excerpt}
+        <PostInfo data={this.state} />
         <span dangerouslySetInnerHTML={{__html: this.state.body}} />
       </div>
     );
