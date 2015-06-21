@@ -19,4 +19,10 @@
     width: 35px;
     margin: 5px 3px;
   }
+
+  /* Page: .contact */
+  .contact iframe {
+    max-width: 500px;
+    height: 180px;
+  }
 }

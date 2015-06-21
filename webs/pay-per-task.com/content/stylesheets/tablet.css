@@ -31,4 +31,10 @@
   .about-us .social-media-icon {
     margin: 4px 10px;
   }
+
+  /* Page: .contact */
+  .contact ul li.map {
+    float: right;
+  }
+
 }

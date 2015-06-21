@@ -17,4 +17,10 @@
   .about-us .social-media-icon {
     margin: 5px 10px;
   }
+
+  /* Page: .contact */
+  .contact iframe {
+    width: 450px;
+    height: 200px;
+  }
 }
