@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # TODO: Haproxy -> API & this.
 # TODO: Trigger Dockerhub build just for this repo.

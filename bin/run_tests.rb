@@ -22,8 +22,8 @@ results.each do |(subproject, success)|
   unless success
     exitstatus = 1
     failed << subproject
+    puts "Project #{subproject} failed."
   end
-  puts "Project #{subproject} failed."
 end
 
 if exitstatus == 1
