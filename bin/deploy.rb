@@ -68,7 +68,7 @@ else
   run "git commit -a -m 'Initial import from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
   run "git push -u origin master"
   # run "curl -X PUT --user #{DOCKERHUB_CREDENTIALS} #{DOCKERHUB_API}/v1/repositories/paypertask/#{REPO_NAME}/ -v -d '[]'"
-  text = DATA.read.gsub('#{REPO_NAME}', REPO_NAME)
+  text = DATA.read.gsub('#{REPO_NAME}', REPO_NAME).gsub(/\n/, '\n')
   run %{curl -X POST https://hooks.slack.com/services/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 -d '{"text": text, "username": "Deployment notifications", "channel": "#general"}'}
   # https://dashboard.tutum.co/container/service/show/30bc8721-55c3-4216-8172-b6386ae95627/#container-triggers -> generate
   # https://registry.hub.docker.com/u/paypertask/pay-per-task.com/settings/webhooks/ -> add the generated URL
