@@ -62,7 +62,8 @@ end.compact.uniq
 
 unless changed_subprojects.empty?
   puts "~ Changed subprojects: #{changed_subprojects.join(', ')}"
-  runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
+  # runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
+  runner = File.expand_path('../run_tests.rb', __FILE__)
   system(runner, *changed_subprojects) || exit(1)
 else
   puts "~ No changed subprojects."
