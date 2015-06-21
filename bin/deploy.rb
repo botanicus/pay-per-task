@@ -88,3 +88,4 @@ __END__
   - Expose and map ports and make them published if necessary.
   - Turn autorestart on.
   - Maybe some links and volumes?
+7. <https://dashboard.tutum.co/container/service/show/83764ab5-85a7-4d62-af97-8df8d129ddfa/edit|Haproxy>: link the new service and edit `VIRTUAL_HOST`.
