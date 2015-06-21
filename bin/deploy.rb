@@ -32,18 +32,25 @@ Host bitbucket
   EOF
 end
 
+def edit_ignores
+  ignores = File.foreach('.gitignore').map(&:chomp)
+  ignores -= ['dist', 'content']
+  File.open('.gitignore', 'w') do |file|
+    file.puts(ignores)
+  end
+end
+
 # Add to instructions for Slack:
 # Go to your Bitbucket repo settings, find the Hooks section, and add https://hooks.slack.com/services/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 as a POST URL.
 repos = JSON.parse(%x{curl --user #{BITBUCKET_CREDENTIALS} #{BITBUCKET_API}/repositories/botanicus})
-build_dir = ['dist', 'content', '.'].select { |dir| Dir.exist?(dir) }
-Dir.chdir(build_dir)
 
 if repos['values'].find { |repo| repo['name'] == REPO_NAME }
   puts "~ Repository #{REPO_NAME} exists, updating."
   # clone it, replace the code, commit, push
   run "rm -rf #{ENV['ROOT']}/.git"
   run "git clone --bare ssh://bitbucket/botanicus/#{REPO_NAME}.git .git"
-  run "git config core.bare false" # Haha LOL.
+  run "git config core.bare false" # Haha LOL
+  edit_ignores
   run "git add ."
   # https://circleci.com/docs/environment-variables
   # TODO: Don't use CIRCLE_COMPARE_URL, if the build failed before, those changes would NOT be included!
@@ -55,6 +62,7 @@ else
   run "curl -X POST --user #{BITBUCKET_CREDENTIALS} -H 'Content-Type: application/json' #{BITBUCKET_API}/repositories/botanicus/#{REPO_NAME} -d '#{json}'"
   run "rm -rf #{ENV['ROOT']}/.git"
   run "git init"
+  edit_ignores
   run "git add ."
   run "git remote add origin ssh://bitbucket/botanicus/#{REPO_NAME}.git"
   run "git commit -a -m 'Initial import from #{Time.now.strftime("%Y/%m/%d %H:%M")}'"
