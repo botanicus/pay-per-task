@@ -6,6 +6,12 @@ window.routes = [
   },
 
   {
+    "path": "/how-it-works",
+    "templateUrl": "/templates/how-it-works.html",
+    "title": "PPT: It's very simple to use!"
+  },
+
+  {
     "path": "/contractors",
     "templateUrl": "/templates/contractors.html",
     "title": "PPT: GET PAID for your work in REALTIME!"
