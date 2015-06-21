@@ -16,7 +16,7 @@ class PostsList extends React.Component {
 
   componentDidMount() {
     request.
-      get(this.props.url).
+      get('/api/posts.json').
       end(this.postsCallback.bind(this));
   }
 

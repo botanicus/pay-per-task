@@ -9,7 +9,8 @@ var webpack = require('webpack');
 
 module.exports = {
   output: {
-    filename: 'main.js',
+    // filename: 'main.js',
+    filename: 'dist/assets/main.js',
     publicPath: '/assets/'
   },
 
@@ -17,7 +18,7 @@ module.exports = {
   debug: true,
   devtool: false,
   entry: [
-    'webpack/hot/only-dev-server',
+    // 'webpack/hot/only-dev-server',
     './src/components/main.js'
   ],
 
@@ -29,6 +30,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
+      'data': __dirname + '/dist/api', // TODO: use it
       'styles': __dirname + '/src/styles',
       'mixins': __dirname + '/src/mixins',
       'components': __dirname + '/src/components/',
@@ -59,7 +61,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
 };

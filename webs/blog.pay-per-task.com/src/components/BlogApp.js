@@ -3,12 +3,13 @@
 import React from 'react/addons';
 import request from 'superagent';
 import PostsList from './PostsList';
+import Router from 'react-router';
 
 // CSS
 require('normalize.css');
 require('../styles/main.css');
 
-var metadata = require('../../dist/api/metadata.json');
+var metadata = require('data/metadata.json');
 
 class BlogApp extends React.Component {
   constructor(state) {
@@ -20,7 +21,7 @@ class BlogApp extends React.Component {
     return (
       <div className='main'>
         <h1>{this.state.title}</h1>
-        <PostsList url="/api/posts.json" />
+        <Router.RouteHandler />
       </div>
     );
   }

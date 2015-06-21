@@ -2,16 +2,11 @@ NAME = File.basename(Dir.pwd)
 PATH = "/webs/#{NAME}"
 
 desc "Build and run the container."
-task default: [:generate, 'docker:build', 'docker:run']
+task default: [:generate, 'docker:build', 'docker:start']
 
 desc "Generate the blog posts."
 task :generate do
-  # sh "grunt build" # this should have --watch version
-  # sh "rm -rf dist/api"
   sh "bundle exec blog-generator.rb content/posts dist/api"
-  # TODO: Move this into the blog-generator gem.
-  # sh "rm -rf dist/assets/posts"
-  sh "cp -R content/assets dist/assets/posts"
 end
 
 desc "Open the running site."
