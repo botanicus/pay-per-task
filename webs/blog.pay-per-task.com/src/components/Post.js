@@ -1,25 +1,27 @@
 'use strict';
 
-import React from 'react/addons';
+import {React, Component} from './Component';
 import request from 'superagent';
 import PostInfo from './PostInfo';
 import DisqusThread from 'react-disqus-thread';
 import Head from 'react-helmet';
 
-export default class Post extends React.Component {
+export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {tags: []};
   }
 
-  get meta() {
-    return [];
-  }
+  // get meta() {
+  //   return [];
+  // }
 
   get links() {
-    return this.state.tags.map((tag) => (
+    var tagLinks = this.state.tags.map((tag) => (
       {rel: 'alternate', title: tag.title, href: tag.feed}
     ));
+
+    return super.links.concat(tagLinks);
   }
 
   get resourceUrl() {
@@ -39,11 +41,7 @@ export default class Post extends React.Component {
   render() {
     return (
       <div>
-        <Head
-          title={this.state.title}
-          meta={this.meta}
-          link={this.links}
-        />
+        {super.render()}
 
         <h1>{this.state.title}</h1>
         <PostInfo data={this.state} />

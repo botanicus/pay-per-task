@@ -1,22 +1,14 @@
 'use strict';
 
-import React from 'react/addons';
+import {React, Component} from './Component';
 import PostPreview from './PostPreview';
 import request from 'superagent';
 import Head from 'react-helmet';
 
-export default class PostList extends React.Component {
+export default class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {posts: []};
-  }
-
-  get meta() {
-    return [];
-  }
-
-  get links() {
-    return [];
   }
 
   get resourceUrl() {
@@ -40,11 +32,7 @@ export default class PostList extends React.Component {
 
     return (
       <div>
-        <Head
-          title={this.state.title}
-          meta={this.meta}
-          link={this.links}
-        />
+        {super.render()}
 
         <div className="posts">
           {nodes}

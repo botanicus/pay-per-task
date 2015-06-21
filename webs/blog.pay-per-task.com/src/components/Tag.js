@@ -3,6 +3,7 @@
 import PostList from './PostList';
 
 export default class Tag extends PostList {
+  // FIXME: The feeds wouln't rerender when we change to a different tag.
   get links() {
     var tag = this.state.tag || {};
     return [
