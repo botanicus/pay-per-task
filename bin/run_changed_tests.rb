@@ -56,4 +56,4 @@ end.compact.uniq
 puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
 runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
-system(runner, *changed_subprojects)
+system(runner, *changed_subprojects) || exit 1
