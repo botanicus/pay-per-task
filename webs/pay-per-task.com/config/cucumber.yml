@@ -6,4 +6,4 @@ CI: >
   CI=true
   SCREENSHOT_DIR=<%= File.join(ENV['CIRCLE_ARTIFACTS'], File.basename(Dir.pwd), ENV['BROWSER'] || 'phantomjs') rescue nil %>
   --format html
-  --out <%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs', 'features.html') rescue nil %>
+  --out <%= File.join(ENV['CIRCLE_ARTIFACTS'], File.basename(Dir.pwd), ENV['BROWSER'] || 'phantomjs', 'features.html') rescue nil %>
