@@ -5,14 +5,14 @@ import Router from 'react-router';
 var Route = Router.Route;
 
 import BlogApp from './BlogApp';
-import PostsList from './PostsList';
+import PostList from './PostList';
 import Post from './Post';
 import Tag from './Tag';
 
 // Router.
 var Routes = (
   <Route handler={BlogApp}>
-    <Route name="/" handler={PostsList} />
+    <Route name="/" handler={PostList} />
     <Route name="post" path="/posts/:slug" handler={Post} />
     <Route name="tag" path="/tags/:slug" handler={Tag} />
   </Route>

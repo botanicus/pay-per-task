@@ -1,8 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import request from 'superagent';
-import PostsList from './PostsList';
+import PostList from './PostList';
 import {Router, RouteHandler} from 'react-router';
 import GoogleAnalytics from 'react-g-analytics';
 
@@ -14,7 +13,11 @@ import '../styles/main.css';
 
 // Metadata
 import metadata from 'data/metadata.json';
+// TODO: On top of this, use what's defined in https://github.com/rackt/react-router/issues/49
 if (document) { document.title = metadata.title; }
+
+// TODO
+// <link rel="alternate" type="application/rss+xml" href="/api/posts.atom" title="PayPerTask Blog" />
 
 export default class BlogApp extends React.Component {
   constructor(props) {

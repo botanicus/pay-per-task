@@ -4,7 +4,7 @@ import React from 'react/addons';
 import PostPreview from './PostPreview';
 import request from 'superagent';
 
-export default class PostsList extends React.Component {
+export default class PostList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {posts: []};
