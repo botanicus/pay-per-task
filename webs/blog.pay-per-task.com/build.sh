@@ -8,14 +8,14 @@
 # https://circleci.com/docs/installing-custom-software
 
 echo "~ Installing NPM packages."
-npm install &> /dev/null
+npm install
 
 echo "~ Installing the gems."
 bundle install > /dev/null || exit 1
 
 echo "~ Building dist."
-rake generate
 webpack --progress --colors
+rake generate
 
 echo "~ Building the Docker image."
 docker build -t blog.pay-per-task.com . > /dev/null || exit 1
