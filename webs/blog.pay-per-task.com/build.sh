@@ -23,7 +23,8 @@ mkdir -p dist/api
 rake generate
 
 echo "~ Building assets."
-webpack.js --colors
+grunt copy
+webpack.js --config webpack.dist.config.js --colors
 
 echo "~ Building the Docker image."
 docker build -t blog.pay-per-task.com . > /dev/null || exit 1

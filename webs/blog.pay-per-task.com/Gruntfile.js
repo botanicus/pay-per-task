@@ -87,11 +87,6 @@ module.exports = function (grunt) {
           {
             flatten: true,
             expand: true,
-            src: ['posts/*'],
-            dest: '<%= pkg.dist %>/api/'
-          },{
-            flatten: true,
-            expand: true,
             src: ['content/assets/*'],
             dest: '<%= pkg.dist %>/assets/posts'
           }

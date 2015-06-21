@@ -6,6 +6,7 @@ task default: [:generate, 'docker:build', 'docker:start']
 
 desc "Generate the blog posts."
 task :generate do
+  sh "mkdir -p dist/api"
   sh "bundle exec blog-generator.rb content/posts dist/api"
 end
 

@@ -9,8 +9,8 @@ var webpack = require('webpack');
 
 module.exports = {
   output: {
-    // filename: 'main.js',
-    filename: 'dist/assets/main.js',
+    filename: 'main.js',
+    // filename: 'dist/assets/main.js',
     publicPath: '/assets/'
   },
 
@@ -30,7 +30,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      'data': __dirname + '/dist/api', // TODO: use it
+      'data': __dirname + '/dist/api',
       'styles': __dirname + '/src/styles',
       'mixins': __dirname + '/src/mixins',
       'components': __dirname + '/src/components/',
