@@ -34,7 +34,7 @@ end
 
 def edit_ignores
   ignores = File.foreach('.gitignore').map(&:chomp)
-  ignores -= ['dist', 'content']
+  ignores.delete_if { |pattern| pattern.match(/^\/?(dist|content)\/?/) }
   File.open('.gitignore', 'w') do |file|
     file.puts(ignores)
   end

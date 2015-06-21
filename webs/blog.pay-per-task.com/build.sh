@@ -19,6 +19,7 @@ bundle install || exit 1
 
 echo "~ Building posts."
 mkdir -p dist/api
+
 # This has to run first so we can use metadata.json from BlogApp.js.
 rake generate
 
