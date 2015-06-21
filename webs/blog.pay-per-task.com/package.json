@@ -10,12 +10,13 @@
   "mainInput": "main",
   "mainOutput": "main",
   "dependencies": {
+    "bootstrap": "^3.3.5",
     "events": "^1.0.2",
     "flux": "^2.0.2",
     "json-loader": "^0.5.2",
-    "normalize.css": "~3.0.3",
     "object-assign": "^2.0.0",
     "react": "~0.13",
+    "react-g-analytics": "^0.1.0",
     "react-router": "~0.13",
     "superagent": "~1.2.0"
   },

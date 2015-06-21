@@ -1,35 +1,9 @@
 'use strict';
 
-import React from 'react/addons';
-import request from 'superagent';
-import PostPreview from './PostPreview';
+import PostsList from './PostsList';
 
-class Tag extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {posts: []};
-  }
-
-  get tagUrl() {
-    return '/api/tags/' + this.props.params.slug + '.json';
-  }
-
-  componentDidMount() {
-    request.
-      get(this.tagUrl).
-      end(this.tagCallback.bind(this));
-  }
-
-  tagCallback(error, response) {
-    this.setState({posts: response.body});
-  }
-
-  render() {
-    var postPreviewNodes = this.state.posts.map((post) =>
-      <PostPreview data={post} />)
-
-    return <div>{postPreviewNodes}</div>;
+export default class Tag extends PostsList {
+  get resourceUrl() {
+    return `/api/tags/${this.props.params.slug}.json`;
   }
 }
-
-module.exports = Tag;

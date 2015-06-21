@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import React from 'react/addons';
 import PostInfo from './PostInfo';
 
-class PostPreview extends React.Component {
+export default class PostPreview extends React.Component {
   render() {
     return (
       <div className="post-preview">
@@ -19,5 +19,3 @@ class PostPreview extends React.Component {
     );
   }
 }
-
-module.exports = PostPreview;

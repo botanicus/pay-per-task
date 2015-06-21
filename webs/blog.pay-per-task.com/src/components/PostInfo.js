@@ -3,12 +3,13 @@
 import {Link} from 'react-router';
 import React from 'react/addons';
 
-require('./PostInfo.css')
+// CSS
+import './PostInfo.css';
 
-class PostInfo extends React.Component {
+export default class PostInfo extends React.Component {
   constructor(props) {
+    if (!props.data.tags) { props.data.tags = []; }
     super(props);
-    this.props.data.tags = [];
   }
 
   render() {
@@ -35,5 +36,3 @@ class PostInfo extends React.Component {
     );
   }
 }
-
-module.exports = PostInfo;

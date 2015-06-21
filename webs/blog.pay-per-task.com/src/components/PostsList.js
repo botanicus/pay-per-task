@@ -4,20 +4,24 @@ import React from 'react/addons';
 import PostPreview from './PostPreview';
 import request from 'superagent';
 
-class PostsList extends React.Component {
+export default class PostsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {posts: []};
   }
 
-  postsCallback(error, response) {
-    this.setState({posts: response.body});
+  get resourceUrl() {
+    return '/api/posts.json';
   }
 
   componentDidMount() {
     request.
-      get('/api/posts.json').
-      end(this.postsCallback.bind(this));
+      get(this.resourceUrl).
+      end(this.callback.bind(this));
+  }
+
+  callback(error, response) {
+    this.setState({posts: response.body});
   }
 
   render() {
@@ -28,5 +32,3 @@ class PostsList extends React.Component {
     return <div>{nodes}</div>;
   }
 }
-
-module.exports = PostsList;

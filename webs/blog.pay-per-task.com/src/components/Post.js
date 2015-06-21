@@ -4,14 +4,14 @@ import React from 'react/addons';
 import request from 'superagent';
 import PostInfo from './PostInfo';
 
-class Post extends React.Component {
+export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   get postUrl() {
-    return '/api/posts/' + this.props.params.slug + '.json';
+    return `/api/posts/${this.props.params.slug}.json`;
   }
 
   componentDidMount() {
@@ -34,5 +34,3 @@ class Post extends React.Component {
     );
   }
 }
-
-module.exports = Post;
