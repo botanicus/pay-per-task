@@ -80,9 +80,9 @@ __END__
 @botanicus:
 
 1. Please create <https://registry.hub.docker.com/builds/bitbucket/botanicus/#{REPO_NAME}/|#{REPO_NAME} automated build>. Dockerhub does not have API for this.
-2. <https://registry.hub.docker.com/u/paypertask/#{REPO_NAME}/settings/deploykeys/|Add a deployment key>.
-3. Also add `https://registry.hub.docker.com/hooks/bitbucket` to <https://bitbucket.org/botanicus/#{REPO_NAME}/admin/hooks|#{REPO_NAME} hooks> (type `POST`).
-4. Service -> Trigger -> Create a new one for Dockerhub.
+2. <https://registry.hub.docker.com/u/paypertask/#{REPO_NAME}/settings/deploykeys/|Copy the deployment key> to <https://bitbucket.org/botanicus/#{REPO_NAME}/admin/deploy-keys|the repo>.
+3. Also add `https://registry.hub.docker.com/hooks/bitbucket` to <https://bitbucket.org/botanicus/#{REPO_NAME}/admin/hooks|the repo hooks> (type `POST`).
+4. Tutum: Service -> Trigger -> Create a new one for Dockerhub.
 5. Add <https://registry.hub.docker.com/u/paypertask/#{REPO_NAME}/settings/webhooks/add|Dockerhub webhooks>
 6. Then deploy it <https://dashboard.tutum.co/container/launch/#tab-image-privates|from private> or <https://dashboard.tutum.co/container/launch/#tab-image-community|from public build>. Do not forget to:
   - Expose and map ports and make them published if necessary.

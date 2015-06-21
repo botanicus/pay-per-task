@@ -6,7 +6,6 @@
 # - docker push circleci/elasticsearch
 # TODO: Run other browsers.
 # https://circleci.com/docs/installing-custom-software
-
 echo "~ Building the Docker image."
 docker build -t pay-per-task.com . > /dev/null || exit 1
 
