@@ -6,14 +6,22 @@
 # - docker push circleci/elasticsearch
 # TODO: Run other browsers.
 # https://circleci.com/docs/installing-custom-software
+
+echo "~ Installing NPM packages."
+npm install
+
+echo "~ Installing the gems."
+bundle install || exit 1
+
+echo "~ Building dist."
+rake generate
+webpack --progress --colors
+
 echo "~ Building the Docker image."
 docker build -t blog.pay-per-task.com . > /dev/null || exit 1
 
 echo "~ Running the blog.pay-per-task.com image."
 docker run -d -p 80:80 blog.pay-per-task.com > /dev/null || exit 1
-
-echo "~ Installing the gems."
-bundle install &> /dev/null || exit 1
 
 echo -e "\n~ Running the integration tests in PhantomJS."
 mkdir $CIRCLE_ARTIFACTS/phantomjs
