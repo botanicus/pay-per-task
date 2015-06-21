@@ -1,6 +1,6 @@
 'use strict';
 
-import {Link} from 'react-router';
+import Link from './Link';
 import React from 'react/addons';
 
 // CSS

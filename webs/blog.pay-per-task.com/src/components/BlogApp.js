@@ -3,8 +3,10 @@
 import React from 'react/addons';
 import request from 'superagent';
 import PostsList from './PostsList';
-import {Router, RouteHandler, Link} from 'react-router';
+import {Router, RouteHandler} from 'react-router';
 import GoogleAnalytics from 'react-g-analytics';
+
+import Link from './Link';
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
