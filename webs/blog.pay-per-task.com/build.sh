@@ -19,10 +19,12 @@ echo "~ \$PATH=$PATH"
 echo "~ Installing the gems."
 bundle install > /dev/null || exit 1
 
-echo "~ Building dist."
+echo "~ Building posts."
 mkdir -p dist/api
 # This has to run first so we can use metadata.json from BlogApp.js.
 rake generate
+
+echo "~ Building assets."
 webpack.js --colors
 
 echo "~ Building the Docker image."
