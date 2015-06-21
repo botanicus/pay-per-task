@@ -14,15 +14,24 @@ import '../styles/main.css';
 // Metadata
 import metadata from 'data/metadata.json';
 // TODO: On top of this, use what's defined in https://github.com/rackt/react-router/issues/49
-if (document) { document.title = metadata.title; }
-
-// TODO
-// <link rel="alternate" type="application/rss+xml" href="/api/posts.atom" title="PayPerTask Blog" />
 
 export default class BlogApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = metadata;
+  }
+
+  componentDidMount() {
+    document.title = this.state.title;
+    var feeds = document.querySelectorAll('link[type="application/atom+xml"]');
+    feeds = Array.prototype.slice.call(feeds, 0);
+    feeds.forEach((feed) => document.head.removeChild(feed));
+    var feed = document.createElement('link');
+    feed.rel  = 'alternate';
+    feed.type = 'application/atom+xml';
+    feed.href = this.state.feed;
+    feed.title = this.state.title;
+    document.head.appendChild(feed);
   }
 
   render() {
