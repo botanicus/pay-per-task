@@ -2,3 +2,12 @@ source 'https://rubygems.org'
 
 gem 'redcarpet'
 gem 'blog-generator', branch: 'master', github: 'botanicus/blog-generator'
+
+gem 'cucumber'
+gem 'capybara'
+gem 'selenium-webdriver'
+gem 'poltergeist'
+gem 'rspec'
+
+# Syntax highlighting in the Cucumber HTML output.
+gem 'syntax'
