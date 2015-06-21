@@ -30,7 +30,7 @@ echo "~ Building the Docker image."
 docker build -t blog.pay-per-task.com . > /dev/null || exit 1
 
 echo "~ Running the blog.pay-per-task.com image."
-docker run -p 80:80 blog.pay-per-task.com > /dev/null  & || exit 1
+docker run -p 80:80 blog.pay-per-task.com > /dev/null &
 
 echo "\n~ Running the integration tests in PhantomJS."
 mkdir $CIRCLE_ARTIFACTS/phantomjs
