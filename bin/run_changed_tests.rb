@@ -45,15 +45,25 @@ files = %x{git diff --name-only #{range}}.split("\n")
 ignore_list = ['README.md', '.gitignore', 'Rakefile', 'vhost.dev.conf', '.rspec']
 ignored_files = files.select { |file| ignore_list.include?(File.basename(file)) }
 files = files - ignored_files
-puts "~ Changed files: #{files.inspect}"
-puts "~ Ignored files: #{ignored_files.inspect}"
+
+unless files.empty?
+  puts "~ Changed files: #{files.inspect}"
+end
+
+unless ignored_files.empty?
+  puts "~ Ignored files: #{ignored_files.inspect}"
+end
 
 # Find changed subprojects.
 dirs = files.map! { |file| File.dirname(file) }.uniq
 changed_subprojects = dirs.map do |dir|
   find_build_script(dir)
 end.compact.uniq
-puts "~ Changed subprojects: #{changed_subprojects.inspect}"
 
-runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
-system(runner, *changed_subprojects) || exit(1)
+unless changed_subprojects.empty?
+  puts "~ Changed subprojects: #{changed_subprojects.inspect}"
+  runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
+  system(runner, *changed_subprojects) || exit(1)
+else
+  puts "~ No changed subprojects."
+end

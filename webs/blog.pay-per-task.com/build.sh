@@ -10,6 +10,11 @@
 echo "~ Installing NPM packages."
 npm install > /dev/null
 
+for bindir in node_modules/*/bin; do
+  export PATH="$bindir:$PATH"
+done
+echo "\$PATH=$PATH"
+
 echo "~ Installing the gems."
 bundle install > /dev/null || exit 1
 
