@@ -20,8 +20,10 @@ echo "~ Installing the gems."
 bundle install > /dev/null || exit 1
 
 echo "~ Building dist."
-webpack.js --progress --colors
+mkdir -p dist/api
+# This has to run first so we can use metadata.json from BlogApp.js.
 rake generate
+webpack.js --colors
 
 echo "~ Building the Docker image."
 docker build -t blog.pay-per-task.com . > /dev/null || exit 1

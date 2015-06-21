@@ -47,11 +47,11 @@ ignored_files = files.select { |file| ignore_list.include?(File.basename(file)) 
 files = files - ignored_files
 
 unless files.empty?
-  puts "~ Changed files: #{files.inspect}"
+  puts "~ Changed files: #{files.join(', ')}"
 end
 
 unless ignored_files.empty?
-  puts "~ Ignored files: #{ignored_files.inspect}"
+  puts "~ Ignored files: #{ignored_files.join(', ')}"
 end
 
 # Find changed subprojects.
@@ -61,7 +61,7 @@ changed_subprojects = dirs.map do |dir|
 end.compact.uniq
 
 unless changed_subprojects.empty?
-  puts "~ Changed subprojects: #{changed_subprojects.inspect}"
+  puts "~ Changed subprojects: #{changed_subprojects.join(', ')}"
   runner = File.expand_path('../run_tests_parallel.rb', __FILE__)
   system(runner, *changed_subprojects) || exit(1)
 else
