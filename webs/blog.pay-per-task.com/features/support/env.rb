@@ -13,7 +13,8 @@ else
   Capybara.default_driver = :poltergeist
 end
 
-Capybara.app_host = "http://#{ENV['SITE'] || 'pay-per-task.dev'}/"
+dev_site = File.basename(Dir.pwd).sub('.com', '.dev')
+Capybara.app_host = "http://#{ENV['SITE'] || dev_site}"
 Capybara.run_server = false
 
 # Hooks

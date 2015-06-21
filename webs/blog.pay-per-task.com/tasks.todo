@@ -1,11 +1,7 @@
 React.js
-generate
+Generate. require vs. AJAX?
 Check GA
-require vs. AJAX?
-How to make it build on Dockerhub? -> ignore dist, but create BitBucket repo with just dist, uploaded from CI and voila!
-jshint doesn't like JSX, surprise, surprise. Either get rid off jshintrc or fix it.
 Document: Yeoman create components - yo react-webpack:component foo  //or just: yo react-webpack:c foo
-Where CSS and images should live?
 tests
 
 Marketing like https://www.facebook.com/getlavanda

@@ -1,5 +1,5 @@
 # General.
-When(/^I visit (.+)$/) do |url|
+When(/^I visit "(.+)"$/) do |url|
   visit(url)
 end
 
@@ -8,8 +8,8 @@ When(/^I click "(.+)"$/) do |link|
 end
 
 Then(/^I should see "(.+)" in the main content$/) do |text|
-  within('[ng-view]') do
+  # within('[ng-view]') do
     expect(page).to have_content(text)
-  end
+  # end
 end
 
