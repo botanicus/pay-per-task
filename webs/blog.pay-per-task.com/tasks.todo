@@ -6,6 +6,7 @@ How to make it build on Dockerhub? -> ignore dist, but create BitBucket repo wit
 jshint doesn't like JSX, surprise, surprise. Either get rid off jshintrc or fix it.
 Document: Yeoman create components - yo react-webpack:component foo  //or just: yo react-webpack:c foo
 Where CSS and images should live?
+tests
 
 Marketing like https://www.facebook.com/getlavanda
 https://twitter.com/getlavanda

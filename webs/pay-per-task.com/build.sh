@@ -15,17 +15,17 @@ docker run -d -p 80:80 pay-per-task.com > /dev/null || exit 1
 echo "~ Installing the gems."
 bundle install &> /dev/null || exit 1
 
-echo -e "\n~ Running the integration tests in PhantomJS."
+echo "\n~ Running the integration tests in PhantomJS."
 mkdir $CIRCLE_ARTIFACTS/phantomjs
 bundle exec cucumber -p CI || FAILED=true
 
 # https://circleci.com/docs/browser-debugging#interact-with-the-browser-over-vnc
-echo -e "\n~ Running the integration tests in Firefox."
+echo "\n~ Running the integration tests in Firefox."
 sudo apt-get -y install firefox > /dev/null
 mkdir $CIRCLE_ARTIFACTS/firefox
 BROWSER=firefox bundle exec cucumber -p CI || FAILED=true
 
-echo -e "\n~ Running the integration tests in Google Chrome."
+echo "\n~ Running the integration tests in Google Chrome."
 sudo apt-get -y install google-chrome-stable > /dev/null
 mkdir $CIRCLE_ARTIFACTS/chrome
 BROWSER=chrome bundle exec cucumber -p CI || FAILED=true
