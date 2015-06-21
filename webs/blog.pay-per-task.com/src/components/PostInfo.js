@@ -2,6 +2,7 @@
 
 import Link from './Link';
 import React from 'react/addons';
+import moment from 'moment';
 
 // CSS
 import './PostInfo.css';
@@ -12,7 +13,12 @@ export default class PostInfo extends React.Component {
     super(props);
   }
 
+  get publishedOn() {
+    return moment(this.props.data.published_on).fromNow();
+  }
+
   render() {
+    this.publishedOn;
     var tagNodes = this.props.data.tags.map((tag) =>
       <span>
         <Link to="tag" params={{slug: tag.slug}}>
@@ -23,7 +29,7 @@ export default class PostInfo extends React.Component {
 
     return (
       <div className="post-info">
-        <em>{this.props.data.published_on}</em>
+        <em>{this.publishedOn}</em>
 
         <div className="tags">
           {tagNodes}
