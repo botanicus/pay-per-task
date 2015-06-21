@@ -8,10 +8,10 @@
 # https://circleci.com/docs/installing-custom-software
 
 echo "~ Installing NPM packages."
-npm install
+npm install &> /dev/null
 
 echo "~ Installing the gems."
-bundle install || exit 1
+bundle install > /dev/null || exit 1
 
 echo "~ Building dist."
 rake generate

@@ -37,12 +37,12 @@ namespace :docker do
 
   desc "Run the container in the foreground."
   task :run do
-    sh "docker run -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
+    sh "docker run -p 80:80 -v #{Dir.pwd}/dist:#{PATH}:ro #{NAME}"
   end
 
   desc "Start the container as a daemon."
   task :start do
-    sh "docker run -d -p 80:80 -v #{Dir.pwd}:#{PATH}:ro #{NAME}"
+    sh "docker run -d -p 80:80 -v #{Dir.pwd}/dist:#{PATH}:ro #{NAME}"
   end
 
   desc "Stop the container."
