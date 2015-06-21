@@ -3,7 +3,7 @@ When(/^I visit "(.+)"$/) do |url|
   visit(url)
 end
 
-When(/^I click "(.+)"$/) do |link|
+When(/^I click on "(.+)"$/) do |link|
   click_link link
 end
 
@@ -13,3 +13,6 @@ Then(/^I should see "(.+)" in the main content$/) do |text|
   # end
 end
 
+Then(/^there should be selector "(.+)"$/) do |text|
+  expect(page).to have_css(text)
+end

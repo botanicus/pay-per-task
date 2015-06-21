@@ -5,5 +5,5 @@ Feature: Contact page
   So that I can buy them beer and prostitutes.
 
 Scenario: Going to the about us page
-  When I click "Contact"
+  When I click on "Contact"
   Then I should see "Get in touch" in the main content

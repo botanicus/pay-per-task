@@ -1,9 +1,9 @@
 # https://github.com/cucumber/cucumber/wiki/cucumber.yml
+default: --tags ~@pending
 smoke: SITE=<%= File.basename(Dir.pwd) %> --tags @smoke
 wip: --tags @wip
 CI: >
   CI=true
-  _=<%= ENV['CIRCLE_ARTIFACTS'] %>
-  SCREENSHOT_DIR=<%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs') rescue nil%>
+  SCREENSHOT_DIR=<%= File.join(ENV['CIRCLE_ARTIFACTS'], File.basename(Dir.pwd), ENV['BROWSER'] || 'phantomjs') rescue nil %>
   --format html
   --out <%= File.join(ENV['CIRCLE_ARTIFACTS'], ENV['BROWSER'] || 'phantomjs', 'features.html') rescue nil %>

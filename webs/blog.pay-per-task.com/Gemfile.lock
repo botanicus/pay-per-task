@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/botanicus/blog-generator.git
-  revision: 8a313e5e59548e2eb3ab1fd50dc6f044eeb6d752
+  revision: dff54c9acb08325f3a7d74e67936a50f0fbe9d2a
   branch: master
   specs:
     blog-generator (0.0.4)

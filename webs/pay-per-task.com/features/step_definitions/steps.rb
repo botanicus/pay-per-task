@@ -3,7 +3,7 @@ When(/^I visit "(.+)"$/) do |url|
   visit(url)
 end
 
-When(/^I click "(.+)"$/) do |link|
+When(/^I click on "(.+)"$/) do |link|
   click_link link
 end
 
